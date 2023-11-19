@@ -12,8 +12,10 @@
     "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
   },
   "dependencies": {
+    "antd": "^5.11.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.19.0"
   },
   "devDependencies": {
     "@electron/packager": "^18.0.0",
