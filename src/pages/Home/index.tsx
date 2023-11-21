@@ -1,6 +1,10 @@
 import Button from '@/components/Button'
 import { ROUTES } from '@/constants/routes'
 import { useNavigate } from 'react-router-dom'
+import TestIcon from '@/assets/svgs/test.svg'
+import PenIcon from '@/assets/svgs/pen.svg'
+import ListIcon from '@/assets/svgs/list.svg'
+import SettingIcon from '@/assets/svgs/setting.svg'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -11,7 +15,7 @@ const Home = () => {
           <Button
             onClick={() => navigate(ROUTES.LIST)}
             size="large"
-            icon={<i className="fa-solid fa-flask"></i>}
+            icon={<TestIcon width={30} height={30} />}
             className="mt-[50px]"
           >
             Kiểm tra
@@ -21,7 +25,7 @@ const Home = () => {
           <Button
             onClick={() => navigate(ROUTES.LIST)}
             size="large"
-            icon={<i className="fa-solid fa-pen-to-square"></i>}
+            icon={<PenIcon width={30} height={30} />}
             className="mt-[50px]"
           >
             Tạo đề
@@ -31,7 +35,7 @@ const Home = () => {
           <Button
             onClick={() => navigate(ROUTES.LIST)}
             size="large"
-            icon={<i className="fa-solid fa-table-list"></i>}
+            icon={<ListIcon width={30} height={30} />}
             className="mt-[50px]"
           >
             Danh sách
@@ -41,7 +45,7 @@ const Home = () => {
           <Button
             onClick={() => navigate(ROUTES.LIST)}
             size="large"
-            icon={<i className="fa-solid fa-sliders"></i>}
+            icon={<SettingIcon width={30} height={30} />}
             className="mt-[50px]"
           >
             Tùy chỉnh

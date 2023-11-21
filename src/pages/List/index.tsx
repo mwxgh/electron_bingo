@@ -1,6 +1,9 @@
 import Button from '@/components/Button'
 import { Table, Input, Typography } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
+import PlusIcon from '@/assets/svgs/plus.svg'
+import { useState } from 'react'
+import EmployeeForm from '@/components/EmployeeForm'
 
 interface DataType {
   key: number
@@ -8,7 +11,7 @@ interface DataType {
   employeeCode: string
   name: string
   factory: string
-  role: string
+  position: string
   testTimes: string
 }
 
@@ -31,7 +34,7 @@ const columns: ColumnsType<DataType> = [
   },
   {
     title: 'Công việc',
-    dataIndex: 'role',
+    dataIndex: 'position',
   },
   {
     title: 'Lần thi',
@@ -47,7 +50,7 @@ for (let i = 1; i <= 120; i++) {
     employeeCode: `${i}`,
     name: 'Trần Ngọc Bình',
     factory: 'ABCDEh',
-    role: 'Vận hành máy',
+    position: 'Vận hành máy',
     testTimes: `${i}`,
   })
 }
@@ -55,6 +58,16 @@ for (let i = 1; i <= 120; i++) {
 const { Search } = Input
 
 const List = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    console.log('selectedRowKeys changed: ', newSelectedRowKeys)
+    setSelectedRowKeys(newSelectedRowKeys)
+  }
+
+  const hasSelected = selectedRowKeys.length > 0
+
   return (
     <div>
       <Typography.Title level={5}>Tìm kiếm</Typography.Title>
@@ -62,8 +75,23 @@ const List = () => {
         <div>
           <Search style={{ width: 200 }} className="w-[300px]" size="large" />
         </div>
-        <div>
-          <Button icon={<i className="fa-solid fa-plus"></i>} color="success">
+        <div className="flex items-center">
+          {hasSelected && (
+            <Button
+              icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
+              color="danger"
+              className="mr-[10px]"
+            >
+              Xóa
+            </Button>
+          )}
+          <Button
+            icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
+            color="success"
+            onClick={() => {
+              setIsOpen(true)
+            }}
+          >
             Thêm
           </Button>
         </div>
@@ -71,12 +99,17 @@ const List = () => {
       <Table
         columns={columns}
         dataSource={data}
-        rowSelection={{ type: 'checkbox' }}
+        rowSelection={{
+          selectedRowKeys,
+          onChange: onSelectChange,
+          type: 'checkbox',
+        }}
         bordered
         scroll={{
           y: 550,
         }}
       />
+      <EmployeeForm isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   )
 }
