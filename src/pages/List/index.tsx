@@ -4,6 +4,7 @@ import type { ColumnsType } from 'antd/es/table'
 import PlusIcon from '@/assets/svgs/plus.svg'
 import { useState } from 'react'
 import EmployeeForm from '@/components/EmployeeForm'
+import TestList from '@/components/TestList'
 
 interface DataType {
   key: number
@@ -12,17 +13,19 @@ interface DataType {
   name: string
   factory: string
   position: string
-  testTimes: string
+  completedTest: React.ReactNode
 }
 
 const columns: ColumnsType<DataType> = [
   {
     title: 'STT',
     dataIndex: 'index',
+    width: 60,
   },
   {
     title: 'Mã nhân viên',
     dataIndex: 'employeeCode',
+    width: 120,
   },
   {
     title: 'Họ và tên',
@@ -31,14 +34,17 @@ const columns: ColumnsType<DataType> = [
   {
     title: 'Xưởng',
     dataIndex: 'factory',
+    width: 250,
   },
   {
     title: 'Công việc',
     dataIndex: 'position',
+    width: 250,
   },
   {
-    title: 'Lần thi',
-    dataIndex: 'testTimes',
+    title: 'Bài test',
+    dataIndex: 'completedTest',
+    width: 570,
   },
 ]
 
@@ -51,7 +57,7 @@ for (let i = 1; i <= 120; i++) {
     name: 'Trần Ngọc Bình',
     factory: 'ABCDEh',
     position: 'Vận hành máy',
-    testTimes: `${i}`,
+    completedTest: <TestList completedTest={[1, 2, 3]} />,
   })
 }
 
@@ -108,6 +114,7 @@ const List = () => {
         scroll={{
           y: 550,
         }}
+        tableLayout="fixed"
       />
       <EmployeeForm isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
