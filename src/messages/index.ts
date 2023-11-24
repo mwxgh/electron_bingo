@@ -1,3 +1,3 @@
 export const errorMessages = {
-  required: 'không được để trống',
+  required: 'Không được để trống',
 }
