@@ -5,7 +5,6 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 export const importUserData = async (event: IpcMainEvent) => {
-  // Open a file dialog
   const result = await dialog.showOpenDialog(
     BrowserWindow.fromWebContents(event.sender)!,
     {

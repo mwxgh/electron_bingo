@@ -5,7 +5,7 @@ import PlusIcon from '@/assets/svgs/plus.svg'
 import { useState } from 'react'
 import EmployeeForm from '@/components/EmployeeForm'
 import TestList from '@/components/TestList'
-import { setWindowTitle, importUserData } from '@/ipc/API'
+import { setWindowTitle, checkAccessPermission } from '@/ipc/API'
 
 interface DataType {
   key: number
@@ -114,10 +114,10 @@ const List = () => {
             icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
             color="info"
             onClick={() => {
-              importUserData()
+              checkAccessPermission('5064c7f8d5f719ac6a234869515aad55')
             }}
           >
-            TestImportUser
+            TestMD5
           </Button>
         </div>
       </div>

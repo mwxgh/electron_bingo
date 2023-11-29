@@ -35,7 +35,7 @@ function createWindow() {
   })
 
   // Enable devtool
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {

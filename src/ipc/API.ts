@@ -1,1 +1,2 @@
-export const { setWindowTitle, importUserData } = window['ipcAPI']
+export const { setWindowTitle, checkAccessPermission, importUserData } =
+  window['ipcAPI']

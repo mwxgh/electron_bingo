@@ -3,7 +3,7 @@
 import { contextBridge, ipcRenderer } from 'electron'
 import { IPC_ACTIONS } from './ipc/action'
 
-const { SET_WINDOW_TITLE } = IPC_ACTIONS.window
+const { SET_WINDOW_TITLE, CHECK_ACCESS_PERMISSION } = IPC_ACTIONS.window
 const { IMPORT_USER } = IPC_ACTIONS.user
 
 // --------- Expose some API to the Renderer process ---------
@@ -31,6 +31,9 @@ function withPrototype(obj: Record<string, any>) {
 // --------- Expose custom API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcAPI', {
   setWindowTitle: (title: string) => ipcRenderer.send(SET_WINDOW_TITLE, title),
+  checkAccessPermission: (hashCode: string) =>
+    ipcRenderer.send(CHECK_ACCESS_PERMISSION, hashCode),
+
   importUserData: () => ipcRenderer.send(IMPORT_USER),
 })
 

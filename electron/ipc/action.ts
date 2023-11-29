@@ -1,6 +1,7 @@
 export const IPC_ACTIONS = {
   window: {
     SET_WINDOW_TITLE: 'SET_WINDOW_TITLE',
+    CHECK_ACCESS_PERMISSION: 'CHECK_ACCESS_PERMISSION',
   },
   setting: {
     SAVE_SETTING: 'SAVE_SETTING',
