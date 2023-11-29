@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
 import { contextBridge, ipcRenderer } from 'electron'
+import { IPC_ACTIONS } from './ipc/action'
+
+const { SET_WINDOW_TITLE, CHECK_ACCESS_PERMISSION } = IPC_ACTIONS.window
+const { IMPORT_USER } = IPC_ACTIONS.user
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', withPrototype(ipcRenderer))
@@ -24,9 +28,20 @@ function withPrototype(obj: Record<string, any>) {
   return obj
 }
 
+// --------- Expose custom API to the Renderer process ---------
+contextBridge.exposeInMainWorld('ipcAPI', {
+  setWindowTitle: (title: string) => ipcRenderer.send(SET_WINDOW_TITLE, title),
+  checkAccessPermission: (hashCode: string) =>
+    ipcRenderer.send(CHECK_ACCESS_PERMISSION, hashCode),
+
+  importUserData: () => ipcRenderer.send(IMPORT_USER),
+})
+
 // --------- Preload scripts loading ---------
-function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
-  return new Promise(resolve => {
+function domReady(
+  condition: DocumentReadyState[] = ['complete', 'interactive'],
+) {
+  return new Promise((resolve) => {
     if (condition.includes(document.readyState)) {
       resolve(true)
     } else {
@@ -41,12 +56,12 @@ function domReady(condition: DocumentReadyState[] = ['complete', 'interactive'])
 
 const safeDOM = {
   append(parent: HTMLElement, child: HTMLElement) {
-    if (!Array.from(parent.children).find(e => e === child)) {
+    if (!Array.from(parent.children).find((e) => e === child)) {
       parent.appendChild(child)
     }
   },
   remove(parent: HTMLElement, child: HTMLElement) {
-    if (Array.from(parent.children).find(e => e === child)) {
+    if (Array.from(parent.children).find((e) => e === child)) {
       parent.removeChild(child)
     }
   },
@@ -112,7 +127,7 @@ function useLoading() {
 const { appendLoading, removeLoading } = useLoading()
 domReady().then(appendLoading)
 
-window.onmessage = ev => {
+window.onmessage = (ev) => {
   ev.data.payload === 'removeLoading' && removeLoading()
 }
 
