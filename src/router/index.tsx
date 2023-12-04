@@ -3,6 +3,8 @@ import Home from '../pages/Home'
 import { createBrowserRouter } from 'react-router-dom'
 import List from '@/pages/List'
 import BaseLayout from '@/layouts/BaseLayout'
+import TestLayout from '@/layouts/TestLayout'
+import Test from '@/pages/Test'
 
 const router = createBrowserRouter([
   {
@@ -15,6 +17,15 @@ const router = createBrowserRouter([
       {
         path: ROUTES.LIST,
         element: <List />,
+      },
+      {
+        path: `${ROUTES.TEST}/:stepId`,
+        element: <TestLayout />,
+        children: [
+          {
+            element: <Test />,
+          },
+        ],
       },
     ],
   },

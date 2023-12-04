@@ -1,4 +1,6 @@
 export const ROUTES = {
   HOME: '/',
-  LIST: "/list"
+  LIST: '/list',
+  TEST: '/test',
+  NOT_FOUND: '/not-found',
 } as const
