@@ -5,25 +5,32 @@ import List from '@/pages/List'
 import BaseLayout from '@/layouts/BaseLayout'
 import TestLayout from '@/layouts/TestLayout'
 import Test from '@/pages/Test'
+// import ProtectLayout from '@/layouts/ProtectLayout'
 
 const router = createBrowserRouter([
   {
-    path: ROUTES.HOME,
-    element: <Home />,
-  },
-  {
-    element: <BaseLayout />,
+    // path: ROUTES.ENTRY,
+    // element: <ProtectLayout />,
     children: [
       {
-        path: ROUTES.LIST,
-        element: <List />,
+        path: ROUTES.ENTRY,
+        element: <Home />,
       },
       {
-        path: `${ROUTES.TEST}/:stepId`,
-        element: <TestLayout />,
+        element: <BaseLayout />,
         children: [
           {
-            element: <Test />,
+            path: ROUTES.LIST,
+            element: <List />,
+          },
+          {
+            path: `${ROUTES.TEST}/:stepId`,
+            element: <TestLayout />,
+            children: [
+              {
+                element: <Test />,
+              },
+            ],
           },
         ],
       },

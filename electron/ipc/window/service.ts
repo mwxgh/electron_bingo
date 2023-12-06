@@ -14,6 +14,8 @@ export const checkAccessPermission = (
   event: IpcMainEvent,
   hashCode: string,
 ): boolean => {
+
+  console.log("here", hashCode)
   const data = JSON.parse(fs.readFileSync('database/settings.json', 'utf-8'))
   const currentDateTime = moment().format('MM_YYYY')
   const dataToHash = data.company + '_' + currentDateTime
