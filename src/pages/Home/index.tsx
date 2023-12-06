@@ -13,7 +13,7 @@ const Home = () => {
       <ul>
         <li>
           <Button
-            onClick={() => navigate(ROUTES.LIST)}
+            onClick={() => navigate(ROUTES.TEST + '/1')}
             size="large"
             icon={<TestIcon width={30} height={30} />}
             className="mt-[50px]"
