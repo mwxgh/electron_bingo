@@ -23,6 +23,12 @@ const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
     form.resetFields()
   }, [form, isOpen])
 
+  const onFinish = (values: Employee) => {
+    console.log('Success:', values)
+    form.resetFields()
+    setIsOpen(false)
+  }
+
   const handleClose = () => {
     setIsOpen(false)
   }
@@ -45,6 +51,7 @@ const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
           size="large"
           className="mt-[15px]"
           form={form}
+          onFinish={onFinish}
         >
           <Form.Item<Employee>
             label={<span className="text-lg ">Mã nhân viên</span>}
