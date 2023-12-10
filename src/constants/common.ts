@@ -1,7 +1,7 @@
-import { TableDataType } from '@/types/common/table'
-import type { ColumnsType } from 'antd/es/table'
+import { TableDataType } from '@/types/common/table';
+import type { ColumnsType } from 'antd/es/table';
 
-export const NUMBER_OF_TEST = 9
+export const NUMBER_OF_TEST = 9;
 
 export const columns: ColumnsType<TableDataType> = [
   {
@@ -33,8 +33,7 @@ export const columns: ColumnsType<TableDataType> = [
     dataIndex: 'completedTest',
     width: 570,
   },
-] as const
-
+] as const;
 
 export const testSteps = [
   {
@@ -49,4 +48,4 @@ export const testSteps = [
   {
     label: 'Hoàn thành',
   },
-] as const
+] as const;

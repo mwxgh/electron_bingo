@@ -1,18 +1,19 @@
-import Button from '@/components/Button'
-import { ROUTES } from '@/constants/routes'
-import { Outlet, useNavigate } from 'react-router-dom'
-import HomeIcon from '@/assets/svgs/home.svg'
+// import HomeIcon from '@/assets/svgs/home.svg'
+import Button from '@/components/Button';
+import { ROUTES } from '@/constants/routes';
+
+import { Outlet, useNavigate } from 'react-router-dom';
 
 const BaseLayout = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div>
       <div className="p-[30px]">
         <Button
-          icon={<HomeIcon width={15} height={15}/>}
+          // icon={<HomeIcon width={15} height={15} />}
           onClick={() => {
-            navigate(ROUTES.HOME)
+            navigate(ROUTES.HOME);
           }}
         >
           Về màn hình chính
@@ -23,7 +24,7 @@ const BaseLayout = () => {
         <Outlet />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default BaseLayout
+export default BaseLayout;

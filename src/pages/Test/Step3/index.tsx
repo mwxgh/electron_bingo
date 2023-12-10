@@ -1,19 +1,20 @@
-import Button from '@/components/Button'
-import PauseIcon from '@/assets/svgs/pause.svg'
-import DoneIcon from '@/assets/svgs/done.svg'
-import { useNavigate } from 'react-router-dom'
-import { ROUTES } from '@/constants/routes'
+// import DoneIcon from '@/assets/svgs/done.svg';
+// import PauseIcon from '@/assets/svgs/pause.svg';
+import Button from '@/components/Button';
+import { ROUTES } from '@/constants/routes';
+
+import { useNavigate } from 'react-router-dom';
 
 const Step3 = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const data = []
+  const data = [];
   for (let i = 1; i <= 5; i++) {
     data.push({
       key: i,
       index: i,
       label: i,
-    })
+    });
   }
 
   return (
@@ -30,7 +31,7 @@ const Step3 = () => {
         <div>
           <Button
             size="medium"
-            icon={<PauseIcon width={20} height={20} fill="white" />}
+            // icon={<PauseIcon width={20} height={20} fill="white" />}
             className="mt-[50px] text-xl"
           >
             Tạm dừng
@@ -38,23 +39,23 @@ const Step3 = () => {
         </div>
       </div>
       <div className="flex justify-between px-[100px] mt-[100px]">
-        {data.map((item) => (
+        {data.map(item => (
           <div className="p-[50px] bg-sky-600 hover:bg-sky-500 cursor-pointer text-white text-3xl rounded-md">
             {item.label}
           </div>
         ))}
       </div>
-      <div className='flex justify-end mt-[50px]'>
+      <div className="flex justify-end mt-[50px]">
         <Button
           size="medium"
-          icon={<DoneIcon width={20} height={20} fill="white" />}
+          // icon={<DoneIcon width={20} height={20} fill="white" />}
           className="mt-[50px] text-xl"
         >
           Hoàn thành
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Step3
+export default Step3;

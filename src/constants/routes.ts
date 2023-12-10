@@ -3,4 +3,4 @@ export const ROUTES = {
   LIST: '/list',
   TEST: '/test',
   NOT_FOUND: '/not-found',
-} as const
+} as const;

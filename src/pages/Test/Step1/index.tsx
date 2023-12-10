@@ -1,15 +1,17 @@
-import Table from '@/components/Table'
-import TestList from '@/components/TestList'
-import { ROUTES } from '@/constants/routes'
-import { TableDataType } from '@/types/common/table'
-import { Typography } from 'antd'
-import Search from 'antd/es/input/Search'
-import { useNavigate } from 'react-router-dom'
+import Table from '@/components/Table';
+import TestList from '@/components/TestList';
+import { ROUTES } from '@/constants/routes';
+import { TableDataType } from '@/types/common/table';
+
+import { useNavigate } from 'react-router-dom';
+
+import { Typography } from 'antd';
+import Search from 'antd/es/input/Search';
 
 const Step1 = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const data: TableDataType[] = []
+  const data: TableDataType[] = [];
   for (let i = 1; i <= 1; i++) {
     data.push({
       key: i,
@@ -22,11 +24,11 @@ const Step1 = () => {
         <TestList
           completedTest={[1, 2, 3]}
           onClick={() => {
-            navigate(ROUTES.TEST + '/2')
+            navigate(ROUTES.TEST + '/2');
           }}
         />
       ),
-    })
+    });
   }
 
   return (
@@ -35,7 +37,7 @@ const Step1 = () => {
       <Search style={{ width: 200 }} className="w-[300px]" size="large" />
       <Table data={data} className="mt-[30px]" />
     </div>
-  )
-}
+  );
+};
 
-export default Step1
+export default Step1;
