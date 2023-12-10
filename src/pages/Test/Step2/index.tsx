@@ -1,19 +1,20 @@
-import { ROUTES } from '@/constants/routes'
-import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '@/constants/routes';
+
+import { useNavigate } from 'react-router-dom';
 
 const Step2 = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const data = []
+  const data = [];
   for (let i = 1; i <= 10; i++) {
     data.push({
       key: i,
       index: i,
       label: `Đề ${i}`,
       onClick: () => {
-        navigate(ROUTES.TEST + '/3')
+        navigate(ROUTES.TEST + '/3');
       },
-    })
+    });
   }
 
   return (
@@ -28,7 +29,7 @@ const Step2 = () => {
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default Step2
+export default Step2;

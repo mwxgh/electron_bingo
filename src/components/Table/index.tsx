@@ -1,12 +1,13 @@
-import { columns } from '@/constants/common'
-import { TableDataType } from '@/types/common/table'
-import { Table as AntdTable } from 'antd'
+import { columns } from '@/constants/common';
+import { TableDataType } from '@/types/common/table';
+
+import { Table as AntdTable } from 'antd';
 
 interface Props {
-  data: TableDataType[]
-  selectedRowKeys?: React.Key[]
-  setSelectedRowKeys?: React.Dispatch<React.SetStateAction<React.Key[]>>
-  className?: string
+  data: TableDataType[];
+  selectedRowKeys?: React.Key[];
+  setSelectedRowKeys?: React.Dispatch<React.SetStateAction<React.Key[]>>;
+  className?: string;
 }
 
 const Table: React.FC<Props> = ({
@@ -17,9 +18,9 @@ const Table: React.FC<Props> = ({
   ...rest
 }) => {
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys)
-    setSelectedRowKeys?.(newSelectedRowKeys)
-  }
+    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+    setSelectedRowKeys?.(newSelectedRowKeys);
+  };
 
   return (
     <AntdTable
@@ -38,7 +39,7 @@ const Table: React.FC<Props> = ({
       className={className}
       {...rest}
     />
-  )
-}
+  );
+};
 
-export default Table
+export default Table;

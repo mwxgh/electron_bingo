@@ -1,0 +1,33 @@
+{
+  "appId": "electron.nosahsafefy",
+  "productName": "NOSAH_SAFETY",
+  "protocols": {
+    "name": "nosahsafefy",
+    "schemes": ["nosahsafefy"]
+  },
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "mwxgh",
+      "repo": "electron_bingo"
+    }
+  ],
+  "asar": true,
+  "win": {
+    "target": "nsis",
+    "icon": "resources/icons/logo@256.ico"
+  },
+  "mac": {
+    "target": "dmg",
+    "icon": "resources/icons/logo@512.png"
+  },
+  "nsis": {
+    "oneClick": true,
+    "artifactName": "NOSAH_SAFETY-Setup-${version}.${ext}",
+    "uninstallDisplayName": "NOSAH_SAFETY"
+  },
+  "extraResources": ["./resources/**"],
+  "directories": {
+    "output": "release/"
+  }
+}

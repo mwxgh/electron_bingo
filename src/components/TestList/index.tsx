@@ -1,9 +1,10 @@
-import { NUMBER_OF_TEST } from '@/constants/common'
-import React from 'react'
+import { NUMBER_OF_TEST } from '@/constants/common';
+
+import React from 'react';
 
 interface Props {
-  completedTest: number[]
-  onClick?: (index: number) => void
+  completedTest: number[];
+  onClick?: (index: number) => void;
 }
 
 const TestList: React.FC<Props> = ({ completedTest, onClick }) => {
@@ -17,14 +18,14 @@ const TestList: React.FC<Props> = ({ completedTest, onClick }) => {
               : 'hover:bg-sky-500 cursor-pointer'
           }`}
           onClick={() => {
-            onClick?.(index + 1)
+            onClick?.(index + 1);
           }}
         >
           {index + 1}
         </span>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default TestList
+export default TestList;

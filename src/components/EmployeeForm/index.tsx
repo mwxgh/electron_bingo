@@ -1,37 +1,40 @@
-import React, { useEffect } from 'react'
-import { Modal, Form, Input } from 'antd'
-import Button from '@/components/Button'
-import './style.css'
-import { useForm } from 'antd/lib/form/Form'
+import Button from '@/components/Button';
+
+import React, { useEffect } from 'react';
+
+import { Modal, Form, Input } from 'antd';
+import { useForm } from 'antd/lib/form/Form';
+
+import './style.css';
 
 interface Props {
-  isOpen: boolean
-  setIsOpen: (state: boolean) => void
+  isOpen: boolean;
+  setIsOpen: (state: boolean) => void;
 }
 
 interface Employee {
-  employeeCode: string
-  name: string
-  factory: string
-  position: string
+  employeeCode: string;
+  name: string;
+  factory: string;
+  position: string;
 }
 
 const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
-  const [form] = useForm()
+  const [form] = useForm();
 
   useEffect(() => {
-    form.resetFields()
-  }, [form, isOpen])
+    form.resetFields();
+  }, [form, isOpen]);
 
   const onFinish = (values: Employee) => {
-    console.log('Success:', values)
-    form.resetFields()
-    setIsOpen(false)
-  }
+    console.log('Success:', values);
+    form.resetFields();
+    setIsOpen(false);
+  };
 
   const handleClose = () => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
 
   return (
     <Modal
@@ -91,7 +94,7 @@ const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
             <Button
               color="info"
               onClick={() => {
-                setIsOpen(true)
+                setIsOpen(true);
               }}
             >
               Xác nhận
@@ -100,7 +103,7 @@ const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
         </Form>
       )}
     </Modal>
-  )
-}
+  );
+};
 
-export default EmployeeForm
+export default EmployeeForm;

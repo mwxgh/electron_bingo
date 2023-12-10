@@ -1,10 +1,12 @@
-import { ROUTES } from '@/constants/routes'
-import Home from '../pages/Home'
-import { createBrowserRouter } from 'react-router-dom'
-import List from '@/pages/List'
-import BaseLayout from '@/layouts/BaseLayout'
-import TestLayout from '@/layouts/TestLayout'
-import Test from '@/pages/Test'
+import { ROUTES } from '@/constants/routes';
+import BaseLayout from '@/layouts/BaseLayout';
+import TestLayout from '@/layouts/TestLayout';
+import List from '@/pages/List';
+import Test from '@/pages/Test';
+
+import { createBrowserRouter } from 'react-router-dom';
+
+import Home from '../pages/Home';
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-])
+]);
 
-export default router
+export default router;

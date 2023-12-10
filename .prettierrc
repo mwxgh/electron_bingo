@@ -1,8 +1,12 @@
 {
+  "arrowParens": "avoid",
+  "endOfLine": "auto",
   "singleQuote": true,
   "trailingComma": "all",
-  "semi": false,
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": true
-  }
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 100,
+  "semi": true,
+  "importOrder": ["^electron", "^react", "^[^.~@]+", "^@app", "^~.+$", "^\\..+$"],
+  "importOrderSeparation": true
 }

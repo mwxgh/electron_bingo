@@ -1,40 +1,41 @@
-import { ROUTES } from '@/constants/routes'
-import { Outlet, useNavigate, useParams } from 'react-router-dom'
-import { useEffect } from 'react'
-import { testSteps } from '@/constants/common'
+import { testSteps } from '@/constants/common';
+import { ROUTES } from '@/constants/routes';
+
+import { useEffect } from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 
 const TestLayout = () => {
-  const navigate = useNavigate()
-  const params = useParams()
-  const stepId = Number(params.stepId)
-  const step = testSteps[stepId - 1]
+  const navigate = useNavigate();
+  const params = useParams();
+  const stepId = Number(params.stepId);
+  const step = testSteps[stepId - 1];
 
   useEffect(() => {
     if (!stepId || !step) {
       navigate(ROUTES.NOT_FOUND, {
         replace: true,
-      })
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   const renderBreadcrumb = () => {
     return (
       <div className="flex items-center relative">
         {testSteps.map((item, index) => {
-          const stepIndex = index + 1
+          const stepIndex = index + 1;
 
           const handleOnClick = () => {
-            if (stepIndex >= stepId) return
-            navigate(`${ROUTES.TEST}/${stepIndex}`)
-          }
+            if (stepIndex >= stepId) return;
+            navigate(`${ROUTES.TEST}/${stepIndex}`);
+          };
 
           const renderHorizontalBar = () => {
             if (stepIndex !== testSteps.length)
-              return <div className="w-[150px] h-[2px] bg-slate-600"></div>
+              return <div className="w-[150px] h-[2px] bg-slate-600"></div>;
 
-            return null
-          }
+            return null;
+          };
 
           if (stepId < stepIndex) {
             return (
@@ -53,7 +54,7 @@ const TestLayout = () => {
                 </div>
                 {renderHorizontalBar()}
               </>
-            )
+            );
           }
 
           if (stepId === stepIndex) {
@@ -75,7 +76,7 @@ const TestLayout = () => {
                 </div>
                 {renderHorizontalBar()}
               </>
-            )
+            );
           }
 
           if (stepId > stepIndex) {
@@ -95,12 +96,12 @@ const TestLayout = () => {
                 </div>
                 {renderHorizontalBar()}
               </>
-            )
+            );
           }
         })}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div>
@@ -108,7 +109,7 @@ const TestLayout = () => {
       {/* <div className="h-[1px] w-full bg-slate-800 opacity-20" /> */}
       <Outlet />
     </div>
-  )
-}
+  );
+};
 
-export default TestLayout
+export default TestLayout;
