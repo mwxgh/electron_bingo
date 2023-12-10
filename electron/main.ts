@@ -1,6 +1,5 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
-import { registerIPCHandlers } from './ipc/handle'
 
 // The built directory structure
 //
@@ -28,14 +27,14 @@ function createWindow() {
 
       // for secure
       nodeIntegration: true,
-      // contextIsolation: false,
+      contextIsolation: false,
     },
     width: 1600,
     height: 900,
   })
 
   // Enable devtool
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {
@@ -69,6 +68,5 @@ app.on('activate', () => {
 })
 
 app.whenReady().then(() => {
-  registerIPCHandlers(), // register custom IPC
-    createWindow()
+  createWindow()
 })

@@ -6,6 +6,9 @@ import EmployeeForm from '@/components/EmployeeForm'
 import TestList from '@/components/TestList'
 import { TableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
+import SettingService from '@/services/api/setting'
+
+const settingService = new SettingService()
 
 const data: TableDataType[] = []
 for (let i = 1; i <= 120; i++) {
@@ -56,21 +59,13 @@ const List = () => {
           >
             Thêm
           </Button>
+
           <Button
             icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
             color="info"
             onClick={() => {
-              window.ipcAPI.setWindowTitle('IPC is working !!!')
-            }}
-          >
-            TestSetWindowTitle
-          </Button>
-          <Button
-            icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
-            color="info"
-            onClick={() => {
-              window.ipcAPI.checkAccessPermission(
-                '5064c7f8d5f719ac6a234869515aad55',
+              console.log(
+                settingService.protectApp('5064c7f8d5f719ac6a234869515aad55'),
               )
             }}
           >
