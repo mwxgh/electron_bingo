@@ -1,32 +1,37 @@
-import { defineConfig } from 'vite'
-import path from 'node:path'
-import electron from 'vite-plugin-electron/simple'
-import react from '@vitejs/plugin-react'
-import svgr from 'vite-plugin-svgr'
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
+import path from 'path';
+import { defineConfig } from 'vite';
+import electron from 'vite-electron-plugin';
+import { alias, copy } from 'vite-electron-plugin/plugin';
+import checker from 'vite-plugin-checker';
+import tsconfigPaths from 'vite-tsconfig-paths';
+
 export default defineConfig({
   plugins: [
-    svgr({
-      include: '**/*.svg',
-    }),
     react(),
+    checker({}),
+    tsconfigPaths(),
     electron({
-      main: {
-        // Shortcut of `build.lib.entry`.
-        entry: 'electron/main.ts',
-      },
-      preload: {
-        // Shortcut of `build.rollupOptions.input`.
-        // Preload scripts may contain Web assets, so use the `build.rollupOptions.input` instead `build.lib.entry`.
-        input: path.join(__dirname, 'electron/preload.ts'),
-      },
-      // Ployfill the Electron and Node.js built-in modules for Renderer process.
-      // See 👉 https://github.com/electron-vite/vite-plugin-electron-renderer
-      renderer: {},
+      include: ['app'],
+      plugins: [
+        alias([
+          {
+            find: '@app',
+            replacement: path.join(__dirname, 'app'),
+          },
+        ]),
+        copy([{ from: 'electron-builder.json', to: 'dist-electron/app.json' }]),
+      ],
     }),
   ],
-  resolve: {
-    alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
+  clearScreen: false,
+  server: {
+    port: 4000,
+    strictPort: true,
   },
-})
+  build: {
+    minify: process.env.NODE_ENV === 'production' ? false : 'esbuild',
+    sourcemap: process.env.NODE_ENV !== 'production',
+  },
+});

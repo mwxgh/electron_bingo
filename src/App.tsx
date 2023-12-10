@@ -1,17 +1,18 @@
-import './App.css'
-import { RouterProvider } from 'react-router-dom'
-import router from './router'
-import { ConfigProvider } from 'antd'
-import { errorMessages } from '@/messages/index'
+import './App.css';
 
 function App() {
   return (
-    <>
-      <ConfigProvider form={{ validateMessages: errorMessages }}>
-        <RouterProvider router={router} />
-      </ConfigProvider>
-    </>
-  )
+    <div>
+      <button
+        type="button"
+        onClick={() => {
+          console.log(window.electron.checkHashCode('e199e161bb28885b5ab4a54daadb8029'));
+        }}
+      >
+        Click Me
+      </button>
+    </div>
+  );
 }
 
-export default App
+export default App;
