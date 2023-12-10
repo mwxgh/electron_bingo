@@ -1,27 +1,13 @@
 import { ROUTES } from '@/constants/routes'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
-
-const steps = [
-  {
-    label: 'Ghi danh',
-  },
-  {
-    label: 'Chọn đề',
-  },
-  {
-    label: 'Kiểm tra',
-  },
-  {
-    label: 'Hoàn thành',
-  },
-]
+import { testSteps } from '@/constants/common'
 
 const TestLayout = () => {
   const navigate = useNavigate()
   const params = useParams()
   const stepId = Number(params.stepId)
-  const step = steps[stepId - 1]
+  const step = testSteps[stepId - 1]
 
   useEffect(() => {
     if (!stepId || !step) {
@@ -29,12 +15,13 @@ const TestLayout = () => {
         replace: true,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const renderBreadcrumb = () => {
     return (
       <div className="flex items-center relative">
-        {steps.map((item, index) => {
+        {testSteps.map((item, index) => {
           const stepIndex = index + 1
 
           const handleOnClick = () => {
@@ -43,7 +30,7 @@ const TestLayout = () => {
           }
 
           const renderHorizontalBar = () => {
-            if (stepIndex !== steps.length)
+            if (stepIndex !== testSteps.length)
               return <div className="w-[150px] h-[2px] bg-slate-600"></div>
 
             return null
@@ -117,11 +104,9 @@ const TestLayout = () => {
 
   return (
     <div>
-      <div className="p-[30px]">{renderBreadcrumb()}</div>
-      <div className="h-[1px] w-full bg-slate-800 opacity-20" />
-      <div className="p-[30px]">
-        <Outlet />
-      </div>
+      <div className="mb-[70px] px-[25px] mt-[20px]">{renderBreadcrumb()}</div>
+      {/* <div className="h-[1px] w-full bg-slate-800 opacity-20" /> */}
+      <Outlet />
     </div>
   )
 }

@@ -3,9 +3,10 @@ import React from 'react'
 
 interface Props {
   completedTest: number[]
+  onClick?: (index: number) => void
 }
 
-const TestList: React.FC<Props> = ({ completedTest }) => {
+const TestList: React.FC<Props> = ({ completedTest, onClick }) => {
   return (
     <div>
       {[...Array(NUMBER_OF_TEST)].map((_, index) => (
@@ -15,7 +16,9 @@ const TestList: React.FC<Props> = ({ completedTest }) => {
               ? 'opacity-50 cursor-default'
               : 'hover:bg-sky-500 cursor-pointer'
           }`}
-          onClick={() => {}}
+          onClick={() => {
+            onClick?.(index + 1)
+          }}
         >
           {index + 1}
         </span>

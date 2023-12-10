@@ -1,54 +1,13 @@
 import Button from '@/components/Button'
-import { Table, Input, Typography } from 'antd'
-import type { ColumnsType } from 'antd/es/table'
+import { Input, Typography } from 'antd'
 import PlusIcon from '@/assets/svgs/plus.svg'
 import { useState } from 'react'
 import EmployeeForm from '@/components/EmployeeForm'
 import TestList from '@/components/TestList'
+import { TableDataType } from '@/types/common/table'
+import Table from '@/components/Table'
 
-interface DataType {
-  key: number
-  index: number
-  employeeCode: string
-  name: string
-  factory: string
-  position: string
-  completedTest: React.ReactNode
-}
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'STT',
-    dataIndex: 'index',
-    width: 60,
-  },
-  {
-    title: 'Mã nhân viên',
-    dataIndex: 'employeeCode',
-    width: 120,
-  },
-  {
-    title: 'Họ và tên',
-    dataIndex: 'name',
-  },
-  {
-    title: 'Xưởng',
-    dataIndex: 'factory',
-    width: 250,
-  },
-  {
-    title: 'Công việc',
-    dataIndex: 'position',
-    width: 250,
-  },
-  {
-    title: 'Bài test',
-    dataIndex: 'completedTest',
-    width: 570,
-  },
-]
-
-const data: DataType[] = []
+const data: TableDataType[] = []
 for (let i = 1; i <= 120; i++) {
   data.push({
     key: i,
@@ -61,16 +20,9 @@ for (let i = 1; i <= 120; i++) {
   })
 }
 
-const { Search } = Input
-
 const List = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
-
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys)
-    setSelectedRowKeys(newSelectedRowKeys)
-  }
 
   const hasSelected = selectedRowKeys.length > 0
 
@@ -79,7 +31,11 @@ const List = () => {
       <Typography.Title level={5}>Tìm kiếm</Typography.Title>
       <div className="flex items-center mb-[20px] justify-between">
         <div>
-          <Search style={{ width: 200 }} className="w-[300px]" size="large" />
+          <Input.Search
+            style={{ width: 200 }}
+            className="w-[300px]"
+            size="large"
+          />
         </div>
         <div className="flex items-center">
           {hasSelected && (
@@ -113,7 +69,9 @@ const List = () => {
             icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
             color="info"
             onClick={() => {
-              window.ipcAPI.checkAccessPermission('5064c7f8d5f719ac6a234869515aad55')
+              window.ipcAPI.checkAccessPermission(
+                '5064c7f8d5f719ac6a234869515aad55',
+              )
             }}
           >
             TestMD5
@@ -121,18 +79,9 @@ const List = () => {
         </div>
       </div>
       <Table
-        columns={columns}
-        dataSource={data}
-        rowSelection={{
-          selectedRowKeys,
-          onChange: onSelectChange,
-          type: 'checkbox',
-        }}
-        bordered
-        scroll={{
-          y: 550,
-        }}
-        tableLayout="fixed"
+        data={data}
+        selectedRowKeys={selectedRowKeys}
+        setSelectedRowKeys={setSelectedRowKeys}
       />
       <EmployeeForm isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>

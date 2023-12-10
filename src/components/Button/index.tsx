@@ -16,7 +16,7 @@ const Button: React.FC<Props> = ({
 }) => {
   const sizeProperties = {
     large: 'text-2xl px-[150px] py-[20px] w-[500px]',
-    medium: 'text-lg',
+    medium: 'text-lg px-[30px]',
   }
 
   const colorProperties = {

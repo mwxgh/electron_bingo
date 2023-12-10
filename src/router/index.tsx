@@ -19,10 +19,10 @@ const router = createBrowserRouter([
         element: <List />,
       },
       {
-        path: `${ROUTES.TEST}/:stepId`,
         element: <TestLayout />,
         children: [
           {
+            path: `${ROUTES.TEST}/:stepId`,
             element: <Test />,
           },
         ],
