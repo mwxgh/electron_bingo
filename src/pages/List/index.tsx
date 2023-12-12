@@ -6,6 +6,8 @@ import EmployeeForm from '@/components/EmployeeForm'
 import TestList from '@/components/TestList'
 import { TableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
+import { Employee } from '@/types/common/user'
+import { createUser } from '@/service/users'
 
 const data: TableDataType[] = []
 for (let i = 1; i <= 120; i++) {
@@ -25,6 +27,10 @@ const List = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 
   const hasSelected = selectedRowKeys.length > 0
+
+  const handleCreateUser = (data: Employee) => {
+    createUser(data as never)
+  }
 
   return (
     <div>
@@ -83,7 +89,7 @@ const List = () => {
         selectedRowKeys={selectedRowKeys}
         setSelectedRowKeys={setSelectedRowKeys}
       />
-      <EmployeeForm isOpen={isOpen} setIsOpen={setIsOpen} />
+      <EmployeeForm isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={handleCreateUser} />
     </div>
   )
 }

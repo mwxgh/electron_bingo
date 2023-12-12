@@ -28,14 +28,14 @@ function createWindow() {
 
       // for secure
       nodeIntegration: true,
-      // contextIsolation: false,
+      contextIsolation: false,
     },
     width: 1600,
     height: 900,
   })
 
   // Enable devtool
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {

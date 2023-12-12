@@ -3,28 +3,23 @@ import { Modal, Form, Input } from 'antd'
 import Button from '@/components/Button'
 import './style.css'
 import { useForm } from 'antd/lib/form/Form'
+import { Employee } from '@/types/common/user'
 
 interface Props {
   isOpen: boolean
   setIsOpen: (state: boolean) => void
+  onSubmit: (data: Employee) => void
 }
 
-interface Employee {
-  employeeCode: string
-  name: string
-  factory: string
-  position: string
-}
-
-const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen }) => {
+const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit }) => {
   const [form] = useForm()
 
   useEffect(() => {
     form.resetFields()
   }, [form, isOpen])
 
-  const onFinish = (values: Employee) => {
-    console.log('Success:', values)
+  const onFinish = (data: Employee) => {
+    onSubmit(data)
     form.resetFields()
     setIsOpen(false)
   }

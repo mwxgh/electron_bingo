@@ -1,0 +1,10 @@
+{
+  "users": [
+    {
+      "employeeCode": "123",
+      "name": "KH",
+      "factory": "XG",
+      "position": "CV"
+    }
+  ]
+}
