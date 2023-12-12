@@ -1,6 +1,5 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
-import { registerIPCHandlers } from './ipc/handle'
 
 // The built directory structure
 //
@@ -69,6 +68,5 @@ app.on('activate', () => {
 })
 
 app.whenReady().then(() => {
-  registerIPCHandlers(), // register custom IPC
-    createWindow()
+  createWindow()
 })

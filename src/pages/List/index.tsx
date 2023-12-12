@@ -65,22 +65,9 @@ const List = () => {
           <Button
             icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
             color="info"
-            onClick={() => {
-              window.ipcAPI.setWindowTitle('IPC is working !!!')
-            }}
+            onClick={() => {}}
           >
-            TestSetWindowTitle
-          </Button>
-          <Button
-            icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
-            color="info"
-            onClick={() => {
-              window.ipcAPI.checkAccessPermission(
-                '5064c7f8d5f719ac6a234869515aad55',
-              )
-            }}
-          >
-            TestMD5
+            TestConfigData
           </Button>
         </div>
       </div>
@@ -89,7 +76,11 @@ const List = () => {
         selectedRowKeys={selectedRowKeys}
         setSelectedRowKeys={setSelectedRowKeys}
       />
-      <EmployeeForm isOpen={isOpen} setIsOpen={setIsOpen} onSubmit={handleCreateUser} />
+      <EmployeeForm
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onSubmit={handleCreateUser}
+      />
     </div>
   )
 }
