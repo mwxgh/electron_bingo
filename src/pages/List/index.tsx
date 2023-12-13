@@ -1,21 +1,18 @@
 import Button from '@/components/Button'
-import { Input, Typography } from 'antd'
+import { Input, Typography, notification } from 'antd'
 import PlusIcon from '@/assets/svgs/plus.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import EmployeeForm from '@/components/EmployeeForm'
 import TestList from '@/components/TestList'
 import { TableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
-import { createUser } from '@/service/users'
 import { User, TestType } from '@/types/common/database'
-import { createEntity } from '@/service/manageData'
+import { createEntity, getEntities } from '@/service/manageData'
 
 const data: TableDataType[] = []
 for (let i = 1; i <= 120; i++) {
   data.push({
-    key: i,
-    index: i,
-    employeeCode: `${i}`,
+    code: `${i}`,
     name: 'Trần Ngọc Bình',
     factory: 'ABCDEh',
     position: 'Vận hành máy',
@@ -26,15 +23,49 @@ for (let i = 1; i <= 120; i++) {
 const List = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
+  const [userData, setUserData] = useState<User[]>([])
+  const [api, contextHolder] = notification.useNotification()
 
   const hasSelected = selectedRowKeys.length > 0
 
-  const handleCreateUser = (data: User) => {
-    createUser(data)
+  const fetchUserList = async () => {
+    const users = (await getEntities('users')) as User[]
+    const userConverted = users.map(
+      ({ uuid, code, name, factory, position }, index) => ({
+        index: index + 1,
+        key: uuid,
+        uuid,
+        code,
+        name,
+        factory,
+        position,
+        completedTest: <TestList completedTest={[1, 2, 3]} />,
+      }),
+    )
+
+    setUserData(userConverted)
+  }
+
+  useEffect(() => {
+    fetchUserList()
+  }, [])
+
+  const handleCreateUser = async (data: User) => {
+    try {
+      await createEntity(data, 'users')
+      fetchUserList()
+      api.success({
+        message: 'Tạo nhân viên thành công!',
+        duration: 1,
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
     <div>
+      {contextHolder}
       <Typography.Title level={5}>Tìm kiếm</Typography.Title>
       <div className="flex items-center mb-[20px] justify-between">
         <div>
@@ -84,7 +115,7 @@ const List = () => {
         </div>
       </div>
       <Table
-        data={data}
+        data={userData}
         selectedRowKeys={selectedRowKeys}
         setSelectedRowKeys={setSelectedRowKeys}
       />
