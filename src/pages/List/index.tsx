@@ -6,7 +6,7 @@ import EmployeeForm from '@/components/EmployeeForm'
 import TestList from '@/components/TestList'
 import { TableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
-import { createUser, getUsers } from '@/service/users'
+import { createUser, deleteUser } from '@/service/users'
 import { User } from '@/types/common/database'
 
 const data: TableDataType[] = []
@@ -66,7 +66,9 @@ const List = () => {
             icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
             color="info"
             onClick={() => {
-              console.log(getUsers())
+              console.log(
+                deleteUser('6dd47b8e-975c-4e40-89a3-7a3a7bacc441'),
+              )
             }}
           >
             TestConfigData

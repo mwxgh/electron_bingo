@@ -11,17 +11,59 @@ export const createUser = async (user: User) => {
   await db.write()
 }
 
-export const getUsers = async () => {
+export const getUsers = async (keyword?: string) => {
   await db.read()
-  return db.data.users
+  if (keyword) {
+    const filteredUsers = db.data.users.filter((user) => {
+      return (
+        user.name.toLowerCase().includes(keyword.toLowerCase()) ||
+        user.code.toLowerCase().includes(keyword.toLowerCase())
+      )
+    })
+
+    return filteredUsers
+  } else {
+    return db.data.users
+  }
 }
 
 export const getUserById = async (uuid: string) => {
   await db.read()
-  return db.data.users.find((user) => user.uuid === uuid)
+  const user = db.data.users.find((user) => user.uuid === uuid)
+
+  return user || null
 }
 
-export const updateUser = async (uuid: string) => {
+export const updateUser = async (
+  uuid: string,
+  updatedUserData: Partial<User>,
+) => {
   await db.read()
-  return db.data.users.find((user) => user.uuid === uuid)
+
+  const userToUpdate = db.data.users.find((user) => user.uuid === uuid)
+
+  if (userToUpdate) {
+    Object.assign(userToUpdate, updatedUserData)
+
+    await db.write()
+
+    return userToUpdate
+  } else {
+    return null
+  }
+}
+
+export const deleteUser = async (uuid: string) => {
+  await db.read()
+
+  const userIndex = db.data.users.findIndex((user) => user.uuid === uuid)
+
+  if (userIndex !== -1) {
+    db.data.users.splice(userIndex, 1)
+    await db.write()
+
+    return true
+  } else {
+    return false
+  }
 }
