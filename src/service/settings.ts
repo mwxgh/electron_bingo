@@ -1,6 +1,6 @@
 import * as fs from 'fs/promises'
 import * as crypto from 'crypto'
-import * as moment from 'moment'
+import moment from 'moment'
 
 export const protectApp = async (hashCode: string): Promise<boolean> => {
   try {
