@@ -6,8 +6,8 @@ import EmployeeForm from '@/components/EmployeeForm'
 import TestList from '@/components/TestList'
 import { TableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
-import { Employee } from '@/types/common/user'
-import { createUser } from '@/service/users'
+import { createUser, getUsers } from '@/service/users'
+import { User } from '@/types/common/database'
 
 const data: TableDataType[] = []
 for (let i = 1; i <= 120; i++) {
@@ -28,8 +28,8 @@ const List = () => {
 
   const hasSelected = selectedRowKeys.length > 0
 
-  const handleCreateUser = (data: Employee) => {
-    createUser(data as never)
+  const handleCreateUser = (data: User) => {
+    createUser(data)
   }
 
   return (
@@ -65,7 +65,9 @@ const List = () => {
           <Button
             icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
             color="info"
-            onClick={() => {}}
+            onClick={() => {
+              console.log(getUsers())
+            }}
           >
             TestConfigData
           </Button>
