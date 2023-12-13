@@ -7,8 +7,21 @@ const defaultData: Database = { users: [], tests: [], testResults: [] }
 const db = await JSONPreset(join('database', 'database.json'), defaultData)
 
 export const createUser = async (user: User) => {
-  db.data.users.push({ ...user, uuid: uuidv4() })
+  const newUser = { ...user, uuid: uuidv4() }
+  db.data.users.push(newUser)
   await db.write()
+
+  return newUser;
+}
+
+export const bulkCreateUser = async (users: User | User[]) => {
+  const userList = Array.isArray(users) ? users : [users]
+
+  const newUsers = userList.map((user) => ({ ...user, uuid: uuidv4() }))
+  db.data.users.push(...newUsers)
+  await db.write()
+
+  return newUsers
 }
 
 export const getUsers = async (keyword?: string) => {
