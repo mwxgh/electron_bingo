@@ -16,6 +16,8 @@ release-builds
 *.local
 yarn.lock
 
+database/database.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
