@@ -19,6 +19,7 @@ const TestList: React.FC<Props> = ({ completedTest, onClick }) => {
           onClick={() => {
             onClick?.(index + 1)
           }}
+          key={index}
         >
           {index + 1}
         </span>

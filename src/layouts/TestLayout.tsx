@@ -39,7 +39,7 @@ const TestLayout = () => {
           if (stepId < stepIndex) {
             return (
               <>
-                <div className="relative">
+                <div className="relative" key={index}>
                   <div
                     className="w-[20px] h-[20px] bg-white rounded-full border-slate-600 border-[2px] flex justify-center items-center cursor-pointer"
                     onClick={handleOnClick}
@@ -59,7 +59,7 @@ const TestLayout = () => {
           if (stepId === stepIndex) {
             return (
               <>
-                <div className="relative">
+                <div className="relative" key={index}>
                   <div
                     className="w-[20px] h-[20px] bg-white rounded-full border-slate-600 border-[2px] flex justify-center items-center cursor-pointer"
                     onClick={handleOnClick}
@@ -81,7 +81,7 @@ const TestLayout = () => {
           if (stepId > stepIndex) {
             return (
               <>
-                <div className="relative">
+                <div className="relative" key={index}>
                   <div
                     className="w-[20px] h-[20px] bg-slate-600 rounded-full cursor-pointer"
                     onClick={handleOnClick}

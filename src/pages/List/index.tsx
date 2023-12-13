@@ -6,6 +6,8 @@ import EmployeeForm from '@/components/EmployeeForm'
 import TestList from '@/components/TestList'
 import { TableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
+import { Employee } from '@/types/common/user'
+import { createUser } from '@/service/users'
 
 const data: TableDataType[] = []
 for (let i = 1; i <= 120; i++) {
@@ -25,6 +27,10 @@ const List = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
 
   const hasSelected = selectedRowKeys.length > 0
+
+  const handleCreateUser = (data: Employee) => {
+    createUser(data as never)
+  }
 
   return (
     <div>
@@ -59,22 +65,9 @@ const List = () => {
           <Button
             icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
             color="info"
-            onClick={() => {
-              window.ipcAPI.setWindowTitle('IPC is working !!!')
-            }}
+            onClick={() => {}}
           >
-            TestSetWindowTitle
-          </Button>
-          <Button
-            icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
-            color="info"
-            onClick={() => {
-              window.ipcAPI.checkAccessPermission(
-                '5064c7f8d5f719ac6a234869515aad55',
-              )
-            }}
-          >
-            TestMD5
+            TestConfigData
           </Button>
         </div>
       </div>
@@ -83,7 +76,11 @@ const List = () => {
         selectedRowKeys={selectedRowKeys}
         setSelectedRowKeys={setSelectedRowKeys}
       />
-      <EmployeeForm isOpen={isOpen} setIsOpen={setIsOpen} />
+      <EmployeeForm
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        onSubmit={handleCreateUser}
+      />
     </div>
   )
 }
