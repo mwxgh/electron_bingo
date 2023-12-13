@@ -1,17 +1,13 @@
-import { join } from 'path'
 import { v4 as uuidv4 } from 'uuid'
-import { Database, User } from '@/types/common/database'
-import { JSONPreset } from 'lowdb/node'
-
-const defaultData: Database = { users: [], tests: [], testResults: [] }
-const db = await JSONPreset(join('database', 'database.json'), defaultData)
+import { User } from '@/types/common/database'
+import { db } from './configDB'
 
 export const createUser = async (user: User) => {
   const newUser = { ...user, uuid: uuidv4() }
   db.data.users.push(newUser)
   await db.write()
 
-  return newUser;
+  return newUser
 }
 
 export const bulkCreateUser = async (users: User | User[]) => {
