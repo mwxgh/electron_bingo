@@ -1,7 +1,5 @@
 export interface TableDataType {
-  key: number
-  index: number
-  employeeCode: string
+  code: string
   name: string
   factory: string
   position: string

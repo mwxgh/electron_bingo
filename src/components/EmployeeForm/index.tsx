@@ -3,12 +3,12 @@ import { Modal, Form, Input } from 'antd'
 import Button from '@/components/Button'
 import './style.css'
 import { useForm } from 'antd/lib/form/Form'
-import { Employee } from '@/types/common/user'
+import { User } from '@/types/common/database'
 
 interface Props {
   isOpen: boolean
   setIsOpen: (state: boolean) => void
-  onSubmit: (data: Employee) => void
+  onSubmit: (data: User) => void
 }
 
 const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit }) => {
@@ -18,7 +18,7 @@ const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit }) => {
     form.resetFields()
   }, [form, isOpen])
 
-  const onFinish = (data: Employee) => {
+  const onFinish = (data: User) => {
     onSubmit(data)
     form.resetFields()
     setIsOpen(false)
@@ -48,16 +48,16 @@ const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit }) => {
           form={form}
           onFinish={onFinish}
         >
-          <Form.Item<Employee>
+          <Form.Item<User>
             label={<span className="text-lg ">Mã nhân viên</span>}
-            name="employeeCode"
+            name="code"
             rules={[{ required: true }]}
             className="mb-[30px]"
           >
             <Input />
           </Form.Item>
 
-          <Form.Item<Employee>
+          <Form.Item<User>
             label={<span className="text-lg ">Họ và tên</span>}
             name="name"
             rules={[{ required: true }]}
@@ -66,7 +66,7 @@ const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit }) => {
             <Input />
           </Form.Item>
 
-          <Form.Item<Employee>
+          <Form.Item<User>
             label={<span className="text-lg ">Xưởng</span>}
             name="factory"
             className="mb-[30px]"
@@ -74,7 +74,7 @@ const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit }) => {
             <Input />
           </Form.Item>
 
-          <Form.Item<Employee>
+          <Form.Item<User>
             label={<span className="text-lg ">Công việc</span>}
             name="position"
             className="mb-[30px]"

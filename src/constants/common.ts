@@ -11,7 +11,7 @@ export const columns: ColumnsType<TableDataType> = [
   },
   {
     title: 'Mã nhân viên',
-    dataIndex: 'employeeCode',
+    dataIndex: 'code',
     width: 120,
   },
   {

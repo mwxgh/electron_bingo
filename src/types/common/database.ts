@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-enum TestType {
+export enum TestType {
   hear,
   sight,
 }

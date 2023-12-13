@@ -1,9 +1,9 @@
 import { columns } from '@/constants/common'
-import { TableDataType } from '@/types/common/table'
 import { Table as AntdTable } from 'antd'
 
 interface Props {
-  data: TableDataType[]
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any
   selectedRowKeys?: React.Key[]
   setSelectedRowKeys?: React.Dispatch<React.SetStateAction<React.Key[]>>
   className?: string
