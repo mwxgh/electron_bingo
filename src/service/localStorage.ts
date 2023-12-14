@@ -1,6 +1,6 @@
 import { LocalStoragePreset } from 'lowdb/browser'
 import { LowSync } from 'lowdb'
-import * as fs from 'fs/promises'
+import * as fs from 'fs'
 import * as crypto from 'crypto'
 import moment from 'moment'
 
@@ -21,18 +21,16 @@ export const saveProtectAppCode = (hashCode: string) => {
   storage.write()
 }
 
-export const existProtectAppCode = (): string => {
+export const getProtectAppCode = (): string => {
   storage.read()
 
   return storage.data.hashCode
 }
 
-export const checkProtectAppCode = async (
-  hashCode: string,
-): Promise<boolean> => {
+export const checkProtectAppCode = (hashCode: string): boolean => {
   storage.read()
 
-  const settingsJson = await fs.readFile('database/settings.json', 'utf-8')
+  const settingsJson = fs.readFileSync('database/settings.json', 'utf-8')
   const { company } = JSON.parse(settingsJson)
 
   const md5 = crypto
@@ -40,12 +38,5 @@ export const checkProtectAppCode = async (
     .update(`${company}_${moment().format('MM_YYYY')}`)
     .digest('hex')
 
-  const isMatch = hashCode === md5
-  if (isMatch) {
-    saveProtectAppCode(hashCode)
-
-    return true
-  }
-
-  return false
+  return hashCode === md5
 }
