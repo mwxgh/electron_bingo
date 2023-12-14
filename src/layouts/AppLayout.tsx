@@ -1,5 +1,5 @@
 import { ROUTES } from '@/constants/routes'
-import { protectApp } from '@/service/settings'
+import { checkProtectAppCode, getProtectAppCode } from '@/service/localStorage'
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
@@ -8,14 +8,15 @@ const AppLayout = () => {
 
   useEffect(() => {
     const checkAppLocked = async () => {
-      const result = await protectApp('e199e161bb28885b5ab4a54daadb8029')
+      const appCode = await getProtectAppCode()
 
-      if (!result) {
+      if (!appCode || !checkProtectAppCode(appCode)) {
         navigate(ROUTES.LOCKED)
       }
     }
     checkAppLocked()
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.href])
 
   return <Outlet />
 }
