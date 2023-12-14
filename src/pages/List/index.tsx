@@ -6,8 +6,9 @@ import EmployeeForm from '@/components/EmployeeForm'
 import TestList from '@/components/TestList'
 import { TableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
-import { User, TestType } from '@/types/common/database'
+import { User } from '@/types/common/database'
 import { createEntity, getEntities } from '@/service/manageData'
+import { checkProtectAppCode } from '@/service/localStorage'
 
 const data: TableDataType[] = []
 for (let i = 1; i <= 120; i++) {
@@ -98,16 +99,8 @@ const List = () => {
             icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
             color="info"
             onClick={() => {
-              createEntity(
-                {
-                  name: 'test1',
-                  type: TestType.hear,
-                  quantity: 10,
-                  detail: 'string',
-                  uuid: '1010101',
-                },
-                'tests',
-              )
+              console.log(checkProtectAppCode('aaa'));
+
             }}
           >
             TestConfigData
