@@ -2,12 +2,12 @@ import './App.css'
 import { RouterProvider } from 'react-router-dom'
 import router from './router'
 import { ConfigProvider } from 'antd'
-import { errorMessages } from '@/messages/index'
+import { validateMessages } from '@/messages/index'
 
 function App() {
   return (
     <>
-      <ConfigProvider form={{ validateMessages: errorMessages }}>
+      <ConfigProvider form={{ validateMessages: validateMessages }}>
         <RouterProvider router={router} />
       </ConfigProvider>
     </>

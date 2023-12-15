@@ -11,7 +11,7 @@ const Step2 = () => {
       index: i,
       label: `Đề ${i}`,
       onClick: () => {
-        navigate(ROUTES.TEST + '/3')
+        navigate(ROUTES.PERFORM_TEST + '/3')
       },
     })
   }

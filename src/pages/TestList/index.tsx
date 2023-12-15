@@ -2,11 +2,8 @@ import Button from '@/components/Button'
 import { Input, Modal, Typography, notification } from 'antd'
 import PlusIcon from '@/assets/svgs/plus.svg'
 import { useEffect, useState } from 'react'
-import EmployeeForm from '@/components/EmployeeForm'
-import TestList from '@/components/TestList'
-import { TableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
-import { User } from '@/types/common/database'
+import { Test } from '@/types/common/database'
 import {
   bulkDeleteEntity,
   createEntity,
@@ -14,121 +11,110 @@ import {
   updateEntity,
 } from '@/service/manageData'
 import { useForm } from 'antd/es/form/Form'
-import { columns } from '@/constants/common'
+import { testTableColumns } from '@/constants/common'
+import TestForm from '@/components/TestForm'
+import { errorMessages, successMessages } from '@/messages'
 
-const data: TableDataType[] = []
-for (let i = 1; i <= 120; i++) {
-  data.push({
-    code: `${i}`,
-    name: 'Trần Ngọc Bình',
-    factory: 'ABCDEh',
-    position: 'Vận hành máy',
-    completedTest: <TestList completedTest={[1, 2, 3]} />,
-  })
-}
-
-const List = () => {
+const TestList = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isOpenDelete, setIsOpenDelete] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
-  const [userData, setUserData] = useState<User[]>([])
+  const [testData, setTestData] = useState<Test[]>([])
   const [api, contextHolder] = notification.useNotification()
   const [form] = useForm()
   const [action, setAction] = useState<'create' | 'update'>('create')
 
-  const fetchUserList = async () => {
-    const users = (await getEntities('users')) as User[]
-    const userConverted = users.map(
-      ({ uuid, code, name, factory, position }, index) => ({
+  const fetchTestList = async () => {
+    const tests = (await getEntities('tests')) as Test[]
+    const testConverted = tests.map(
+      ({ uuid, name, type, quantity, details }, index) => ({
         index: index + 1,
         key: uuid,
         uuid,
-        code,
         name,
-        factory,
-        position,
-        completedTest: <TestList completedTest={[1, 2, 3]} />,
+        type,
+        quantity,
+        details,
       }),
     )
-
-    setUserData(userConverted)
+    setTestData(testConverted)
   }
 
   useEffect(() => {
-    fetchUserList()
+    fetchTestList()
   }, [])
 
-  const handleCreateUser = async (data: User) => {
+  const handleCreateTest = async (data: Test) => {
     try {
-      await createEntity(data, 'users')
-      fetchUserList()
+      await createEntity(data, 'tests')
+      fetchTestList()
       api.success({
-        message: 'Tạo nhân viên thành công!',
+        message: successMessages.create.test,
         duration: 1,
       })
     } catch (error) {
       api.error({
-        message: 'Tạo nhân viên thất bại!',
+        message: errorMessages.create.test,
         duration: 1,
       })
     }
   }
 
   const handleOpenUpdateModal = () => {
-    const user = userData.find((user) => user.uuid === selectedRowKeys[0])
-    if (!user) return
+    const test = testData.find((test) => test.uuid === selectedRowKeys[0])
+    if (!test) return
 
-    const { code, name, factory, position } = user
+    const { name, type, quantity } = test
+    // details
 
     form.setFieldsValue({
-      code,
       name,
-      factory,
-      position,
+      type,
+      quantity,
     })
 
     setAction('update')
     setIsOpen(true)
   }
 
-  const handleUpdateUser = async (data: User) => {
+  const handleUpdateTest = async (data: Test) => {
     try {
-      const user = userData.find((user) => user.uuid === selectedRowKeys[0])
-      if (!user) {
+      const test = testData.find((test) => test.uuid === selectedRowKeys[0])
+      if (!test) {
         api.error({
-          message: 'Sửa thông tin nhân viên thất bại!',
+          message: errorMessages.update.test,
           duration: 1,
         })
         return
       }
 
-      await updateEntity('users', user?.uuid, data)
-      fetchUserList()
+      await updateEntity('tests', test?.uuid, data)
+      fetchTestList()
       api.success({
-        message: 'Sửa thông tin nhân viên thành công!',
+        message: successMessages.update.test,
         duration: 1,
       })
     } catch (error) {
       api.error({
-        message: 'Sửa thông tin nhân viên thất bại!',
+        message: errorMessages.update.test,
         duration: 1,
       })
     }
   }
 
-  const handleOnDeleteUsers = async () => {
+  const handleOnDeleteTests = async () => {
     try {
-      await bulkDeleteEntity('users', selectedRowKeys as string[])
+      await bulkDeleteEntity('tests', selectedRowKeys as string[])
       setSelectedRowKeys([])
-      fetchUserList()
+      fetchTestList()
       setIsOpenDelete(false)
       api.success({
-        message: 'Xóa nhân viên thành công!',
+        message: successMessages.delete.test,
         duration: 1,
       })
     } catch (error) {
       api.error({
-        message: 'Xóa nhân viên thất bại!',
+        message: errorMessages.delete.test,
         duration: 1,
       })
     }
@@ -181,18 +167,20 @@ const List = () => {
         </div>
       </div>
       <Table
-        data={userData}
-        columns={columns}
+        data={testData}
+        columns={testTableColumns}
         selectedRowKeys={selectedRowKeys}
         setSelectedRowKeys={setSelectedRowKeys}
       />
-      <EmployeeForm
+      <TestForm
         title={
-          action === 'create' ? 'Thêm nhân viên' : 'Sửa thông tin nhân viên'
+          action === 'create'
+            ? 'Thêm đề kiểm tra'
+            : 'Cập nhật thông tin đề kiểm tra'
         }
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        onSubmit={action === 'create' ? handleCreateUser : handleUpdateUser}
+        onSubmit={action === 'create' ? handleCreateTest : handleUpdateTest}
         form={form}
       />
       <Modal
@@ -202,7 +190,7 @@ const List = () => {
         }}
         footer={
           <div className="flex justify-end mt-[30px]">
-            <Button color="danger" size="medium" onClick={handleOnDeleteUsers}>
+            <Button color="danger" size="medium" onClick={handleOnDeleteTests}>
               Xóa
             </Button>
             <Button size="medium" className="ml-[10px]">
@@ -214,7 +202,7 @@ const List = () => {
       >
         <div className="pt-[30px]">
           <span className="text-xl">
-            Bạn có chắc chắn muốn xóa các nhân viên đã chọn không?
+            Bạn có chắc chắn muốn xóa các đề kiểm tra đã chọn không?
           </span>
         </div>
       </Modal>
@@ -222,4 +210,4 @@ const List = () => {
   )
 }
 
-export default List
+export default TestList

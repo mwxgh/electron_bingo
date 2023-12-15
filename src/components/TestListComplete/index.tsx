@@ -6,7 +6,7 @@ interface Props {
   onClick?: (index: number) => void
 }
 
-const TestList: React.FC<Props> = ({ completedTest, onClick }) => {
+const TestListComplete: React.FC<Props> = ({ completedTest, onClick }) => {
   return (
     <div>
       {[...Array(NUMBER_OF_TEST)].map((_, index) => (
@@ -28,4 +28,4 @@ const TestList: React.FC<Props> = ({ completedTest, onClick }) => {
   )
 }
 
-export default TestList
+export default TestListComplete

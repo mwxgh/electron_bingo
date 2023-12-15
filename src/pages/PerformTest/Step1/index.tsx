@@ -1,16 +1,16 @@
 import Table from '@/components/Table'
-import TestList from '@/components/TestList'
 import { ROUTES } from '@/constants/routes'
-import { TableDataType } from '@/types/common/table'
+import { UserTableDataType } from '@/types/common/table'
 import { Typography } from 'antd'
 import Search from 'antd/es/input/Search'
 import { useNavigate } from 'react-router-dom'
-import { columns } from '@/constants/common'
+import { userTableColumns } from '@/constants/common'
+import TestListComplete from '@/components/TestListComplete'
 
 const Step1 = () => {
   const navigate = useNavigate()
 
-  const data: TableDataType[] = []
+  const data: UserTableDataType[] = []
   for (let i = 1; i <= 1; i++) {
     data.push({
       key: i,
@@ -20,10 +20,10 @@ const Step1 = () => {
       factory: 'ABCDEh',
       position: 'Vận hành máy',
       completedTest: (
-        <TestList
+        <TestListComplete
           completedTest={[1, 2, 3]}
           onClick={() => {
-            navigate(ROUTES.TEST + '/2')
+            navigate(ROUTES.PERFORM_TEST + '/2')
           }}
         />
       ),
@@ -34,7 +34,7 @@ const Step1 = () => {
     <div>
       <Typography.Title level={5}>Tìm kiếm</Typography.Title>
       <Search style={{ width: 200 }} className="w-[300px]" size="large" />
-      <Table columns={columns} data={data} className="mt-[30px]" />
+      <Table columns={userTableColumns} data={data} className="mt-[30px]" />
     </div>
   )
 }

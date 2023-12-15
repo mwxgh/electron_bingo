@@ -1,3 +1,6 @@
 {
-  "company": "NOSAH_SAFETY"
+  "company": "NOSAH_SAFETY",
+  "durationQuestion": 2,
+  "minQuantityQuestion": 5,
+  "maxQuantityQuestion": 20
 }

@@ -1,25 +1,25 @@
 import React from 'react'
-import { Modal, Form, Input, FormInstance } from 'antd'
+import { Modal, Form, Input, FormInstance, Select, InputNumber } from 'antd'
 import Button from '@/components/Button'
 import './style.css'
-import { User } from '@/types/common/database'
+import { Test } from '@/types/common/database'
 
 interface Props {
   title: string
   isOpen: boolean
   setIsOpen: (state: boolean) => void
   form: FormInstance
-  onSubmit: (data: User) => void
+  onSubmit: (data: Test) => void
 }
 
-const EmployeeForm: React.FC<Props> = ({
+const TestForm: React.FC<Props> = ({
   title,
   isOpen,
   setIsOpen,
   onSubmit,
   form,
 }) => {
-  const onFinish = (data: User) => {
+  const onFinish = (data: Test) => {
     onSubmit(data)
     form.resetFields()
     setIsOpen(false)
@@ -48,17 +48,8 @@ const EmployeeForm: React.FC<Props> = ({
           form={form}
           onFinish={onFinish}
         >
-          <Form.Item<User>
-            label={<span className="text-lg ">Mã nhân viên</span>}
-            name="code"
-            rules={[{ required: true }]}
-            className="mb-[30px]"
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item<User>
-            label={<span className="text-lg ">Họ và tên</span>}
+          <Form.Item<Test>
+            label={<span className="text-lg ">Tên đề kiểm tra</span>}
             name="name"
             rules={[{ required: true }]}
             className="mb-[30px]"
@@ -66,20 +57,26 @@ const EmployeeForm: React.FC<Props> = ({
             <Input />
           </Form.Item>
 
-          <Form.Item<User>
-            label={<span className="text-lg ">Xưởng</span>}
-            name="factory"
+          <Form.Item<Test>
+            label={<span className="text-lg ">Loại đề kiểm tra</span>}
+            name="type"
+            rules={[{ required: true }]}
             className="mb-[30px]"
           >
-            <Input />
+            <Select>
+              <Select.Option value="hear">Thính vận động</Select.Option>
+              <Select.Option value="sight">Thị vận động</Select.Option>
+              <Select.Option value="synthetic">Tổng hợp</Select.Option>
+            </Select>
           </Form.Item>
 
-          <Form.Item<User>
-            label={<span className="text-lg ">Công việc</span>}
-            name="position"
+          <Form.Item<Test>
+            label={<span className="text-lg ">Số câu hỏi</span>}
+            name="quantity"
+            rules={[{ required: true }]}
             className="mb-[30px]"
           >
-            <Input />
+            <InputNumber min={5} max={20} />
           </Form.Item>
 
           <Form.Item className="flex justify-center">
@@ -98,4 +95,4 @@ const EmployeeForm: React.FC<Props> = ({
   )
 }
 
-export default EmployeeForm
+export default TestForm
