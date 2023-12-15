@@ -5,6 +5,7 @@ import { TableDataType } from '@/types/common/table'
 import { Typography } from 'antd'
 import Search from 'antd/es/input/Search'
 import { useNavigate } from 'react-router-dom'
+import { columns } from '@/constants/common'
 
 const Step1 = () => {
   const navigate = useNavigate()
@@ -14,7 +15,7 @@ const Step1 = () => {
     data.push({
       key: i,
       index: i,
-      employeeCode: `${i}`,
+      code: `${i}`,
       name: 'Trần Ngọc Bình',
       factory: 'ABCDEh',
       position: 'Vận hành máy',
@@ -33,7 +34,7 @@ const Step1 = () => {
     <div>
       <Typography.Title level={5}>Tìm kiếm</Typography.Title>
       <Search style={{ width: 200 }} className="w-[300px]" size="large" />
-      <Table data={data} className="mt-[30px]" />
+      <Table columns={columns} data={data} className="mt-[30px]" />
     </div>
   )
 }

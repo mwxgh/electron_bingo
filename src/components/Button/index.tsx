@@ -2,7 +2,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
   icon?: React.ReactNode
   size?: 'large' | 'medium'
-  color?: 'success' | 'danger' | 'default' | 'info'
+  color?: 'success' | 'danger' | 'default' | 'info' | 'warning'
   className?: string
 }
 
@@ -24,6 +24,7 @@ const Button: React.FC<Props> = ({
     danger: 'bg-red-600 hover:bg-red-500',
     info: 'bg-sky-600 hover:bg-sky-500',
     default: 'bg-slate-600 hover:bg-slate-500',
+    warning: 'bg-yellow-500 hover:bg-yellow-400',
   }
 
   return (
@@ -36,7 +37,7 @@ const Button: React.FC<Props> = ({
       }}
       {...props}
     >
-      <div className="mr-[5px]">{icon}</div>
+      {icon && <div className="mr-[5px]">{icon}</div>}
       <div className="grow">{children}</div>
     </button>
   )

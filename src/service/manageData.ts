@@ -123,3 +123,31 @@ export const deleteEntity = async (entityType: EntityType, uuid: string) => {
     return false
   }
 }
+
+export const bulkDeleteEntity = async (
+  entityType: EntityType,
+  uuids: string | string[],
+) => {
+  await db.read()
+
+  const uuidList = Array.isArray(uuids) ? uuids : [uuids]
+  const deletedEntities: Entity[] = []
+
+  for (const uuid of uuidList) {
+    const entityIndex = db.data[entityType].findIndex(
+      (entity) => entity.uuid === uuid,
+    )
+
+    if (entityIndex !== -1) {
+      const deletedEntity = db.data[entityType].splice(entityIndex, 1)[0]
+      deletedEntities.push(deletedEntity)
+    }
+  }
+
+  if (deletedEntities.length > 0) {
+    await db.write()
+    return deletedEntities
+  } else {
+    return null
+  }
+}

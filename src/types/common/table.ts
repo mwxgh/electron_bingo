@@ -1,4 +1,6 @@
 export interface TableDataType {
+  key?: number
+  index?: number
   code: string
   name: string
   factory: string

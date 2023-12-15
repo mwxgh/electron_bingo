@@ -1,5 +1,5 @@
 import Button from '@/components/Button'
-import { Input, Typography, notification } from 'antd'
+import { Input, Modal, Typography, notification } from 'antd'
 import PlusIcon from '@/assets/svgs/plus.svg'
 import { useEffect, useState } from 'react'
 import EmployeeForm from '@/components/EmployeeForm'
@@ -7,8 +7,14 @@ import TestList from '@/components/TestList'
 import { TableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
 import { User } from '@/types/common/database'
-import { createEntity, getEntities } from '@/service/manageData'
-import { checkProtectAppCode } from '@/service/localStorage'
+import {
+  bulkDeleteEntity,
+  createEntity,
+  getEntities,
+  updateEntity,
+} from '@/service/manageData'
+import { useForm } from 'antd/es/form/Form'
+import { columns } from '@/constants/common'
 
 const data: TableDataType[] = []
 for (let i = 1; i <= 120; i++) {
@@ -23,11 +29,12 @@ for (let i = 1; i <= 120; i++) {
 
 const List = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isOpenDelete, setIsOpenDelete] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
   const [userData, setUserData] = useState<User[]>([])
   const [api, contextHolder] = notification.useNotification()
-
-  const hasSelected = selectedRowKeys.length > 0
+  const [form] = useForm()
+  const [action, setAction] = useState<'create' | 'update'>('create')
 
   const fetchUserList = async () => {
     const users = (await getEntities('users')) as User[]
@@ -60,7 +67,70 @@ const List = () => {
         duration: 1,
       })
     } catch (error) {
-      console.log(error)
+      api.error({
+        message: 'Tạo nhân viên thất bại!',
+        duration: 1,
+      })
+    }
+  }
+
+  const handleOpenUpdateModal = () => {
+    const user = userData.find((user) => user.uuid === selectedRowKeys[0])
+    if (!user) return
+
+    const { code, name, factory, position } = user
+
+    form.setFieldsValue({
+      code,
+      name,
+      factory,
+      position,
+    })
+
+    setAction('update')
+    setIsOpen(true)
+  }
+
+  const handleUpdateUser = async (data: User) => {
+    try {
+      const user = userData.find((user) => user.uuid === selectedRowKeys[0])
+      if (!user) {
+        api.error({
+          message: 'Sửa thông tin nhân viên thất bại!',
+          duration: 1,
+        })
+        return
+      }
+
+      await updateEntity('users', user?.uuid, data)
+      fetchUserList()
+      api.success({
+        message: 'Sửa thông tin nhân viên thành công!',
+        duration: 1,
+      })
+    } catch (error) {
+      api.error({
+        message: 'Sửa thông tin nhân viên thất bại!',
+        duration: 1,
+      })
+    }
+  }
+
+  const handleOnDeleteUsers = async () => {
+    try {
+      await bulkDeleteEntity('users', selectedRowKeys as string[])
+      setSelectedRowKeys([])
+      fetchUserList()
+      setIsOpenDelete(false)
+      api.success({
+        message: 'Xóa nhân viên thành công!',
+        duration: 1,
+      })
+    } catch (error) {
+      api.error({
+        message: 'Xóa nhân viên thất bại!',
+        duration: 1,
+      })
     }
   }
 
@@ -77,13 +147,26 @@ const List = () => {
           />
         </div>
         <div className="flex items-center">
-          {hasSelected && (
+          {selectedRowKeys.length > 0 && (
             <Button
               icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
               color="danger"
               className="mr-[10px]"
+              onClick={() => {
+                setIsOpenDelete(true)
+              }}
             >
               Xóa
+            </Button>
+          )}
+          {selectedRowKeys.length === 1 && (
+            <Button
+              icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
+              color="warning"
+              className="mr-[10px]"
+              onClick={handleOpenUpdateModal}
+            >
+              Sửa
             </Button>
           )}
           <Button
@@ -95,28 +178,46 @@ const List = () => {
           >
             Thêm
           </Button>
-          <Button
-            icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
-            color="info"
-            onClick={() => {
-              console.log(checkProtectAppCode('aaa'));
-
-            }}
-          >
-            TestConfigData
-          </Button>
         </div>
       </div>
       <Table
         data={userData}
+        columns={columns}
         selectedRowKeys={selectedRowKeys}
         setSelectedRowKeys={setSelectedRowKeys}
       />
       <EmployeeForm
+        title={
+          action === 'create' ? 'Thêm nhân viên' : 'Sửa thông tin nhân viên'
+        }
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        onSubmit={handleCreateUser}
+        onSubmit={action === 'create' ? handleCreateUser : handleUpdateUser}
+        form={form}
       />
+      <Modal
+        open={isOpenDelete}
+        onCancel={() => {
+          setIsOpenDelete(false)
+        }}
+        footer={
+          <div className="flex justify-end mt-[30px]">
+            <Button color="danger" size="medium" onClick={handleOnDeleteUsers}>
+              Xóa
+            </Button>
+            <Button size="medium" className="ml-[10px]">
+              Hủy
+            </Button>
+          </div>
+        }
+        width={600}
+      >
+        <div className="pt-[30px]">
+          <span className="text-xl">
+            Bạn có chắc chắn muốn xóa các nhân viên đã chọn không?
+          </span>
+        </div>
+      </Modal>
     </div>
   )
 }
