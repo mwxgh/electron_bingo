@@ -21,6 +21,10 @@ export const successMessages = {
 }
 
 export const errorMessages = {
+  read: {
+    user: 'Nhân viên không tồn tại trong hệ thống !',
+    test: 'Đề kiểm tra không tồn tại trong hệ thống !',
+  },
   create: {
     user: 'Tạo nhân viên thất bại !',
     test: 'Tạo đề kiêm tra thất bại !',

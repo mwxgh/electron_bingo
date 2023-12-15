@@ -1,19 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Button from '@/components/Button'
 import { Input, Modal, Typography, notification } from 'antd'
 import PlusIcon from '@/assets/svgs/plus.svg'
 import { useEffect, useState } from 'react'
 import Table from '@/components/Table'
-import { Test } from '@/types/common/database'
-import {
-  bulkDeleteEntity,
-  createEntity,
-  getEntities,
-  updateEntity,
-} from '@/service/manageData'
+import { Test, TestType, typeLabels } from '@/types/common/database'
+import { bulkDeleteEntity, getEntities } from '@/service/manageData'
 import { useForm } from 'antd/es/form/Form'
 import { testTableColumns } from '@/constants/common'
 import TestForm from '@/components/TestForm'
 import { errorMessages, successMessages } from '@/messages'
+import { createTest, updateTest } from '@/service/tests'
 
 const TestList = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -32,7 +29,7 @@ const TestList = () => {
         key: uuid,
         uuid,
         name,
-        type,
+        type: typeLabels[type] as TestType,
         quantity,
         details,
       }),
@@ -46,7 +43,7 @@ const TestList = () => {
 
   const handleCreateTest = async (data: Test) => {
     try {
-      await createEntity(data, 'tests')
+      await createTest(data)
       fetchTestList()
       api.success({
         message: successMessages.create.test,
@@ -64,13 +61,13 @@ const TestList = () => {
     const test = testData.find((test) => test.uuid === selectedRowKeys[0])
     if (!test) return
 
-    const { name, type, quantity } = test
-    // details
+    const { name, type, quantity, details } = test
 
     form.setFieldsValue({
       name,
       type,
       quantity,
+      details,
     })
 
     setAction('update')
@@ -82,13 +79,13 @@ const TestList = () => {
       const test = testData.find((test) => test.uuid === selectedRowKeys[0])
       if (!test) {
         api.error({
-          message: errorMessages.update.test,
+          message: errorMessages.read.test,
           duration: 1,
         })
         return
       }
 
-      await updateEntity('tests', test?.uuid, data)
+      await updateTest(test?.uuid, data)
       fetchTestList()
       api.success({
         message: successMessages.update.test,

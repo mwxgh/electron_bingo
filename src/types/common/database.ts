@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export enum TestType {
-  hear,
-  sight,
-  synthetic,
+  hear = 'hear',
+  sight = 'sight',
+  synthetic = 'synthetic',
+}
+
+export const typeLabels: Record<TestType, string> = {
+  [TestType.hear]: 'Thính vận động',
+  [TestType.sight]: 'Thị vận động',
+  [TestType.synthetic]: 'Đề tổng hợp',
 }
 
 export interface TestDetail {
   type: TestType.hear | TestType.sight
   keyCode: number
-  code: string
   value: string
 }
 

@@ -97,7 +97,7 @@ const UserList = () => {
       const user = userData.find((user) => user.uuid === selectedRowKeys[0])
       if (!user) {
         api.error({
-          message: errorMessages.update.user,
+          message: errorMessages.read.user,
           duration: 1,
         })
         return

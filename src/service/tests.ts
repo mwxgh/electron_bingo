@@ -1,45 +1,64 @@
 import { v4 as uuidv4 } from 'uuid'
-import { Test } from '@/types/common/database'
+import { Test, TestDetail, TestType } from '@/types/common/database'
 import { db } from './configDB'
+import { colorCodePalette, keyBoard } from '@/constants/common'
+import { shuffle } from 'lodash'
 
-export const createTest = async (test: Test) => {
-  const newTest = { ...test, uuid: uuidv4() }
+const getRandomElement = <T>(array: T[]): T =>
+  array[Math.floor(Math.random() * array.length)]
+
+export const getRandomTestDetail = (
+  type: TestType.hear | TestType.sight,
+): TestDetail => {
+  const isHear = type === TestType.hear
+  const keyCode = isHear
+    ? 13
+    : getRandomElement(
+        keyBoard
+          .filter((item) => item.keyCode !== 13)
+          .map((item) => item.keyCode),
+      )
+  const value = isHear ? 'sound' : getRandomElement(colorCodePalette).hex
+
+  return { type, keyCode, value }
+}
+
+export const createTest = async (test: Test): Promise<Test> => {
+  const newTest: Test = { ...test, uuid: uuidv4(), details: [] }
+  const halfQuantity = Math.floor(test.quantity / 2)
+
+  let details: TestDetail[] = []
+  if (test.type === TestType.hear) {
+    details = Array.from({ length: test.quantity }, () =>
+      getRandomTestDetail(TestType.hear),
+    )
+  }
+  if (test.type === TestType.sight) {
+    details = Array.from({ length: test.quantity }, () =>
+      getRandomTestDetail(TestType.sight),
+    )
+  }
+  if (test.type === TestType.synthetic) {
+    details = shuffle(
+      Array.from({ length: halfQuantity }, () =>
+        getRandomTestDetail(TestType.sight),
+      ).concat(
+        Array.from({ length: test.quantity - halfQuantity }, () =>
+          getRandomTestDetail(TestType.hear),
+        ),
+      ),
+    )
+  }
+
+  newTest.details = details
+
   db.data.tests.push(newTest)
   await db.write()
 
   return newTest
 }
 
-export const bulkCreateTest = async (tests: Test | Test[]) => {
-  const testList = Array.isArray(tests) ? tests : [tests]
-
-  const newTests = testList.map((test) => ({ ...test, uuid: uuidv4() }))
-  db.data.tests.push(...newTests)
-  await db.write()
-
-  return newTests
-}
-
-export const getTests = async (keyword?: string) => {
-  await db.read()
-  if (keyword) {
-    const filteredTests = db.data.tests.filter((test) => {
-      return test.name.toLowerCase().includes(keyword.toLowerCase())
-    })
-
-    return filteredTests
-  } else {
-    return db.data.tests
-  }
-}
-
-export const getTestById = async (uuid: string) => {
-  await db.read()
-  const test = db.data.tests.find((test) => test.uuid === uuid)
-
-  return test || null
-}
-
+// if quantity less or more than before -> custom update test for modify details
 export const updateTest = async (
   uuid: string,
   updatedTestData: Partial<Test>,
@@ -56,20 +75,5 @@ export const updateTest = async (
     return testToUpdate
   } else {
     return null
-  }
-}
-
-export const deleteTest = async (uuid: string) => {
-  await db.read()
-
-  const testIndex = db.data.tests.findIndex((test) => test.uuid === uuid)
-
-  if (testIndex !== -1) {
-    db.data.tests.splice(testIndex, 1)
-    await db.write()
-
-    return true
-  } else {
-    return false
   }
 }

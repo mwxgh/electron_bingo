@@ -72,3 +72,71 @@ export const testSteps = [
     label: 'Hoàn thành',
   },
 ] as const
+
+export const colorCodePalette = [
+  {
+    name: 'crimson',
+    hex: '#DC143C',
+  },
+  {
+    name: 'deepPink',
+    hex: '#FF1493',
+  },
+  {
+    name: 'orangeRed',
+    hex: '#FF4500',
+  },
+  {
+    name: 'gold',
+    hex: '#FFD700',
+  },
+  {
+    name: 'darkOrchid',
+    hex: '#9932CC',
+  },
+  {
+    name: 'forestGreen',
+    hex: '#228B22',
+  },
+  {
+    name: 'steelBlue',
+    hex: '#4682B4',
+  },
+  {
+    name: 'sienna',
+    hex: '#A0522D',
+  },
+]
+
+export const keyBoard = [
+  {
+    key: '1',
+    keyCode: 49,
+    which: 49,
+    code: 'Digit1',
+  },
+  {
+    key: '2',
+    keyCode: 50,
+    which: 50,
+    code: 'Digit2',
+  },
+  {
+    key: '3',
+    keyCode: 51,
+    which: 51,
+    code: 'Digit3',
+  },
+  {
+    key: '4',
+    keyCode: 52,
+    which: 52,
+    code: 'Digit4',
+  },
+  {
+    key: 'Enter',
+    keyCode: 13,
+    which: 13,
+    code: 'Enter',
+  },
+] as const
