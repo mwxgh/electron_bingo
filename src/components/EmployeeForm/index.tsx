@@ -1,23 +1,24 @@
-import React, { useEffect } from 'react'
-import { Modal, Form, Input } from 'antd'
+import React from 'react'
+import { Modal, Form, Input, FormInstance } from 'antd'
 import Button from '@/components/Button'
 import './style.css'
-import { useForm } from 'antd/lib/form/Form'
 import { User } from '@/types/common/database'
 
 interface Props {
+  title: string
   isOpen: boolean
   setIsOpen: (state: boolean) => void
+  form: FormInstance
   onSubmit: (data: User) => void
 }
 
-const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit }) => {
-  const [form] = useForm()
-
-  useEffect(() => {
-    form.resetFields()
-  }, [form, isOpen])
-
+const EmployeeForm: React.FC<Props> = ({
+  title,
+  isOpen,
+  setIsOpen,
+  onSubmit,
+  form,
+}) => {
   const onFinish = (data: User) => {
     onSubmit(data)
     form.resetFields()
@@ -25,12 +26,13 @@ const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit }) => {
   }
 
   const handleClose = () => {
+    form.resetFields()
     setIsOpen(false)
   }
 
   return (
     <Modal
-      title={<div className="text-xl text-center">Thêm nhân viên</div>}
+      title={<div className="text-xl text-center">{title}</div>}
       open={isOpen}
       onCancel={handleClose}
       footer={null}
@@ -40,8 +42,6 @@ const EmployeeForm: React.FC<Props> = ({ isOpen, setIsOpen, onSubmit }) => {
       {isOpen && (
         <Form
           name="basic"
-          initialValues={{ remember: false }}
-          autoComplete="off"
           layout="vertical"
           size="large"
           className="mt-[15px]"
