@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { columns } from '@/constants/common'
 import { Table as AntdTable } from 'antd'
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any
   selectedRowKeys?: React.Key[]
   setSelectedRowKeys?: React.Dispatch<React.SetStateAction<React.Key[]>>

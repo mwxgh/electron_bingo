@@ -2,6 +2,14 @@
 export enum TestType {
   hear,
   sight,
+  synthetic,
+}
+
+export interface TestDetail {
+  type: TestType
+  keyCode: number
+  code: string
+  value: string
 }
 
 export interface User {
@@ -17,7 +25,7 @@ export interface Test {
   name: string
   type: TestType
   quantity: number
-  detail: any
+  details: TestDetail[]
 }
 
 export interface TestResult {

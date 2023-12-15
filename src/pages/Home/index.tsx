@@ -13,7 +13,7 @@ const Home = () => {
       <ul>
         <li>
           <Button
-            onClick={() => navigate(ROUTES.TEST + '/1')}
+            onClick={() => navigate(ROUTES.PERFORM_TEST + '/1')}
             size="large"
             icon={<TestIcon width={30} height={30} />}
             className="mt-[50px]"
@@ -23,17 +23,17 @@ const Home = () => {
         </li>
         <li>
           <Button
-            onClick={() => navigate(ROUTES.LIST)}
+            onClick={() => navigate(ROUTES.TEST)}
             size="large"
             icon={<PenIcon width={30} height={30} />}
             className="mt-[50px]"
           >
-            Tạo đề
+            Đề kiểm tra
           </Button>
         </li>
         <li>
           <Button
-            onClick={() => navigate(ROUTES.LIST)}
+            onClick={() => navigate(ROUTES.USER)}
             size="large"
             icon={<ListIcon width={30} height={30} />}
             className="mt-[50px]"
@@ -43,7 +43,7 @@ const Home = () => {
         </li>
         <li>
           <Button
-            onClick={() => navigate(ROUTES.LIST)}
+            onClick={() => navigate(ROUTES.USER)}
             size="large"
             icon={<SettingIcon width={30} height={30} />}
             className="mt-[50px]"

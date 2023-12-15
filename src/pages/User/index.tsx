@@ -2,7 +2,7 @@ import Button from '@/components/Button'
 import { Input, Typography, notification } from 'antd'
 import PlusIcon from '@/assets/svgs/plus.svg'
 import { useEffect, useState } from 'react'
-import EmployeeForm from '@/components/EmployeeForm'
+import EmployeeForm from '@/components/UserForm'
 import TestList from '@/components/TestList'
 import { TableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
@@ -21,7 +21,7 @@ for (let i = 1; i <= 120; i++) {
   })
 }
 
-const List = () => {
+const ListUser = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([])
   const [userData, setUserData] = useState<User[]>([])
@@ -99,8 +99,7 @@ const List = () => {
             icon={<PlusIcon width={15} height={15} className="mr-[5px]" />}
             color="info"
             onClick={() => {
-              console.log(checkProtectAppCode('aaa'));
-
+              console.log(checkProtectAppCode('aaa'))
             }}
           >
             TestConfigData
@@ -121,4 +120,4 @@ const List = () => {
   )
 }
 
-export default List
+export default ListUser

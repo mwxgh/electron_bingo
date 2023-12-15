@@ -1,12 +1,13 @@
 import { ROUTES } from '@/constants/routes'
 import Home from '../pages/Home'
 import { createBrowserRouter } from 'react-router-dom'
-import List from '@/pages/List'
+import ListUser from '@/pages/User'
 import BaseLayout from '@/layouts/BaseLayout'
-import TestLayout from '@/layouts/TestLayout'
-import Test from '@/pages/Test'
+import TestLayout from '@/layouts/PerformTestLayout'
+import PerformTest from '@/pages/PerformTest'
 import AppLayout from '@/layouts/AppLayout'
 import Locked from '@/pages/Locked'
+import ListTest from '@/pages/Test'
 
 const router = createBrowserRouter([
   {
@@ -18,21 +19,25 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTES.LOCKED,
-        element: <Locked/>
+        element: <Locked />,
       },
       {
         element: <BaseLayout />,
         children: [
           {
-            path: ROUTES.LIST,
-            element: <List />,
+            path: ROUTES.USER,
+            element: <ListUser />,
+          },
+          {
+            path: ROUTES.TEST,
+            element: <ListTest />,
           },
           {
             element: <TestLayout />,
             children: [
               {
-                path: `${ROUTES.TEST}/:stepId`,
-                element: <Test />,
+                path: `${ROUTES.PERFORM_TEST}/:stepId`,
+                element: <PerformTest />,
               },
             ],
           },

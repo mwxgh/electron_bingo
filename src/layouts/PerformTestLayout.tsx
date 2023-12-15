@@ -3,7 +3,7 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import { testSteps } from '@/constants/common'
 
-const TestLayout = () => {
+const PerformTestLayout = () => {
   const navigate = useNavigate()
   const params = useParams()
   const stepId = Number(params.stepId)
@@ -111,4 +111,4 @@ const TestLayout = () => {
   )
 }
 
-export default TestLayout
+export default PerformTestLayout
