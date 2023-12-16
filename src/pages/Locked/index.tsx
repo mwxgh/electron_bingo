@@ -30,9 +30,7 @@ const Locked = () => {
   return (
     <div className="flex justify-center items-center h-full">
       <div className="w-[500px] flex flex-col justify-center items-center">
-        <h1 className="text-3xl mb-[50px] font-bold text-gray-800">
-          Mở khóa ứng dụng
-        </h1>
+        <h1 className="text-3xl mb-[50px] font-bold">Mở khóa ứng dụng</h1>
         <Input
           className="mb-[30px] text-xl text-center"
           onChange={(event) => {

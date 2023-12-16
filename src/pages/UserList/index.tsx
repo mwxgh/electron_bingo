@@ -16,6 +16,7 @@ import { useForm } from 'antd/es/form/Form'
 import { userTableColumns } from '@/constants/common'
 import TestListComplete from '@/components/TestListComplete'
 import { errorMessages, successMessages } from '@/messages'
+import { exportToExcel } from '@/service/excelHelper'
 
 const data: UserTableDataType[] = []
 for (let i = 1; i <= 120; i++) {
@@ -138,6 +139,24 @@ const UserList = () => {
   return (
     <div>
       {contextHolder}
+      <div className="flex justify-end mt-[30px]">
+        <Button
+          color="danger"
+          size="medium"
+          onClick={() => {
+            exportToExcel([
+              { Name: 'John Doe', Age: 30, City: 'New York' },
+              { Name: 'Jane Smith', Age: 25, City: 'San Francisco' },
+              { Name: 'Bob Johnson', Age: 35, City: 'Los Angeles' },
+            ])
+          }}
+        >
+          Export
+        </Button>
+        <Button size="medium" className="ml-[10px]">
+          Import
+        </Button>
+      </div>
       <Typography.Title level={5}>Tìm kiếm</Typography.Title>
       <div className="flex items-center mb-[20px] justify-between">
         <div>

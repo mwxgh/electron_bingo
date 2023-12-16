@@ -33,11 +33,20 @@ export interface Test {
   details: TestDetail[]
 }
 
+export interface TestResultDetail {
+  round: number
+  results: [
+    {
+      type: TestType.hear | TestType.sight
+      time: number
+    },
+  ]
+}
 export interface TestResult {
   uuid: string
   userUuid: string
   testUuid: string
-  details: any
+  details: TestResultDetail[]
 }
 
 export interface Database {
