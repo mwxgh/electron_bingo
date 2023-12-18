@@ -23,6 +23,7 @@ export interface User {
   name: string
   position: string
   factory: string
+  testingProcess?: any[]
 }
 
 export interface Test {
@@ -33,15 +34,16 @@ export interface Test {
   details: TestDetail[]
 }
 
+export interface Answer {
+  type: TestType.hear | TestType.sight
+  time: number
+}
+
 export interface TestResultDetail {
   round: number
-  results: [
-    {
-      type: TestType.hear | TestType.sight
-      time: number
-    },
-  ]
+  answers: Answer[]
 }
+
 export interface TestResult {
   uuid: string
   userUuid: string

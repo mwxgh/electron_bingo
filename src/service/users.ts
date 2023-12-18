@@ -1,29 +1,24 @@
-import { v4 as uuidv4 } from 'uuid'
-import { User } from '@/types/common/database'
 import { db } from './configDB'
-
-export const createUser = async (user: User) => {
-  const newUser = { ...user, uuid: uuidv4() }
-  db.data.users.push(newUser)
-  await db.write()
-
-  return newUser
-}
-
-export const bulkCreateUser = async (users: User | User[]) => {
-  const userList = Array.isArray(users) ? users : [users]
-
-  const newUsers = userList.map((user) => ({ ...user, uuid: uuidv4() }))
-  db.data.users.push(...newUsers)
-  await db.write()
-
-  return newUsers
-}
 
 export const getUsers = async (keyword?: string) => {
   await db.read()
+  const users = db.data.users
+
+  const userUuids = users.map((user) => user.uuid)
+
+  for (const userUuid of userUuids) {
+    const testResults = db.data.testResults.filter(
+      (testResult) => testResult.userUuid === userUuid,
+    )
+    const userIndex = users.findIndex((user) => user.uuid === userUuid)
+
+    if (userIndex !== -1) {
+      users[userIndex].testingProcess = testResults
+    }
+  }
+
   if (keyword) {
-    const filteredUsers = db.data.users.filter((user) => {
+    const filteredUsers = users.filter((user) => {
       return (
         user.name.toLowerCase().includes(keyword.toLowerCase()) ||
         user.code.toLowerCase().includes(keyword.toLowerCase())
@@ -32,7 +27,7 @@ export const getUsers = async (keyword?: string) => {
 
     return filteredUsers
   } else {
-    return db.data.users
+    return users
   }
 }
 
@@ -41,25 +36,6 @@ export const getUserById = async (uuid: string) => {
   const user = db.data.users.find((user) => user.uuid === uuid)
 
   return user || null
-}
-
-export const updateUser = async (
-  uuid: string,
-  updatedUserData: Partial<User>,
-) => {
-  await db.read()
-
-  const userToUpdate = db.data.users.find((user) => user.uuid === uuid)
-
-  if (userToUpdate) {
-    Object.assign(userToUpdate, updatedUserData)
-
-    await db.write()
-
-    return userToUpdate
-  } else {
-    return null
-  }
 }
 
 export const deleteUser = async (uuid: string) => {
