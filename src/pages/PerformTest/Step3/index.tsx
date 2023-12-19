@@ -166,7 +166,7 @@ const Step3 = () => {
               className="mt-[50px] text-xl"
               onClick={isPause ? resumeTestTime : pauseTestTime}
             >
-              Tạm dừng
+              {isPause ? 'Tiếp tục' : 'Tạm dừng'}
             </Button>
           )}
         </div>

@@ -5,12 +5,12 @@ import PlusIcon from '@/assets/svgs/plus.svg'
 import { useEffect, useState } from 'react'
 import Table from '@/components/Table'
 import { Test, TestType, typeLabels } from '@/types/common/database'
-import { bulkDeleteEntity, getEntities } from '@/service/manageData'
+import { bulkDeleteEntity, getEntities, updateEntity } from '@/service/manageData'
 import { useForm } from 'antd/es/form/Form'
 import { testTableColumns } from '@/constants/common'
 import TestForm from '@/components/TestForm'
 import { errorMessages, successMessages } from '@/messages'
-import { createTest, updateTest } from '@/service/tests'
+import { createTest } from '@/service/tests'
 
 const TestList = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -85,7 +85,7 @@ const TestList = () => {
         return
       }
 
-      await updateTest(test?.uuid, data)
+      await updateEntity('tests',test?.uuid, data)
       fetchTestList()
       api.success({
         message: successMessages.update.test,

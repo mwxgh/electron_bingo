@@ -14,9 +14,7 @@ export const getRandomTestDetail = (
   const key = isHear
     ? 'Enter'
     : getRandomElement(
-        keyBoard
-          .filter((item) => item.key !== 'Enter')
-          .map((item) => item.key),
+        keyBoard.filter((item) => item.key !== 'Enter').map((item) => item.key),
       )
   const value = isHear ? 'sound' : getRandomElement(colorCodePalette).hex
 
@@ -56,24 +54,4 @@ export const createTest = async (test: Test): Promise<Test> => {
   await db.write()
 
   return newTest
-}
-
-// if quantity less or more than before -> custom update test for modify details
-export const updateTest = async (
-  uuid: string,
-  updatedTestData: Partial<Test>,
-) => {
-  await db.read()
-
-  const testToUpdate = db.data.tests.find((test) => test.uuid === uuid)
-
-  if (testToUpdate) {
-    Object.assign(testToUpdate, updatedTestData)
-
-    await db.write()
-
-    return testToUpdate
-  } else {
-    return null
-  }
 }

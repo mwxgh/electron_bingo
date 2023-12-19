@@ -1,20 +1,16 @@
+import { User } from '@/types/common/database'
 import { db } from './configDB'
 
 export const getUsers = async (keyword?: string) => {
   await db.read()
   const users = db.data.users
 
-  const userUuids = users.map((user) => user.uuid)
-
-  for (const userUuid of userUuids) {
-    const testResults = db.data.testResults.filter(
-      (testResult) => testResult.userUuid === userUuid,
+  const assignTestingProcessDetails = (user: User) => {
+    const userTestingProcess = db.data.testResults.find(
+      (testResult) => testResult.userUuid === user.uuid,
     )
-    const userIndex = users.findIndex((user) => user.uuid === userUuid)
 
-    if (userIndex !== -1) {
-      users[userIndex].testingProcess = testResults
-    }
+    user.testingProcess = userTestingProcess ? userTestingProcess.details : []
   }
 
   if (keyword) {
@@ -25,8 +21,12 @@ export const getUsers = async (keyword?: string) => {
       )
     })
 
+    filteredUsers.forEach(assignTestingProcessDetails)
+
     return filteredUsers
   } else {
+    users.forEach(assignTestingProcessDetails)
+
     return users
   }
 }

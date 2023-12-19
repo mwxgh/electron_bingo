@@ -23,7 +23,7 @@ export interface User {
   name: string
   position: string
   factory: string
-  testingProcess?: any[]
+  testingProcess?: TestResultDetail[]
 }
 
 export interface Test {
@@ -47,7 +47,6 @@ export interface TestResultDetail {
 export interface TestResult {
   uuid: string
   userUuid: string
-  testUuid: string
   details: TestResultDetail[]
 }
 
