@@ -17,6 +17,9 @@ import TestListComplete from '@/components/TestListComplete'
 import { errorMessages, successMessages } from '@/messages'
 import { exportToExcel } from '@/service/excelHelper'
 import { getUsers } from '@/service/users'
+import { useTestProgress } from '@/stores/testProgressStore'
+import { useNavigate } from 'react-router-dom'
+import { ROUTES } from '@/constants/routes'
 
 const data: UserTableDataType[] = []
 for (let i = 1; i <= 120; i++) {
@@ -37,6 +40,8 @@ const UserList = () => {
   const [api, contextHolder] = notification.useNotification()
   const [form] = useForm()
   const [action, setAction] = useState<'create' | 'update'>('create')
+  const { setTestProgress } = useTestProgress()
+  const navigate = useNavigate()
 
   const fetchUserList = async () => {
     const users = (await getUsers()) as User[]
@@ -49,7 +54,18 @@ const UserList = () => {
         name,
         factory,
         position,
-        completedTest: <TestListComplete completedTest={[1, 2, 3]} />,
+        completedTest: (
+          <TestListComplete
+            completedTest={[1, 2, 3]}
+            onClick={(index) => {
+              setTestProgress({
+                userUuid: uuid,
+                round: index
+              }, true)
+              navigate(`${ROUTES.PERFORM_TEST}/${2}`)
+            }}
+          />
+        ),
       }),
     )
 
