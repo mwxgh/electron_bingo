@@ -1,14 +1,14 @@
-import Button from '@/components/Button'
-import PauseIcon from '@/assets/svgs/pause.svg'
 import DoneIcon from '@/assets/svgs/done.svg'
-import { useNavigate } from 'react-router-dom'
-import { ROUTES } from '@/constants/routes'
-import { useTestProgress } from '@/stores/testProgressStore'
-import { useEffect, useRef, useState } from 'react'
-import { Answer, Test, TestDetail } from '@/types/common/database'
-import { getEntities, getEntityById } from '@/service/manageData'
-import moment, { Duration, Moment } from 'moment'
+import PauseIcon from '@/assets/svgs/pause.svg'
+import Button from '@/components/Button'
 import { keyBoard } from '@/constants/common'
+import { ROUTES } from '@/constants/routes'
+import { getEntityById } from '@/service/manageData'
+import { useTestProgress } from '@/stores/testProgressStore'
+import { Answer, Test, TestDetail, TestType } from '@/types/common/database'
+import moment, { Moment } from 'moment'
+import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Step3 = () => {
   const { testProgress, setTestProgress } = useTestProgress()
@@ -17,9 +17,10 @@ const Step3 = () => {
   const [time, setTime] = useState(0)
   const [pauseTime, setPauseTime] = useState(0)
   const [isPause, setIsPause] = useState(false)
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1)
   const [answers, setAnswers] = useState<Answer[]>([])
   const navigate = useNavigate()
+  const [isBreakTime, setIsBreakTime] = useState(false)
 
   const startTimeRef = useRef<Moment | null>(null)
   const pauseTimeRef = useRef<Moment | null>(null)
@@ -38,32 +39,46 @@ const Step3 = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // console.log('currentQuestionIndex', currentQuestionIndex)
+  useEffect(() => {
+    const currentQuestion = questions[currentQuestionIndex]
+
+    if (
+      currentQuestion?.type === TestType.hear &&
+      started === true &&
+      !isBreakTime
+    ) {
+      const audio = new Audio('/src/assets/sound.mp3')
+      audio.play()
+    }
+  }, [currentQuestionIndex, questions, started, isBreakTime])
+
+  const handleOnChoseCorrectAnswer = () => {
+    if (isBreakTime) return
+
+    const currentQuestion = questions[currentQuestionIndex]
+
+    if (currentQuestion) {
+      setAnswers((preAnswers) => {
+        return [
+          ...preAnswers,
+          {
+            type: currentQuestion?.type,
+            time,
+          },
+        ]
+      })
+      setIsBreakTime(true)
+
+      nextQuestion()
+    }
+  }
 
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
       const currentQuestion = questions[currentQuestionIndex]
 
       if (event.key === currentQuestion?.key) {
-        setAnswers((preAnswers) => {
-          console.log('answers', [
-            ...preAnswers,
-            {
-              type: currentQuestion.type,
-              time,
-            },
-          ])
-
-          return [
-            ...preAnswers,
-            {
-              type: currentQuestion.type,
-              time,
-            },
-          ]
-        })
-
-        nextQuestion()
+        handleOnChoseCorrectAnswer()
       }
     }
 
@@ -128,11 +143,15 @@ const Step3 = () => {
 
   const nextQuestion = () => {
     stopTestTime()
-    setCurrentQuestionIndex(currentQuestionIndex + 1)
 
-    if (currentQuestionIndex < questions.length - 1) {
-      startTestTime()
-    }
+    setTimeout(() => {
+      setIsBreakTime(false)
+      setCurrentQuestionIndex(currentQuestionIndex + 1)
+
+      if (currentQuestionIndex < questions.length - 1) {
+        startTestTime()
+      }
+    }, 2000)
   }
 
   if (!started) {
@@ -147,23 +166,23 @@ const Step3 = () => {
 
   return (
     <div className="px-[30px]">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center h-[95px]">
         <div className="flex flex-col items-center">
-          <span className="font-bold text-xl">Thời gian</span>
-          <span>{time} ms</span>
+          <span className="font-bold text-3xl">Thời gian</span>
+          <span className="text-3xl">{time} ms</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="font-bold text-xl">Câu hỏi</span>
-          <span>
+          <span className="font-bold text-3xl">Câu hỏi</span>
+          <span className="text-3xl">
             {currentQuestionIndex}/{questions.length}
           </span>
         </div>
-        <div>
-          {currentQuestionIndex < questions.length - 1 && (
+        <div className="w-[174.14px] mt-[50px]">
+          {currentQuestionIndex < questions.length && (
             <Button
               size="medium"
               icon={<PauseIcon width={20} height={20} fill="white" />}
-              className="mt-[50px] text-xl"
+              className="text-xl"
               onClick={isPause ? resumeTestTime : pauseTestTime}
             >
               {isPause ? 'Tiếp tục' : 'Tạm dừng'}
@@ -174,10 +193,24 @@ const Step3 = () => {
       <div className="flex justify-between px-[100px] mt-[100px]">
         {keyBoard.map((item, index) => {
           const currentQuestion = questions[currentQuestionIndex]
-          const color =
-            item.key === currentQuestion?.key
-              ? currentQuestion?.value
-              : '#94a3b8'
+          let color
+
+          if (!currentQuestion) return
+
+          if (item.key === currentQuestion.key) {
+            if (currentQuestion.value === 'sound') {
+              color = '#0ea5e9'
+            } else {
+              color = currentQuestion.value
+            }
+          } else {
+            color = '#94a3b8'
+          }
+
+          if (isBreakTime) {
+            color = '#94a3b8'
+          }
+
           return (
             <div
               className={`p-[50px] hover:opacity-80 cursor-pointer text-white text-3xl rounded-md`}
@@ -185,11 +218,22 @@ const Step3 = () => {
               style={{
                 background: color,
               }}
+              onClick={() => {
+                if (item.key === currentQuestion.key) {
+                  handleOnChoseCorrectAnswer()
+                }
+              }}
             >
               {item.key}
             </div>
           )
         })}
+
+        {!questions[currentQuestionIndex] && (
+          <div className="w-full flex justify-center text-2xl">
+            Bạn đã hoàn thành tất cả các câu hỏi!
+          </div>
+        )}
       </div>
       <div className="flex justify-end mt-[50px]">
         <Button
