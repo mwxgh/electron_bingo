@@ -6,9 +6,13 @@ import Search from 'antd/es/input/Search'
 import { useNavigate } from 'react-router-dom'
 import { userTableColumns } from '@/constants/common'
 import TestListComplete from '@/components/TestListComplete'
+import { useTestProgress } from '@/stores/testProgressStore'
 
 const Step1 = () => {
   const navigate = useNavigate()
+  const { testProgress } = useTestProgress()
+
+  console.log('step1', testProgress)
 
   const data: UserTableDataType[] = []
   for (let i = 1; i <= 1; i++) {

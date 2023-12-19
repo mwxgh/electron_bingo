@@ -8,6 +8,7 @@ import AppLayout from '@/layouts/AppLayout'
 import Locked from '@/pages/Locked'
 import PerformTest from '@/pages/PerformTest'
 import TestList from '@/pages/TestList'
+import NotFound from '@/pages/NotFound'
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
             ],
           },
         ],
+      },
+      {
+        path: '*',
+        element: <NotFound />,
       },
     ],
   },
