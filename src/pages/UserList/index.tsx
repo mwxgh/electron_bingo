@@ -9,7 +9,6 @@ import { User } from '@/types/common/database'
 import {
   bulkDeleteEntity,
   createEntity,
-  getEntities,
   updateEntity,
 } from '@/service/manageData'
 import { useForm } from 'antd/es/form/Form'
@@ -17,6 +16,7 @@ import { userTableColumns } from '@/constants/common'
 import TestListComplete from '@/components/TestListComplete'
 import { errorMessages, successMessages } from '@/messages'
 import { exportToExcel } from '@/service/excelHelper'
+import { getUsers } from '@/service/users'
 
 const data: UserTableDataType[] = []
 for (let i = 1; i <= 120; i++) {
@@ -39,7 +39,7 @@ const UserList = () => {
   const [action, setAction] = useState<'create' | 'update'>('create')
 
   const fetchUserList = async () => {
-    const users = (await getEntities('users')) as User[]
+    const users = (await getUsers()) as User[]
     const userConverted = users.map(
       ({ uuid, code, name, factory, position }, index) => ({
         index: index + 1,
@@ -153,7 +153,13 @@ const UserList = () => {
         >
           Export
         </Button>
-        <Button size="medium" className="ml-[10px]">
+        <Button
+          size="medium"
+          className="ml-[10px]"
+          onClick={() => {
+            getUsers()
+          }}
+        >
           Import
         </Button>
       </div>
