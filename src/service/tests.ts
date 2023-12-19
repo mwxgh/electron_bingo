@@ -11,16 +11,16 @@ export const getRandomTestDetail = (
   type: TestType.hear | TestType.sight,
 ): TestDetail => {
   const isHear = type === TestType.hear
-  const keyCode = isHear
-    ? 13
+  const key = isHear
+    ? 'Enter'
     : getRandomElement(
         keyBoard
-          .filter((item) => item.keyCode !== 13)
-          .map((item) => item.keyCode),
+          .filter((item) => item.key !== 'Enter')
+          .map((item) => item.key),
       )
   const value = isHear ? 'sound' : getRandomElement(colorCodePalette).hex
 
-  return { type, keyCode, value }
+  return { type, key, value }
 }
 
 export const createTest = async (test: Test): Promise<Test> => {

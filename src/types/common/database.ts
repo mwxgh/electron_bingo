@@ -13,7 +13,7 @@ export const typeLabels: Record<TestType, string> = {
 
 export interface TestDetail {
   type: TestType.hear | TestType.sight
-  keyCode: number
+  key: string
   value: string
 }
 
