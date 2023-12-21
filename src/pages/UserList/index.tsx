@@ -39,9 +39,10 @@ const UserList = () => {
   const [action, setAction] = useState<'create' | 'update'>('create')
   const { setTestProgress } = useTestProgress()
   const navigate = useNavigate()
+  const [keyword, setKeyword] = useState('')
 
   const fetchUserList = async () => {
-    const users = (await getUsers()) as User[]
+    const users = (await getUsers(keyword)) as User[]
     const userConverted = users.map(
       ({ uuid, code, name, factory, position }, index) => ({
         index: index + 1,
@@ -74,7 +75,7 @@ const UserList = () => {
 
   useEffect(() => {
     fetchUserList()
-  }, [])
+  }, [keyword])
 
   const handleCreateUser = async (data: User) => {
     try {
@@ -186,6 +187,9 @@ const UserList = () => {
             style={{ width: 200 }}
             className="w-[300px]"
             size="large"
+            onSearch={(value) => {
+              setKeyword(value)
+            }}
           />
         </div>
         <div className="flex items-center">

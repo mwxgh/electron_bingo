@@ -1,14 +1,15 @@
 import Button from '@/components/Button'
+import { ROUTES } from '@/constants/routes'
 // import { ROUTES } from '@/constants/routes'
 import { createTestResult } from '@/service/testResult'
 import { useTestProgress } from '@/stores/testProgressStore'
 import { notification } from 'antd'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function Step4() {
-  // const navigate = useNavigate()
   const { testProgress, setTestProgress } = useTestProgress()
   const [api, contextHolder] = notification.useNotification()
+  const navigate = useNavigate()
 
   const handleSaveResult = async () => {
     try {
@@ -31,6 +32,9 @@ function Step4() {
         message: 'Lưu kết quả thành công!',
         duration: 1,
       })
+      setTimeout(() => {
+        navigate(ROUTES.USER)
+      }, 2000)
     } catch (error) {
       api.error({
         message: 'Lưu kết quả thất bại!',
@@ -43,11 +47,7 @@ function Step4() {
     <div>
       {contextHolder}
       <div>Step4</div>
-      <Button
-        onClick={handleSaveResult}
-      >
-        Lưu
-      </Button>
+      <Button onClick={handleSaveResult}>Lưu</Button>
     </div>
   )
 }
