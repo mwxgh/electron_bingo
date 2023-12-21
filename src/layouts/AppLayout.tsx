@@ -1,5 +1,6 @@
 import { ROUTES } from '@/constants/routes'
-import { checkProtectAppCode, getProtectAppCode } from '@/service/localStorage'
+import { getProtectAppCode } from '@/service/localStorage'
+import { checkProtectAppCode } from '@/service/settings'
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 

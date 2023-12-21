@@ -11,6 +11,13 @@ export const typeLabels: Record<TestType, string> = {
   [TestType.synthetic]: 'Đề tổng hợp',
 }
 
+export interface Setting {
+  minQuantityQuestion: number
+  maxQuantityQuestion: number
+  questionBreakTime: number
+  [key: string]: number;
+}
+
 export interface TestDetail {
   type: TestType.hear | TestType.sight
   key: string
