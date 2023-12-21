@@ -31,22 +31,31 @@ export const getUsers = async (keyword?: string) => {
   }
 }
 
-export const getUserById = async (uuid: string) => {
-  await db.read()
-  const user = db.data.users.find((user) => user.uuid === uuid)
+export const deleteUsers = async (userUuids: string[]): Promise<boolean> => {
+  if (!userUuids || userUuids.length === 0) {
+    return false
+  }
 
-  return user || null
-}
-
-export const deleteUser = async (uuid: string) => {
   await db.read()
 
-  const userIndex = db.data.users.findIndex((user) => user.uuid === uuid)
+  let usersDeleted = false
 
-  if (userIndex !== -1) {
-    db.data.users.splice(userIndex, 1)
+  userUuids.forEach((uuid) => {
+    const userIndex = db.data.users.findIndex((user) => user.uuid === uuid)
+
+    if (userIndex !== -1) {
+      db.data.users.splice(userIndex, 1)[0]
+
+      db.data.testResults = db.data.testResults.filter(
+        (testResult) => testResult.userUuid !== uuid,
+      )
+
+      usersDeleted = true
+    }
+  })
+
+  if (usersDeleted) {
     await db.write()
-
     return true
   } else {
     return false
