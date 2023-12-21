@@ -1,8 +1,6 @@
 import { LocalStoragePreset } from 'lowdb/browser'
 import { LowSync } from 'lowdb'
-import * as fs from 'fs'
-import * as crypto from 'crypto'
-import moment from 'moment'
+import { Setting } from '@/types/common/database'
 
 export const storage: LowSync<Storage> = LocalStoragePreset(
   'nosah_safety_local_storage',
@@ -27,16 +25,24 @@ export const getProtectAppCode = (): string => {
   return storage.data.hashCode
 }
 
-export const checkProtectAppCode = (hashCode: string): boolean => {
+export const saveSettingApp = (data: Setting) => {
   storage.read()
 
-  const settingsJson = fs.readFileSync('database/settings.json', 'utf-8')
-  const { company } = JSON.parse(settingsJson)
+  for (const key in data) {
+    if (Object.prototype.hasOwnProperty.call(data, key)) {
+      storage.data[key] = data[key]
+    }
+  }
 
-  const md5 = crypto
-    .createHash('md5')
-    .update(`${company}_${moment().format('MM_YYYY')}`)
-    .digest('hex')
+  storage.write()
+}
 
-  return hashCode === md5
+export const getSettingApp = (): Setting => {
+  storage.read()
+
+  return {
+    minQuantityQuestion: storage.data.minQuantityQuestion,
+    maxQuantityQuestion: storage.data.maxQuantityQuestion,
+    questionBreakTime: storage.data.questionBreakTime,
+  }
 }

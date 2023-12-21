@@ -1,6 +1,7 @@
 import Button from '@/components/Button'
 import { ROUTES } from '@/constants/routes'
-import { checkProtectAppCode, saveProtectAppCode } from '@/service/localStorage'
+import { saveProtectAppCode } from '@/service/localStorage'
+import { checkProtectAppCode } from '@/service/settings'
 import { Input, notification } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
