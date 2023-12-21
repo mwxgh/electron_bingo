@@ -17,6 +17,11 @@ export interface TestDetail {
   value: string
 }
 
+export interface Answer {
+  type: TestType.hear | TestType.sight
+  time: number
+}
+
 export interface User {
   uuid: string
   code: string
@@ -34,13 +39,9 @@ export interface Test {
   details: TestDetail[]
 }
 
-export interface Answer {
-  type: TestType.hear | TestType.sight
-  time: number
-}
-
 export interface TestResultDetail {
   round: number
+  testUuid: string
   answers: Answer[]
 }
 
