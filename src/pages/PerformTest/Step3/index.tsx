@@ -17,7 +17,7 @@ const Step3 = () => {
   const [time, setTime] = useState(0)
   const [pauseTime, setPauseTime] = useState(0)
   const [isPause, setIsPause] = useState(false)
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(1)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [answers, setAnswers] = useState<Answer[]>([])
   const navigate = useNavigate()
   const [isBreakTime, setIsBreakTime] = useState(false)
@@ -146,12 +146,14 @@ const Step3 = () => {
 
     setTimeout(() => {
       setIsBreakTime(false)
-      setCurrentQuestionIndex(currentQuestionIndex + 1)
 
       if (currentQuestionIndex < questions.length - 1) {
         startTestTime()
+        setCurrentQuestionIndex(currentQuestionIndex + 1)
+      } else {
+        setCurrentQuestionIndex(-1)
       }
-    }, 2000)
+    }, 500)
   }
 
   if (!started) {
@@ -174,11 +176,11 @@ const Step3 = () => {
         <div className="flex flex-col items-center">
           <span className="font-bold text-3xl">Câu hỏi</span>
           <span className="text-3xl">
-            {currentQuestionIndex}/{questions.length}
+            {currentQuestionIndex + 1}/{questions.length}
           </span>
         </div>
         <div className="w-[174.14px] mt-[50px]">
-          {currentQuestionIndex < questions.length && (
+          {!questions[currentQuestionIndex] && (
             <Button
               size="medium"
               icon={<PauseIcon width={20} height={20} fill="white" />}

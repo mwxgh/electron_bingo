@@ -12,7 +12,7 @@ export const userTableColumns: ColumnsType<UserTableDataType> = [
   {
     title: 'Mã nhân viên',
     dataIndex: 'code',
-    width: 120,
+    width: 130,
   },
   {
     title: 'Họ và tên',

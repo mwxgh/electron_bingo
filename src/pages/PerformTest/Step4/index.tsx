@@ -12,9 +12,9 @@ function Step4() {
       await createEntity(
         {
           userUuid: testProgress.userUuid,
-          testUuid: testProgress.testUuid,
           details: [
             {
+              testUuid: testProgress.testUuid,
               round: testProgress.round,
               answers: testProgress.answers,
             },
