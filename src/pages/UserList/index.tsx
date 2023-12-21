@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Button from '@/components/Button'
 import { Input, Modal, Typography, notification } from 'antd'
 import PlusIcon from '@/assets/svgs/plus.svg'
@@ -6,17 +7,13 @@ import UserForm from '@/components/UserForm'
 import { UserTableDataType } from '@/types/common/table'
 import Table from '@/components/Table'
 import { User } from '@/types/common/database'
-import {
-  bulkDeleteEntity,
-  createEntity,
-  updateEntity,
-} from '@/service/manageData'
+import { createEntity, updateEntity } from '@/service/manageData'
 import { useForm } from 'antd/es/form/Form'
 import { userTableColumns } from '@/constants/common'
 import TestListComplete from '@/components/TestListComplete'
 import { errorMessages, successMessages } from '@/messages'
 import { exportToExcel } from '@/service/excelHelper'
-import { getUsers } from '@/service/users'
+import { deleteUsers, getUsers } from '@/service/users'
 import { useTestProgress } from '@/stores/testProgressStore'
 import { useNavigate } from 'react-router-dom'
 import { ROUTES } from '@/constants/routes'
@@ -58,10 +55,13 @@ const UserList = () => {
           <TestListComplete
             completedTest={[1, 2, 3]}
             onClick={(index) => {
-              setTestProgress({
-                userUuid: uuid,
-                round: index
-              }, true)
+              setTestProgress(
+                {
+                  userUuid: uuid,
+                  round: index,
+                },
+                true,
+              )
               navigate(`${ROUTES.PERFORM_TEST}/${2}`)
             }}
           />
@@ -136,7 +136,7 @@ const UserList = () => {
 
   const handleOnDeleteUsers = async () => {
     try {
-      await bulkDeleteEntity('users', selectedRowKeys as string[])
+      await deleteUsers(selectedRowKeys as string[])
       setSelectedRowKeys([])
       fetchUserList()
       setIsOpenDelete(false)

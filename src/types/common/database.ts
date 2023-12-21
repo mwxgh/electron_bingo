@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export enum TestType {
   hear = 'hear',
   sight = 'sight',
@@ -15,7 +14,7 @@ export interface Setting {
   minQuantityQuestion: number
   maxQuantityQuestion: number
   questionBreakTime: number
-  [key: string]: number;
+  [key: string]: number
 }
 
 export interface TestDetail {

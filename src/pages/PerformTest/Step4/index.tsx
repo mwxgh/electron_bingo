@@ -1,12 +1,12 @@
 import Button from '@/components/Button'
-import { ROUTES } from '@/constants/routes'
+// import { ROUTES } from '@/constants/routes'
 import { createTestResult } from '@/service/testResult'
 import { useTestProgress } from '@/stores/testProgressStore'
 import { notification } from 'antd'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
 function Step4() {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const { testProgress, setTestProgress } = useTestProgress()
   const [api, contextHolder] = notification.useNotification()
 
@@ -44,10 +44,7 @@ function Step4() {
       {contextHolder}
       <div>Step4</div>
       <Button
-        onClick={() => {
-          handleSaveResult
-          navigate(ROUTES.USER)
-        }}
+        onClick={handleSaveResult}
       >
         Lưu
       </Button>

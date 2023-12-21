@@ -1,11 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Button from '@/components/Button'
 import { Input, Modal, Typography, notification } from 'antd'
 import PlusIcon from '@/assets/svgs/plus.svg'
 import { useEffect, useState } from 'react'
 import Table from '@/components/Table'
 import { Test, TestType, typeLabels } from '@/types/common/database'
-import { bulkDeleteEntity, getEntities, updateEntity } from '@/service/manageData'
+import {
+  bulkDeleteEntity,
+  getEntities,
+  updateEntity,
+} from '@/service/manageData'
 import { useForm } from 'antd/es/form/Form'
 import { testTableColumns } from '@/constants/common'
 import TestForm from '@/components/TestForm'
@@ -85,7 +88,7 @@ const TestList = () => {
         return
       }
 
-      await updateEntity('tests',test?.uuid, data)
+      await updateEntity('tests', test?.uuid, data)
       fetchTestList()
       api.success({
         message: successMessages.update.test,
