@@ -1,6 +1,6 @@
 import Button from '@/components/Button'
 import { ROUTES } from '@/constants/routes'
-// import { ROUTES } from '@/constants/routes'
+import { errorMessages, successMessages } from '@/messages'
 import { createTestResult } from '@/service/testResult'
 import { useTestProgress } from '@/stores/testProgressStore'
 import { notification } from 'antd'
@@ -29,15 +29,15 @@ function Step4() {
         ],
       })
       api.success({
-        message: 'Lưu kết quả thành công!',
+        message: successMessages.create.testResult,
         duration: 1,
       })
       setTimeout(() => {
         navigate(ROUTES.USER)
-      }, 2000)
+      }, 1000)
     } catch (error) {
       api.error({
-        message: 'Lưu kết quả thất bại!',
+        message: errorMessages.create.testResult,
         duration: 1,
       })
     }

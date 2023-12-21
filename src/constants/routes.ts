@@ -5,4 +5,5 @@ export const ROUTES = {
   TEST: '/test',
   PERFORM_TEST: '/perform_test',
   NOT_FOUND: '/not-found',
+  SETTING: '/setting',
 } as const

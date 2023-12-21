@@ -8,11 +8,12 @@ export const validateMessages = {
 export const successMessages = {
   create: {
     user: 'Tạo nhân viên thành công !',
-    test: 'Tạo đề kiêm tra thành công !',
+    test: 'Tạo đề kiểm tra thành công !',
+    testResult: 'Lưu kết quả thành công !',
   },
   update: {
     user: 'Cập nhật nhân viên thành công !',
-    test: 'Cập nhật đề kiêm tra thành công !',
+    test: 'Cập nhật đề kiểm tra thành công !',
   },
   delete: {
     user: 'Xóa nhân viên thành công !',
@@ -27,11 +28,12 @@ export const errorMessages = {
   },
   create: {
     user: 'Tạo nhân viên thất bại !',
-    test: 'Tạo đề kiêm tra thất bại !',
+    test: 'Tạo đề kiểm tra thất bại !',
+    testResult: 'Lưu kết quả thất bại !',
   },
   update: {
     user: 'Cập nhật nhân viên thất bại !',
-    test: 'Cập nhật đề kiêm tra thất bại !',
+    test: 'Cập nhật đề kiểm tra thất bại !',
   },
   delete: {
     user: 'Xóa nhân viên thất bại !',

@@ -9,6 +9,7 @@ import Locked from '@/pages/Locked'
 import PerformTest from '@/pages/PerformTest'
 import TestList from '@/pages/TestList'
 import NotFound from '@/pages/NotFound'
+import Setting from '@/pages/Setting'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
           {
             path: ROUTES.TEST,
             element: <TestList />,
+          },
+          {
+            path: ROUTES.SETTING,
+            element: <Setting />,
           },
           {
             element: <TestLayout />,

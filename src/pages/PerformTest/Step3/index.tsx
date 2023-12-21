@@ -1,5 +1,3 @@
-import DoneIcon from '@/assets/svgs/done.svg'
-import PauseIcon from '@/assets/svgs/pause.svg'
 import Button from '@/components/Button'
 import { keyBoard } from '@/constants/common'
 import { ROUTES } from '@/constants/routes'
@@ -155,7 +153,7 @@ const Step3 = () => {
       } else {
         setCurrentQuestionIndex(-1)
       }
-    }, 500)
+    }, 2000)
   }
 
   if (!started) {
@@ -185,7 +183,6 @@ const Step3 = () => {
           {questions[currentQuestionIndex] ? (
             <Button
               size="medium"
-              // icon={<PauseIcon width={20} height={20} fill="white" />}
               className="text-xl w-[170px]"
               onClick={isPause ? resumeTestTime : pauseTestTime}
             >
@@ -194,7 +191,6 @@ const Step3 = () => {
           ) : (
             <Button
               size="medium"
-              // icon={<DoneIcon width={20} height={20} fill="white" />}
               className="text-xl w-[170px]"
               onClick={() => {
                 setTestProgress(

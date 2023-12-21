@@ -43,7 +43,7 @@ const Home = () => {
         </li>
         <li>
           <Button
-            onClick={() => navigate(ROUTES.USER)}
+            onClick={() => navigate(ROUTES.SETTING)}
             size="large"
             icon={<SettingIcon width={30} height={30} />}
             className="mt-[50px]"
