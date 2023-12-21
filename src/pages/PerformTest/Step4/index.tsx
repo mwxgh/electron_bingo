@@ -1,10 +1,12 @@
 import Button from '@/components/Button'
-import { createEntity } from '@/service/manageData'
+import { ROUTES } from '@/constants/routes'
 import { createTestResult } from '@/service/testResult'
 import { useTestProgress } from '@/stores/testProgressStore'
 import { notification } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 function Step4() {
+  const navigate = useNavigate()
   const { testProgress, setTestProgress } = useTestProgress()
   const [api, contextHolder] = notification.useNotification()
 
@@ -15,13 +17,13 @@ function Step4() {
       if (!userUuid || !testUuid || !round || !answers) return
 
       await createTestResult({
-        uuid: "",
+        uuid: '',
         userUuid,
         details: [
           {
             testUuid,
             round,
-            answers
+            answers,
           },
         ],
       })
@@ -41,7 +43,14 @@ function Step4() {
     <div>
       {contextHolder}
       <div>Step4</div>
-      <Button onClick={handleSaveResult}>Lưu</Button>
+      <Button
+        onClick={() => {
+          handleSaveResult
+          navigate(ROUTES.USER)
+        }}
+      >
+        Lưu
+      </Button>
     </div>
   )
 }
