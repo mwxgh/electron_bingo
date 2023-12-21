@@ -92,6 +92,8 @@ const Step3 = () => {
 
   const startTestTime = () => {
     setStarted(true)
+    setIsPause(false)
+
     startTimeRef.current = moment()
 
     intervalIdRef.current = window.setInterval(() => {
@@ -179,15 +181,32 @@ const Step3 = () => {
             {currentQuestionIndex + 1}/{questions.length}
           </span>
         </div>
-        <div className="w-[174.14px] mt-[50px]">
-          {!questions[currentQuestionIndex] && (
+        <div className="w-[174.14px]">
+          {questions[currentQuestionIndex] ? (
             <Button
               size="medium"
-              icon={<PauseIcon width={20} height={20} fill="white" />}
-              className="text-xl"
+              // icon={<PauseIcon width={20} height={20} fill="white" />}
+              className="text-xl w-[170px]"
               onClick={isPause ? resumeTestTime : pauseTestTime}
             >
               {isPause ? 'Tiếp tục' : 'Tạm dừng'}
+            </Button>
+          ) : (
+            <Button
+              size="medium"
+              // icon={<DoneIcon width={20} height={20} fill="white" />}
+              className="text-xl w-[170px]"
+              onClick={() => {
+                setTestProgress(
+                  {
+                    answers,
+                  },
+                  true,
+                )
+                navigate(`${ROUTES.PERFORM_TEST}/${4}`)
+              }}
+            >
+              Hoàn thành
             </Button>
           )}
         </div>
@@ -236,24 +255,6 @@ const Step3 = () => {
             Bạn đã hoàn thành tất cả các câu hỏi!
           </div>
         )}
-      </div>
-      <div className="flex justify-end mt-[50px]">
-        <Button
-          size="medium"
-          icon={<DoneIcon width={20} height={20} fill="white" />}
-          className="mt-[50px] text-xl"
-          onClick={() => {
-            setTestProgress(
-              {
-                answers,
-              },
-              true,
-            )
-            navigate(`${ROUTES.PERFORM_TEST}/${4}`)
-          }}
-        >
-          Hoàn thành
-        </Button>
       </div>
     </div>
   )

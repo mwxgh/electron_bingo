@@ -23,9 +23,10 @@ const TestList = () => {
   const [api, contextHolder] = notification.useNotification()
   const [form] = useForm()
   const [action, setAction] = useState<'create' | 'update'>('create')
+  const [keyword, setKeyword] = useState('')
 
   const fetchTestList = async () => {
-    const tests = (await getEntities('tests')) as Test[]
+    const tests = (await getEntities('tests', keyword)) as Test[]
     const testConverted = tests.map(
       ({ uuid, name, type, quantity, details }, index) => ({
         index: index + 1,
@@ -42,7 +43,7 @@ const TestList = () => {
 
   useEffect(() => {
     fetchTestList()
-  }, [])
+  }, [keyword])
 
   const handleCreateTest = async (data: Test) => {
     try {
@@ -130,6 +131,9 @@ const TestList = () => {
             style={{ width: 200 }}
             className="w-[300px]"
             size="large"
+            onSearch={(value) => {
+              setKeyword(value)
+            }}
           />
         </div>
         <div className="flex items-center">
