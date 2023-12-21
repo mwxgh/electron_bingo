@@ -1,5 +1,6 @@
 import Button from '@/components/Button'
 import { createEntity } from '@/service/manageData'
+import { createTestResult } from '@/service/testResult'
 import { useTestProgress } from '@/stores/testProgressStore'
 import { notification } from 'antd'
 
@@ -9,19 +10,21 @@ function Step4() {
 
   const handleSaveResult = async () => {
     try {
-      await createEntity(
-        {
-          userUuid: testProgress.userUuid,
-          details: [
-            {
-              testUuid: testProgress.testUuid,
-              round: testProgress.round,
-              answers: testProgress.answers,
-            },
-          ],
-        },
-        'testResults',
-      )
+      const { userUuid, testUuid, round, answers } = testProgress
+
+      if (!userUuid || !testUuid || !round || !answers) return
+
+      await createTestResult({
+        uuid: "",
+        userUuid,
+        details: [
+          {
+            testUuid,
+            round,
+            answers
+          },
+        ],
+      })
       api.success({
         message: 'Lưu kết quả thành công!',
         duration: 1,
