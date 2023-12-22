@@ -7,7 +7,8 @@ import { notification } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 function Step4() {
-  const { testProgress, setTestProgress } = useTestProgress()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { testProgress } = useTestProgress()
   const [api, contextHolder] = notification.useNotification()
   const navigate = useNavigate()
 

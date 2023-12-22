@@ -5,6 +5,6 @@ import { JSONPreset } from 'lowdb/node'
 const defaultData: Database = { users: [], tests: [], testResults: [] }
 
 export const db = await JSONPreset(
-  join('database', 'database.json'),
+  join('src/database', 'database.json'),
   defaultData,
 )
