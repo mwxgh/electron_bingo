@@ -140,3 +140,12 @@ export const keyBoard = [
     code: 'Enter',
   },
 ] as const
+
+export const excelFileHeader = [
+  'Code NV',
+  'Tên NV',
+  'Số CMT/CCCD',
+  'Ngày tháng năm sinh',
+  'Xưởng',
+  'Nghề, công việc',
+] as const
