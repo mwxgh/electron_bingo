@@ -1,22 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
-import Button from '@/components/Button'
-import { Input, Modal, Typography, notification } from 'antd'
 import PlusIcon from '@/assets/svgs/plus.svg'
-import { useEffect, useState } from 'react'
-import UserForm from '@/components/UserForm'
-import { UserTableDataType } from '@/types/common/table'
+import Button from '@/components/Button'
 import Table from '@/components/Table'
-import { User } from '@/types/common/database'
-import { createEntity, updateEntity } from '@/service/manageData'
-import { useForm } from 'antd/es/form/Form'
-import { userTableColumns } from '@/constants/common'
 import TestListComplete from '@/components/TestListComplete'
+import UserForm from '@/components/UserForm'
+import { excelFileHeader, userTableColumns } from '@/constants/common'
+import { ROUTES } from '@/constants/routes'
 import { errorMessages, successMessages } from '@/messages'
 import { exportToExcel } from '@/service/excelHelper'
+import {
+  bulkCreateEntity,
+  createEntity,
+  updateEntity,
+} from '@/service/manageData'
 import { deleteUsers, getUsers } from '@/service/users'
 import { useTestProgress } from '@/stores/testProgressStore'
+import { User } from '@/types/common/database'
+import { UserTableDataType } from '@/types/common/table'
+import { Input, Modal, Typography, notification } from 'antd'
+import { useForm } from 'antd/es/form/Form'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ROUTES } from '@/constants/routes'
+import * as XLSX from 'xlsx'
 
 const data: UserTableDataType[] = []
 for (let i = 1; i <= 120; i++) {
@@ -40,6 +46,8 @@ const UserList = () => {
   const { setTestProgress } = useTestProgress()
   const navigate = useNavigate()
   const [keyword, setKeyword] = useState('')
+
+  const inputFileRef = useRef<HTMLInputElement>(null)
 
   const fetchUserList = async () => {
     const users = (await getUsers(keyword)) as User[]
@@ -76,6 +84,82 @@ const UserList = () => {
   useEffect(() => {
     fetchUserList()
   }, [keyword])
+
+  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    try {
+      const file = e.target.files?.[0]
+
+      if (file) {
+        const fileName = file.name
+        const fileExtension = fileName.slice(
+          ((fileName.lastIndexOf('.') - 1) >>> 0) + 2,
+        )
+
+        if (fileExtension.toLowerCase() !== 'xlsx') {
+          throw false
+        }
+
+        const reader = new FileReader()
+
+        reader.onload = async (event: ProgressEvent<FileReader>) => {
+          const data = event.target?.result as string
+
+          const workbook = XLSX.read(data, { type: 'binary' })
+          const sheetName = workbook.SheetNames[0]
+          const sheet = workbook.Sheets[sheetName]
+
+          const jsonData = XLSX.utils.sheet_to_json(sheet, {
+            header: 1,
+          }) as any[]
+          let isValidData = true
+
+          jsonData[0].forEach((item: string, index: number) => {
+            if (item !== excelFileHeader[index]) {
+              isValidData = false
+            }
+          })
+
+          if (!isValidData) {
+            throw false
+          }
+
+          const filteredData = jsonData.filter((row: any, index: number) => {
+            return row.length > 0 && index !== 0
+          })
+
+          const formattedData = filteredData.map((item: any[]) => {
+            return {
+              code: item[0],
+              name: item[1],
+              factory: item[4],
+              position: item[5],
+            }
+          })
+
+          await bulkCreateEntity(formattedData, 'users')
+
+          fetchUserList()
+
+          api.success({
+            message: 'Import nhân viên thành công!',
+            duration: 2,
+          })
+        }
+
+        reader.readAsBinaryString(file)
+      }
+    } catch (error) {
+      api.error({
+        message: 'Import nhân viên thất bại! File không hợp lệ',
+        duration: 2,
+      })
+      return
+    } finally {
+      if (inputFileRef.current) {
+        inputFileRef.current.value = ''
+      }
+    }
+  }
 
   const handleCreateUser = async (data: User) => {
     try {
@@ -174,11 +258,19 @@ const UserList = () => {
           size="medium"
           className="ml-[10px]"
           onClick={() => {
-            getUsers()
+            if (inputFileRef.current) {
+              inputFileRef.current.click()
+            }
           }}
         >
           Import
         </Button>
+        <input
+          type="file"
+          onChange={handleFileUpload}
+          ref={inputFileRef}
+          className="hidden"
+        />
       </div>
       <Typography.Title level={5}>Tìm kiếm</Typography.Title>
       <div className="flex items-center mb-[20px] justify-between">
