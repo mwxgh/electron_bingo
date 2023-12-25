@@ -26,6 +26,9 @@ export default defineConfig({
       renderer: {},
     }),
   ],
+  build: {
+    target: 'ES2022',
+  },
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },

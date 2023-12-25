@@ -1,5 +1,5 @@
 import { User } from '@/types/common/database'
-import { db } from './configDB'
+import { db } from './configLowDB'
 
 export const getUsers = async (keyword?: string) => {
   await db.read()

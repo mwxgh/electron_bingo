@@ -1,5 +1,5 @@
 import { TestResult } from '@/types/common/database'
-import { db } from './configDB'
+import { db } from './configLowDB'
 import { v4 as uuidv4 } from 'uuid'
 
 export const createTestResult = async (

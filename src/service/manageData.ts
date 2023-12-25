@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { Test, TestResult, User } from '@/types/common/database'
-import { db } from './configDB'
+import { db } from './configLowDB'
 
 type Entity = User | Test | TestResult
 type EntityType = 'users' | 'tests' | 'testResults'
@@ -62,6 +62,8 @@ export const bulkCreateEntity = async <T extends Entity>(
 
 export const getEntities = async (entityType: EntityType, keyword?: string) => {
   await db.read()
+
+  console.log(db, 'db_config__________________')
 
   if (keyword) {
     const filteredEntities = db.data[entityType].filter((entity) => {

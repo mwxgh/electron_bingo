@@ -1,0 +1,39 @@
+{
+  "users": [],
+  "tests": [
+    {
+      "name": "AA",
+      "type": "synthetic",
+      "quantity": 5,
+      "uuid": "812a33d3-2375-4dc1-b519-93cc6e40172e",
+      "details": [
+        {
+          "type": "hear",
+          "key": "Enter",
+          "value": "sound"
+        },
+        {
+          "type": "sight",
+          "key": "4",
+          "value": "#DC143C"
+        },
+        {
+          "type": "sight",
+          "key": "2",
+          "value": "#9932CC"
+        },
+        {
+          "type": "hear",
+          "key": "Enter",
+          "value": "sound"
+        },
+        {
+          "type": "hear",
+          "key": "Enter",
+          "value": "sound"
+        }
+      ]
+    }
+  ],
+  "testResults": []
+}

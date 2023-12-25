@@ -28,6 +28,18 @@ export interface Answer {
   time: number
 }
 
+export interface TestResultDetail {
+  round: number
+  testUuid: string
+  answers: Answer[]
+}
+
+export interface TestResult {
+  uuid: string
+  userUuid: string
+  details: TestResultDetail[]
+}
+
 export interface User {
   uuid: string
   code: string
@@ -43,18 +55,6 @@ export interface Test {
   type: TestType
   quantity: number
   details: TestDetail[]
-}
-
-export interface TestResultDetail {
-  round: number
-  testUuid: string
-  answers: Answer[]
-}
-
-export interface TestResult {
-  uuid: string
-  userUuid: string
-  details: TestResultDetail[]
 }
 
 export interface Database {

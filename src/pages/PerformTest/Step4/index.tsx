@@ -7,7 +7,7 @@ import { notification } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 function Step4() {
-  const { testProgress, setTestProgress } = useTestProgress()
+  const { testProgress } = useTestProgress()
   const [api, contextHolder] = notification.useNotification()
   const navigate = useNavigate()
 

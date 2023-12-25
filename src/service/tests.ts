@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { Test, TestDetail, TestType } from '@/types/common/database'
-import { db } from './configDB'
+import { db } from './configLowDB'
 import { colorCodePalette, keyBoard } from '@/constants/common'
 import { shuffle } from 'lodash'
 
