@@ -17,23 +17,11 @@ import {
 import { deleteUsers, getUsers } from '@/service/users'
 import { useTestProgress } from '@/stores/testProgressStore'
 import { User } from '@/types/common/database'
-import { UserTableDataType } from '@/types/common/table'
 import { Input, Modal, Typography, notification } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as XLSX from 'xlsx'
-
-const data: UserTableDataType[] = []
-for (let i = 1; i <= 120; i++) {
-  data.push({
-    code: `${i}`,
-    name: 'Trần Ngọc Bình',
-    factory: 'ABCDEh',
-    position: 'Vận hành máy',
-    completedTest: <TestListComplete completedTest={[1, 2, 3]} />,
-  })
-}
 
 const UserList = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -167,12 +155,12 @@ const UserList = () => {
       await createEntity(data, 'users')
       fetchUserList()
       api.success({
-        message: 'Tạo nhân viên thành công!',
+        message: successMessages.create.user,
         duration: 1,
       })
     } catch (error) {
       api.error({
-        message: 'Tạo nhân viên thất bại!',
+        message: errorMessages.create.user,
         duration: 1,
       })
     }
@@ -246,11 +234,7 @@ const UserList = () => {
           color="danger"
           size="medium"
           onClick={() => {
-            exportToExcel([
-              { Name: 'John Doe', Age: 30, City: 'New York' },
-              { Name: 'Jane Smith', Age: 25, City: 'San Francisco' },
-              { Name: 'Bob Johnson', Age: 35, City: 'Los Angeles' },
-            ])
+            exportToExcel(userData)
           }}
         >
           Export
