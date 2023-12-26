@@ -50,7 +50,6 @@ const Step1 = () => {
   }
 
   useEffect(() => {
-    console.log('go1', keyword)
     if (keyword) {
       fetchUser()
     } else {
@@ -58,13 +57,12 @@ const Step1 = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [keyword])
-  console.log('go2', userData)
 
   return (
     <div>
       <Typography.Title level={5}>Tìm kiếm</Typography.Title>
       <Search
-        style={{ width: 200 }}
+        style={{ width: 300 }}
         className="w-[300px]"
         size="large"
         onSearch={(value) => {

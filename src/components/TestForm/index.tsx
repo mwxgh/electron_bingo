@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Form, Input, FormInstance, Select, InputNumber } from 'antd'
 import Button from '@/components/Button'
 import './style.css'
-import { Test } from '@/types/common/database'
+import { Test, typeLabels } from '@/types/common/database'
 
 interface Props {
   title: string
@@ -64,9 +64,11 @@ const TestForm: React.FC<Props> = ({
             className="mb-[30px]"
           >
             <Select>
-              <Select.Option value="hear">Thính vận động</Select.Option>
-              <Select.Option value="sight">Thị vận động</Select.Option>
-              <Select.Option value="synthetic">Tổng hợp</Select.Option>
+              <Select.Option value="hear">{typeLabels.hear}</Select.Option>
+              <Select.Option value="sight">{typeLabels.sight}</Select.Option>
+              <Select.Option value="synthetic">
+                {typeLabels.synthetic}
+              </Select.Option>
             </Select>
           </Form.Item>
 

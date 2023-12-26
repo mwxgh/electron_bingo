@@ -22,12 +22,12 @@ export const createTestResult = async (
       }
     })
 
-    await db.write()
+    db.write()
     return existingTestResult
   } else {
     const newTestResult: TestResult = { ...data, uuid: uuidv4() }
     db.data.testResults.push(newTestResult)
-    await db.write()
+    db.write()
     return newTestResult
   }
 }

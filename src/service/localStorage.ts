@@ -1,6 +1,7 @@
 import { LocalStoragePreset } from 'lowdb/browser'
 import { LowSync } from 'lowdb'
 import { Setting } from '@/types/common/database'
+import { DEFAULT_SETTING } from '@/constants/common'
 
 export const storage: LowSync<Storage> = LocalStoragePreset(
   'nosah_safety_local_storage',
@@ -41,8 +42,11 @@ export const getSettingApp = (): Setting => {
   storage.read()
 
   return {
-    minQuantityQuestion: storage.data.minQuantityQuestion,
-    maxQuantityQuestion: storage.data.maxQuantityQuestion,
-    questionBreakTime: storage.data.questionBreakTime,
+    minQuantityQuestion:
+      storage.data.minQuantityQuestion ?? DEFAULT_SETTING.MIN_QUANTITY_QUESTION,
+    maxQuantityQuestion:
+      storage.data.maxQuantityQuestion ?? DEFAULT_SETTING.MAX_QUANTITY_QUESTION,
+    questionBreakTime:
+      storage.data.questionBreakTime ?? DEFAULT_SETTING.QUESTION_BREAK_TIME,
   }
 }

@@ -3,6 +3,7 @@ import { ROUTES } from '@/constants/routes'
 import { errorMessages, successMessages } from '@/messages'
 import { createTestResult } from '@/service/testResult'
 import { useTestProgress } from '@/stores/testProgressStore'
+import { typeLabels } from '@/types/common/database'
 import { notification } from 'antd'
 import moment from 'moment'
 import { useMemo } from 'react'
@@ -85,8 +86,8 @@ function Step4() {
         </div>
         <div className="w-full">
           <h2 className="text-3xl mb-5">Kết quả kiểm tra</h2>
-          <Info label="Thính vận động:" text={hearTime + ' ms'} />
-          <Info label="Thị vận động:" text={sightTime + ' ms'} />
+          <Info label={typeLabels.hear + ':'} text={hearTime + ' ms'} />
+          <Info label={typeLabels.sight + ':'} text={sightTime + ' ms'} />
           <Info label="Ngày kiểm tra:" text={moment().format('DD/MM/YYYY')} />
           <Button onClick={handleSaveResult} className="mt-[50px]">
             Lưu kết quả

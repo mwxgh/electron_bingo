@@ -277,7 +277,7 @@ const UserList = () => {
       <div className="flex items-center mb-[20px] justify-between">
         <div>
           <Input.Search
-            style={{ width: 200 }}
+            style={{ width: 300 }}
             className="w-[300px]"
             size="large"
             onSearch={(value) => {

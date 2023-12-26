@@ -7,7 +7,7 @@ export enum TestType {
 export const typeLabels: Record<TestType, string> = {
   [TestType.hear]: 'Thính vận động',
   [TestType.sight]: 'Thị vận động',
-  [TestType.synthetic]: 'Đề tổng hợp',
+  [TestType.synthetic]: 'Tổng hợp',
 }
 
 export interface Setting {

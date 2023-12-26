@@ -25,7 +25,7 @@ export const createEntity = async <T extends Entity>(
       throw new Error('Invalid entity type')
   }
 
-  await db.write()
+  db.write()
 
   return newEntity
 }
@@ -55,13 +55,13 @@ export const bulkCreateEntity = async <T extends Entity>(
       throw new Error('Invalid entity type')
   }
 
-  await db.write()
+  db.write()
 
   return newEntities
 }
 
 export const getEntities = async (entityType: EntityType, keyword?: string) => {
-  await db.read()
+  db.read()
 
   if (keyword) {
     const filteredEntities = db.data[entityType].filter((entity) => {
@@ -79,7 +79,7 @@ export const getEntities = async (entityType: EntityType, keyword?: string) => {
 }
 
 export const getEntityById = async (entityType: EntityType, uuid: string) => {
-  await db.read()
+  db.read()
   const entity = db.data[entityType].find((entity) => entity.uuid === uuid)
 
   return entity || null
@@ -90,7 +90,7 @@ export const updateEntity = async (
   uuid: string,
   updatedEntityData: Partial<Entity>,
 ) => {
-  await db.read()
+  db.read()
 
   const entityToUpdate = db.data[entityType].find(
     (entity) => entity.uuid === uuid,
@@ -99,7 +99,7 @@ export const updateEntity = async (
   if (entityToUpdate) {
     Object.assign(entityToUpdate, updatedEntityData)
 
-    await db.write()
+    db.write()
 
     return entityToUpdate
   } else {
@@ -108,7 +108,7 @@ export const updateEntity = async (
 }
 
 export const deleteEntity = async (entityType: EntityType, uuid: string) => {
-  await db.read()
+  db.read()
 
   const entityIndex = db.data[entityType].findIndex(
     (entity) => entity.uuid === uuid,
@@ -116,7 +116,7 @@ export const deleteEntity = async (entityType: EntityType, uuid: string) => {
 
   if (entityIndex !== -1) {
     db.data[entityType].splice(entityIndex, 1)
-    await db.write()
+    db.write()
 
     return true
   } else {
@@ -128,7 +128,7 @@ export const bulkDeleteEntity = async (
   entityType: EntityType,
   uuids: string | string[],
 ) => {
-  await db.read()
+  db.read()
 
   const uuidList = Array.isArray(uuids) ? uuids : [uuids]
   const deletedEntities: Entity[] = []
@@ -145,7 +145,7 @@ export const bulkDeleteEntity = async (
   }
 
   if (deletedEntities.length > 0) {
-    await db.write()
+    db.write()
     return deletedEntities
   } else {
     return null

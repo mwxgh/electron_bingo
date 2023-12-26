@@ -2,6 +2,12 @@ import { TestTableDataType, UserTableDataType } from '@/types/common/table'
 import type { ColumnsType } from 'antd/es/table'
 
 export const NUMBER_OF_TEST = 9
+export const COMPANY = 'NOSAH_SAFETY'
+export const DEFAULT_SETTING = {
+  QUESTION_BREAK_TIME: 2000,
+  MIN_QUANTITY_QUESTION: 5,
+  MAX_QUANTITY_QUESTION: 20,
+}
 
 export const userTableColumns: ColumnsType<UserTableDataType> = [
   {
@@ -142,10 +148,8 @@ export const keyBoard = [
 ] as const
 
 export const excelFileHeader = [
-  'Code NV',
-  'Tên NV',
-  'Số CMT/CCCD',
-  'Ngày tháng năm sinh',
+  'Mã nhân viên',
+  'Tên nhân viên',
   'Xưởng',
-  'Nghề, công việc',
+  'Công việc',
 ] as const

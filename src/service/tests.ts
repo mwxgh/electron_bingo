@@ -51,7 +51,7 @@ export const createTest = async (test: Test): Promise<Test> => {
   newTest.details = details
 
   db.data.tests.push(newTest)
-  await db.write()
+  db.write()
 
   return newTest
 }

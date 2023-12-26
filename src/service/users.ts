@@ -2,7 +2,7 @@ import { User } from '@/types/common/database'
 import { db } from './configDB'
 
 export const getUsers = async (keyword?: string) => {
-  await db.read()
+  db.read()
   const users = db.data.users
 
   const assignTestingProcessDetails = (user: User) => {
@@ -36,7 +36,7 @@ export const deleteUsers = async (userUuids: string[]): Promise<boolean> => {
     return false
   }
 
-  await db.read()
+  db.read()
 
   let usersDeleted = false
 
@@ -55,7 +55,7 @@ export const deleteUsers = async (userUuids: string[]): Promise<boolean> => {
   })
 
   if (usersDeleted) {
-    await db.write()
+    db.write()
     return true
   } else {
     return false

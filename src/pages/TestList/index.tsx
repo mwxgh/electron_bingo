@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Button from '@/components/Button'
 import { Input, Modal, Typography, notification } from 'antd'
 import PlusIcon from '@/assets/svgs/plus.svg'
@@ -128,7 +129,7 @@ const TestList = () => {
       <div className="flex items-center mb-[20px] justify-between">
         <div>
           <Input.Search
-            style={{ width: 200 }}
+            style={{ width: 300 }}
             className="w-[300px]"
             size="large"
             onSearch={(value) => {

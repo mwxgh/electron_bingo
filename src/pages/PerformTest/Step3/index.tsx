@@ -248,7 +248,7 @@ const Step3 = () => {
 
         {!questions[currentQuestionIndex] && (
           <div className="w-full flex justify-center text-2xl">
-            Bạn đã hoàn thành tất cả các câu hỏi!
+            Bạn đã hoàn thành bài kiểm tra !
           </div>
         )}
       </div>
