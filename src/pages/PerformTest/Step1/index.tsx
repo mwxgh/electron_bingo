@@ -1,44 +1,83 @@
 import Table from '@/components/Table'
 import { ROUTES } from '@/constants/routes'
-import { UserTableDataType } from '@/types/common/table'
 import { Typography } from 'antd'
 import Search from 'antd/es/input/Search'
 import { useNavigate } from 'react-router-dom'
 import { userTableColumns } from '@/constants/common'
 import TestListComplete from '@/components/TestListComplete'
 import { useTestProgress } from '@/stores/testProgressStore'
+import { getUsers } from '@/service/users'
+import { User } from '@/types/common/database'
+import { useEffect, useState } from 'react'
 
 const Step1 = () => {
   const navigate = useNavigate()
-  const { testProgress } = useTestProgress()
+  const [userData, setUserData] = useState<User[]>([])
+  const [keyword, setKeyword] = useState('')
+  const { setTestProgress } = useTestProgress()
 
-  console.log('step1', testProgress)
-
-  const data: UserTableDataType[] = []
-  for (let i = 1; i <= 1; i++) {
-    data.push({
-      key: i,
-      index: i,
-      code: `${i}`,
-      name: 'Trần Ngọc Bình',
-      factory: 'ABCDEh',
-      position: 'Vận hành máy',
-      completedTest: (
-        <TestListComplete
-          completedTest={[1, 2, 3]}
-          onClick={() => {
-            navigate(ROUTES.PERFORM_TEST + '/2')
-          }}
-        />
-      ),
+  const fetchUser = async () => {
+    const users = (await getUsers(keyword)) as User[]
+    const userConverted = users.map((user, index) => {
+      const { uuid, code, name, factory, position, testingProcess } = user
+      return {
+        index: index + 1,
+        key: uuid,
+        uuid,
+        code,
+        name,
+        factory,
+        position,
+        completedTest: (
+          <TestListComplete
+            completedTest={testingProcess?.map(({ round }) => round) ?? []}
+            onClick={(index) => {
+              setTestProgress(
+                {
+                  user,
+                  round: index,
+                },
+                true,
+              )
+              navigate(`${ROUTES.PERFORM_TEST}/${2}`)
+            }}
+          />
+        ),
+      }
     })
+
+    setUserData(userConverted)
   }
+
+  useEffect(() => {
+    console.log('go1', keyword)
+    if (keyword) {
+      fetchUser()
+    } else {
+      setUserData([])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [keyword])
+  console.log('go2', userData)
 
   return (
     <div>
       <Typography.Title level={5}>Tìm kiếm</Typography.Title>
-      <Search style={{ width: 200 }} className="w-[300px]" size="large" />
-      <Table columns={userTableColumns} data={data} className="mt-[30px]" />
+      <Search
+        style={{ width: 200 }}
+        className="w-[300px]"
+        size="large"
+        onSearch={(value) => {
+          setKeyword(value)
+        }}
+      />
+      {userData.length != 0 && (
+        <Table
+          columns={userTableColumns}
+          data={userData}
+          className="mt-[30px]"
+        />
+      )}
     </div>
   )
 }

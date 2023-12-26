@@ -2,9 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+}
+
 html,
 body {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   color: #475569;
 }
 

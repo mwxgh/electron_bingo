@@ -16,8 +16,8 @@ export const getUsers = async (keyword?: string) => {
   if (keyword) {
     const filteredUsers = users.filter((user) => {
       return (
-        user.name.toLowerCase().includes(keyword.toLowerCase()) ||
-        user.code.toLowerCase().includes(keyword.toLowerCase())
+        user.name.toString().toLowerCase().includes(keyword.toLowerCase()) ||
+        user.code.toString().toLowerCase().includes(keyword.toLowerCase())
       )
     })
 
