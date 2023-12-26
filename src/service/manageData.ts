@@ -63,8 +63,6 @@ export const bulkCreateEntity = async <T extends Entity>(
 export const getEntities = async (entityType: EntityType, keyword?: string) => {
   await db.read()
 
-  console.log(db, 'db_config__________________')
-
   if (keyword) {
     const filteredEntities = db.data[entityType].filter((entity) => {
       return Object.values(entity).some(

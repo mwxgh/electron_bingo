@@ -6,14 +6,15 @@ import Table from '@/components/Table'
 import { Test, TestType, typeLabels } from '@/types/common/database'
 import {
   bulkDeleteEntity,
-  getEntities,
+  // getEntities,
   updateEntity,
 } from '@/service/manageData'
 import { useForm } from 'antd/es/form/Form'
 import { testTableColumns } from '@/constants/common'
 import TestForm from '@/components/TestForm'
 import { errorMessages, successMessages } from '@/messages'
-import { createTest } from '@/service/tests'
+// import { createTest } from '@/service/tests'
+import { indexedCreateTest, indexedGetTest } from '@/service/indexedTests'
 
 const TestList = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -26,7 +27,10 @@ const TestList = () => {
   const [keyword, setKeyword] = useState('')
 
   const fetchTestList = async () => {
-    const tests = (await getEntities('tests', keyword)) as Test[]
+    // const tests = (await getEntities('tests', keyword)) as Test[]
+    const tests = (await indexedGetTest(keyword)) as Test[]
+    console.log(tests, 'here_____________________-')
+
     const testConverted = tests.map(
       ({ uuid, name, type, quantity, details }, index) => ({
         index: index + 1,
@@ -47,7 +51,8 @@ const TestList = () => {
 
   const handleCreateTest = async (data: Test) => {
     try {
-      await createTest(data)
+      // await createTest(data)
+      await indexedCreateTest(data)
       fetchTestList()
       api.success({
         message: successMessages.create.test,

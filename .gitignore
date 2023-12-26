@@ -17,6 +17,7 @@ release-builds
 yarn.lock
 
 database/database.json
+src/database/database.json
 
 # Editor directories and files
 .vscode/*
