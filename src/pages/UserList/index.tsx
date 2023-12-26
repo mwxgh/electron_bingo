@@ -51,8 +51,9 @@ const UserList = () => {
 
   const fetchUserList = async () => {
     const users = (await getUsers(keyword)) as User[]
-    const userConverted = users.map(
-      ({ uuid, code, name, factory, position }, index) => ({
+    const userConverted = users.map((user, index) => {
+      const { uuid, code, name, factory, position, testingProcess } = user
+      return {
         index: index + 1,
         key: uuid,
         uuid,
@@ -62,11 +63,11 @@ const UserList = () => {
         position,
         completedTest: (
           <TestListComplete
-            completedTest={[1, 2, 3]}
+            completedTest={testingProcess?.map(({ round }) => round) ?? []}
             onClick={(index) => {
               setTestProgress(
                 {
-                  userUuid: uuid,
+                  user,
                   round: index,
                 },
                 true,
@@ -75,8 +76,8 @@ const UserList = () => {
             }}
           />
         ),
-      }),
-    )
+      }
+    })
 
     setUserData(userConverted)
   }

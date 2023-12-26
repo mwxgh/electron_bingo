@@ -7,8 +7,10 @@ import { useNavigate } from 'react-router-dom'
 
 const Step2 = () => {
   const navigate = useNavigate()
-  const { setTestProgress } = useTestProgress()
+  const { testProgress, setTestProgress } = useTestProgress()
   const [testData, setTestData] = useState<Partial<Test>[]>([])
+  const passedTests =
+    testProgress?.user?.testingProcess?.map((item) => item.testUuid) ?? []
 
   const fetchTestList = async () => {
     const tests = (await getEntities('tests')) as Test[]
@@ -29,7 +31,9 @@ const Step2 = () => {
       {testData.map((item, index) => (
         <div
           key={index}
-          className="bg-sky-600 hover:bg-sky-500 cursor-pointer w-[250px] py-[20px] rounded-lg mx-[20px] mb-[40px] text-xl text-white font-medium flex justify-center items-center"
+          className={`bg-sky-600 hover:bg-sky-500 cursor-pointer ${
+            passedTests.includes(item.uuid ?? '') && 'opacity-50'
+          } w-[250px] py-[20px] rounded-lg mx-[20px] mb-[40px] text-xl text-white font-medium flex justify-center items-center`}
           onClick={() => {
             setTestProgress(
               {

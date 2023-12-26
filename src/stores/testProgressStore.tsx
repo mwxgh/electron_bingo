@@ -1,9 +1,9 @@
-import { Answer } from '@/types/common/database'
+import { Answer, User } from '@/types/common/database'
 import { create } from 'zustand'
 
 interface TestProgress {
   uuid?: string
-  userUuid?: string
+  user?: User
   testUuid?: string
   round?: number
   answers?: Answer[]
