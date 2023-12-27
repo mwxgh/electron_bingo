@@ -15,6 +15,7 @@ import { testTableColumns } from '@/constants/common'
 import TestForm from '@/components/TestForm'
 import { errorMessages, successMessages } from '@/messages'
 import { createTest } from '@/service/tests'
+import { swapKeysAndValues } from '@/utils/common'
 
 const TestList = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -64,13 +65,14 @@ const TestList = () => {
 
   const handleOpenUpdateModal = () => {
     const test = testData.find((test) => test.uuid === selectedRowKeys[0])
+
     if (!test) return
 
     const { name, type, quantity, details } = test
 
     form.setFieldsValue({
       name,
-      type,
+      type: swapKeysAndValues(typeLabels)[type],
       quantity,
       details,
     })
@@ -165,6 +167,8 @@ const TestList = () => {
             color="success"
             onClick={() => {
               setIsOpen(true)
+              form.resetFields()
+              setAction('create')
             }}
           >
             Thêm
@@ -185,6 +189,7 @@ const TestList = () => {
         }
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        isCreate={action === 'create'}
         onSubmit={action === 'create' ? handleCreateTest : handleUpdateTest}
         form={form}
       />
