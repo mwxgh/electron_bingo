@@ -132,8 +132,8 @@ const UserList = () => {
             return {
               code: item[0],
               name: item[1],
-              factory: item[4],
-              position: item[5],
+              factory: item[2],
+              position: item[3],
             }
           })
 
@@ -246,11 +246,7 @@ const UserList = () => {
           color="danger"
           size="medium"
           onClick={() => {
-            exportToExcel([
-              { Name: 'John Doe', Age: 30, City: 'New York' },
-              { Name: 'Jane Smith', Age: 25, City: 'San Francisco' },
-              { Name: 'Bob Johnson', Age: 35, City: 'Los Angeles' },
-            ])
+            exportToExcel()
           }}
         >
           Export

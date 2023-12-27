@@ -27,12 +27,12 @@ export const userTableColumns: ColumnsType<UserTableDataType> = [
   {
     title: 'Xưởng',
     dataIndex: 'factory',
-    width: 250,
+    width: 150,
   },
   {
     title: 'Công việc',
     dataIndex: 'position',
-    width: 250,
+    width: 300,
   },
   {
     title: 'Kiểm tra',
