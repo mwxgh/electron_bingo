@@ -1,6 +1,7 @@
 import Button from '@/components/Button'
 import { keyBoard } from '@/constants/common'
 import { ROUTES } from '@/constants/routes'
+import { getSettingApp } from '@/service/localStorage'
 import { getEntityById } from '@/service/manageData'
 import { useTestProgress } from '@/stores/testProgressStore'
 import { Answer, Test, TestDetail, TestType } from '@/types/common/database'
@@ -19,6 +20,7 @@ const Step3 = () => {
   const [answers, setAnswers] = useState<Answer[]>([])
   const navigate = useNavigate()
   const [isBreakTime, setIsBreakTime] = useState(false)
+  const [questionBreakTime, setQuestionBreakTime] = useState(1000)
 
   const startTimeRef = useRef<Moment | null>(null)
   const pauseTimeRef = useRef<Moment | null>(null)
@@ -32,8 +34,15 @@ const Step3 = () => {
     setQuestions(test.details)
   }
 
+  const fetchAppSetting = async () => {
+    const settings = await getSettingApp()
+
+    setQuestionBreakTime(settings.questionBreakTime ?? 1000)
+  }
+
   useEffect(() => {
     fetchTestList()
+    fetchAppSetting()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -153,7 +162,7 @@ const Step3 = () => {
       } else {
         setCurrentQuestionIndex(-1)
       }
-    }, 2000)
+    }, questionBreakTime)
   }
 
   if (!started) {

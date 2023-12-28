@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Modal, Form, Input, FormInstance, Select, InputNumber } from 'antd'
 import Button from '@/components/Button'
 import './style.css'
-import { Test, TestDetail, typeLabels } from '@/types/common/database'
+import { Setting, Test, TestDetail, typeLabels } from '@/types/common/database'
 import { colorCodePalette } from '@/constants/common'
 import EyeIcon from '@/assets/svgs/eye.svg'
 import EarIcon from '@/assets/svgs/ear.svg'
+import { getSettingApp } from '@/service/localStorage'
 
 interface Props {
   title: string
@@ -89,6 +90,25 @@ const TestForm: React.FC<Props> = ({
   form,
   isCreate,
 }) => {
+  const [appSetting, setAppSetting] = useState<Partial<Setting>>({
+    minQuantityQuestion: 1,
+    maxQuantityQuestion: 100,
+  })
+
+  const fetchAppSetting = async () => {
+    const settings = await getSettingApp()
+
+    setAppSetting({
+      minQuantityQuestion: settings.minQuantityQuestion ?? 1,
+      maxQuantityQuestion: settings.maxQuantityQuestion ?? 100,
+    })
+  }
+
+  useEffect(() => {
+    fetchAppSetting()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const onFinish = (data: Test) => {
     onSubmit(data)
     setIsOpen(false)
@@ -144,7 +164,12 @@ const TestForm: React.FC<Props> = ({
             rules={[{ required: true }]}
             className="mb-[30px]"
           >
-            <InputNumber min={5} max={20} disabled={!isCreate} />
+            <InputNumber
+              type="number"
+              min={appSetting.minQuantityQuestion}
+              max={appSetting.maxQuantityQuestion}
+              disabled={!isCreate}
+            />
           </Form.Item>
 
           {!isCreate && (
