@@ -47,7 +47,7 @@ const QuestionDetail: React.FC<QuestionDetailProps> = ({
             })
           }}
         >
-          {[1, 2, 3, 4, 5].map((item) => (
+          {[1, 2, 3, 4].map((item) => (
             <Select.Option value={item.toString()}>
               {item.toString()}
             </Select.Option>
@@ -89,8 +89,6 @@ const TestForm: React.FC<Props> = ({
   form,
   isCreate,
 }) => {
-
-
   const onFinish = (data: Test) => {
     onSubmit(data)
     setIsOpen(false)
