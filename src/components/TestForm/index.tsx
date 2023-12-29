@@ -106,7 +106,6 @@ const TestForm: React.FC<Props> = ({
 
   useEffect(() => {
     fetchAppSetting()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onFinish = (data: Test) => {
