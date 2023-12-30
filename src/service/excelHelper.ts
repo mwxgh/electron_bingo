@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx'
 import moment from 'moment'
 import { COMPANY } from '@/constants/common'
 import { getUsers } from './users'
+import { mean, round } from 'lodash'
 
 interface DataToExport {
   index: number
@@ -151,7 +152,7 @@ const prepareDataForExportExcel = async (): Promise<{
   }
 }
 
-function jsonToSheet(jsonData: DataToExport[]) {
+const jsonToSheet = (jsonData: DataToExport[]) => {
   // Calculate the maximum lengths of data, data2, and data3 arrays
   const maxArrayRound1Length = Math.max(
     ...jsonData.map((entry) => (entry.round1 ? entry.round1.length : 0)),
@@ -193,38 +194,47 @@ function jsonToSheet(jsonData: DataToExport[]) {
       ...Array(maxArrayRound1Length > 1 ? maxArrayRound1Length - 1 : 0).fill(
         '',
       ),
+      'TB1',
       'Lần 2',
       ...Array(maxArrayRound2Length > 1 ? maxArrayRound2Length - 1 : 0).fill(
         '',
       ),
+      'TB2',
       'Lần 3',
       ...Array(maxArrayRound3Length > 1 ? maxArrayRound3Length - 1 : 0).fill(
         '',
       ),
+      'TB3',
       'Lần 4',
       ...Array(maxArrayRound4Length > 1 ? maxArrayRound4Length - 1 : 0).fill(
         '',
       ),
+      'TB4',
       'Lần 5',
       ...Array(maxArrayRound5Length > 1 ? maxArrayRound5Length - 1 : 0).fill(
         '',
       ),
+      'TB5',
       'Lần 6',
       ...Array(maxArrayRound6Length > 1 ? maxArrayRound6Length - 1 : 0).fill(
         '',
       ),
+      'TB6',
       'Lần 7',
       ...Array(maxArrayRound7Length > 1 ? maxArrayRound7Length - 1 : 0).fill(
         '',
       ),
+      'TB7',
       'Lần 8',
       ...Array(maxArrayRound8Length > 1 ? maxArrayRound8Length - 1 : 0).fill(
         '',
       ),
+      'TB8',
       'Lần 9',
       ...Array(maxArrayRound9Length > 1 ? maxArrayRound9Length - 1 : 0).fill(
         '',
       ),
+      'TB9',
     ],
   ])
 
@@ -253,23 +263,50 @@ function jsonToSheet(jsonData: DataToExport[]) {
       factory,
       position,
       ...(round1 || Array(maxArrayRound1Length).fill('')),
-      ...Array(maxArrayRound1Length - round1.length).fill(''),
+      ...Array(
+        maxArrayRound1Length > 1 ? maxArrayRound1Length - round1.length : 1,
+      ).fill(''),
+      round1.length > 0 ? round(mean(round1)) : 0,
       ...(round2 || Array(maxArrayRound2Length).fill('')),
-      ...Array(maxArrayRound2Length - round2.length).fill(''),
+      ...Array(
+        maxArrayRound2Length > 1 ? maxArrayRound2Length - round2.length : 1,
+      ).fill(''),
+      round2.length > 0 ? round(mean(round2)) : 0,
       ...(round3 || Array(maxArrayRound3Length).fill('')),
-      ...Array(maxArrayRound3Length - round3.length).fill(''),
+      ...Array(
+        maxArrayRound3Length > 1 ? maxArrayRound3Length - round3.length : 1,
+      ).fill(''),
+      round3.length > 0 ? round(mean(round3)) : 0,
       ...(round4 || Array(maxArrayRound4Length).fill('')),
-      ...Array(maxArrayRound4Length - round4.length).fill(''),
+      ...Array(
+        maxArrayRound4Length > 1 ? maxArrayRound4Length - round4.length : 1,
+      ).fill(''),
+      round4.length > 0 ? round(mean(round4)) : 0,
       ...(round5 || Array(maxArrayRound5Length).fill('')),
-      ...Array(maxArrayRound5Length - round5.length).fill(''),
+      ...Array(
+        maxArrayRound5Length > 1 ? maxArrayRound5Length - round5.length : 1,
+      ).fill(''),
+      round5.length > 0 ? round(mean(round5)) : 0,
       ...(round6 || Array(maxArrayRound6Length).fill('')),
-      ...Array(maxArrayRound6Length - round6.length).fill(''),
+      ...Array(
+        maxArrayRound6Length > 1 ? maxArrayRound6Length - round6.length : 1,
+      ).fill(''),
+      round6.length > 0 ? round(mean(round6)) : 0,
       ...(round7 || Array(maxArrayRound7Length).fill('')),
-      ...Array(maxArrayRound7Length - round7.length).fill(''),
+      ...Array(
+        maxArrayRound7Length > 1 ? maxArrayRound7Length - round7.length : 1,
+      ).fill(''),
+      round7.length > 0 ? round(mean(round7)) : 0,
       ...(round8 || Array(maxArrayRound8Length).fill('')),
-      ...Array(maxArrayRound8Length - round8.length).fill(''),
+      ...Array(
+        maxArrayRound8Length > 1 ? maxArrayRound8Length - round8.length : 1,
+      ).fill(''),
+      round8.length > 0 ? round(mean(round8)) : 0,
       ...(round9 || Array(maxArrayRound9Length).fill('')),
-      ...Array(maxArrayRound9Length - round9.length).fill(''),
+      ...Array(
+        maxArrayRound9Length > 1 ? maxArrayRound9Length - round9.length : 1,
+      ).fill(''),
+      round9.length > 0 ? round(mean(round9)) : 0,
     ]
     XLSX.utils.sheet_add_aoa(ws, [row], { origin: -1 })
   })
