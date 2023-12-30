@@ -8,6 +8,7 @@ import { Answer, Test, TestDetail, TestType } from '@/types/common/database'
 import moment, { Moment } from 'moment'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import sound from '@/assets/sound.mp3'
 
 const Step3 = () => {
   const { testProgress, setTestProgress } = useTestProgress()
@@ -54,7 +55,7 @@ const Step3 = () => {
       started === true &&
       !isBreakTime
     ) {
-      const audio = new Audio('/src/assets/sound.mp3')
+      const audio = new Audio(sound)
       audio.play()
     }
   }, [currentQuestionIndex, questions, started, isBreakTime])
@@ -143,10 +144,13 @@ const Step3 = () => {
     setPauseTime(currentPauseTime)
 
     intervalIdRef.current = window.setInterval(() => {
-      setTime(
-        moment.duration(moment().diff(startTimeRef.current)).asMilliseconds() -
-          currentPauseTime,
-      )
+      if (!isBreakTime) {
+        setTime(
+          moment
+            .duration(moment().diff(startTimeRef.current))
+            .asMilliseconds() - currentPauseTime,
+        )
+      }
     }, 1)
   }
 
