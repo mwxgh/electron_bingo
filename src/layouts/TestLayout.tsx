@@ -9,7 +9,6 @@ const TestLayout = () => {
   const stepId = Number(params.stepId)
   const step = testSteps[stepId - 1]
 
-
   useEffect(() => {
     if (!stepId || !step) {
       navigate(ROUTES.NOT_FOUND, {
@@ -26,7 +25,6 @@ const TestLayout = () => {
           const stepIndex = index + 1
 
           const handleOnClick = () => {
-
             if (stepIndex >= stepId) return
             navigate(`${ROUTES.PERFORM_TEST}/${stepIndex}`)
           }
