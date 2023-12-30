@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as XLSX from 'xlsx'
 import moment from 'moment'
@@ -20,6 +21,7 @@ interface DataToExport {
   round7: number[]
   round8: number[]
   round9: number[]
+  [key: string]: any
 }
 const fileName = `${COMPANY}_${moment().format('DD_MM_YYYY')}.xlsx`
 
