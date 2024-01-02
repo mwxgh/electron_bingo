@@ -2,6 +2,8 @@
   "name": "electron_bingo",
   "private": true,
   "version": "0.0.0",
+  "description": "Electron + Vite + React + TypeScript",
+  "author":"h1nguyenkhanh x mwxgh",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
