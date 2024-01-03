@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export enum TestType {
   hear = 'hear',
   sight = 'sight',
@@ -61,4 +62,35 @@ export interface Database {
   users: User[]
   tests: Test[]
   testResults: TestResult[]
+}
+
+export interface DataToExport {
+  index: number
+  code: string
+  name: string
+  factory: string
+  position: string
+  round1: number[]
+  round2: number[]
+  round3: number[]
+  round4: number[]
+  round5: number[]
+  round6: number[]
+  round7: number[]
+  round8: number[]
+  round9: number[]
+  [key: string]: any
+}
+
+export interface IndexedDataUser {
+  index: number
+  code: string
+  name: string
+  position: string
+  factory: string
+  testingProcess?: TestResultDetail[] | undefined
+}
+
+export interface DataUserClassified extends IndexedDataUser {
+  testingProcess: TestResultDetail[]
 }
