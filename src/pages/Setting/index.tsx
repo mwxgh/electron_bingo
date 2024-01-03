@@ -9,8 +9,8 @@ const Setting = () => {
   const [form] = useForm()
   const [api, contextHolder] = notification.useNotification()
 
-  const fetchAppSetting = async () => {
-    const settings = await getSettingApp()
+  const fetchAppSetting = () => {
+    const settings = getSettingApp()
     form.setFieldsValue(settings)
   }
 
@@ -19,9 +19,9 @@ const Setting = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleOnSaveSetting = async (data: TSetting) => {
+  const handleOnSaveSetting = (data: TSetting) => {
     try {
-      await saveSettingApp(data)
+      saveSettingApp(data)
 
       api.success({
         message: 'Lưu tùy chỉnh thành công',
@@ -58,7 +58,7 @@ const Setting = () => {
               </span>
             }
             name="minQuantityQuestion"
-            rules={[{ required: true, message: 'Không được để trống' }]}
+            rules={[{ required: true }]}
             className="mb-[50px]"
           >
             <InputNumber
@@ -76,8 +76,7 @@ const Setting = () => {
               </span>
             }
             name="maxQuantityQuestion"
-            rules={[{ required: true, message: 'Không được để trống' }]}
-            className="mb-[50px]"
+            rules={[{ required: true }]}
           >
             <InputNumber
               type="number"
@@ -94,7 +93,7 @@ const Setting = () => {
                 </span>
               }
               name="questionBreakTime"
-              rules={[{ required: true, message: 'Không được để trống' }]}
+              rules={[{ required: true }]}
               className="mb-[50px]"
             >
               <InputNumber

@@ -48,5 +48,6 @@ export const getSettingApp = (): Setting => {
       storage.data.maxQuantityQuestion ?? DEFAULT_SETTING.MAX_QUANTITY_QUESTION,
     questionBreakTime:
       storage.data.questionBreakTime ?? DEFAULT_SETTING.QUESTION_BREAK_TIME,
+    sound: storage.data.sound ?? DEFAULT_SETTING.SOUND,
   }
 }

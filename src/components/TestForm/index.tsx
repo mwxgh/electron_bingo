@@ -96,7 +96,7 @@ const TestForm: React.FC<Props> = ({
   })
 
   const fetchAppSetting = async () => {
-    const settings = await getSettingApp()
+    const settings = getSettingApp()
 
     setAppSetting({
       minQuantityQuestion: settings.minQuantityQuestion ?? 1,

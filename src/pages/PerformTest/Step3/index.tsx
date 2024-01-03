@@ -8,7 +8,7 @@ import { Answer, Test, TestDetail, TestType } from '@/types/common/database'
 import moment, { Moment } from 'moment'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import sound from '@/assets/sound.mp3'
+import sound from '@/assets/sound/sound1.mp3'
 
 const Step3 = () => {
   const { testProgress, setTestProgress } = useTestProgress()
