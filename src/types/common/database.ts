@@ -15,6 +15,7 @@ export interface Setting {
   minQuantityQuestion: number
   maxQuantityQuestion: number
   questionBreakTime: number
+  sound: number
   [key: string]: number
 }
 

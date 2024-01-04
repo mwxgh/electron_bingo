@@ -7,6 +7,7 @@ export const DEFAULT_SETTING = {
   QUESTION_BREAK_TIME: 2000,
   MIN_QUANTITY_QUESTION: 5,
   MAX_QUANTITY_QUESTION: 20,
+  SOUND: 1,
 }
 
 export const userTableColumns: ColumnsType<UserTableDataType> = [
