@@ -13,13 +13,16 @@ const Locked = () => {
 
   const handleOnSubmit = () => {
     if (checkProtectAppCode(appCode)) {
-      navigate(ROUTES.HOME)
       saveProtectAppCode(appCode)
 
       api.success({
         message: 'Mở khóa ứng dụng thành công!',
         duration: 1,
       })
+
+      setTimeout(() => {
+        navigate(ROUTES.HOME)
+      }, 1500)
     } else {
       api.error({
         message: 'Mã không hợp lệ!',
