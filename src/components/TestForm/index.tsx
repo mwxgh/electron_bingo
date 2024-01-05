@@ -30,7 +30,7 @@ const QuestionDetail: React.FC<QuestionDetailProps> = ({
 }) => {
   return (
     <div className="flex items-center mb-[15px]">
-      <p className="mr-[15px]">Câu {index + 1}:</p>
+      <p className="mr-[10px] whitespace-nowrap w-[50px]">Câu {index + 1}:</p>
       <div className="mr-[15px]">
         {detail.type === 'sight' ? (
           <EyeIcon width="30" height="30" />

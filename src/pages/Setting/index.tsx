@@ -1,13 +1,16 @@
 import Button from '@/components/Button'
 import { getSettingApp, saveSettingApp } from '@/service/localStorage'
 import { Setting as TSetting } from '@/types/common/database'
-import { Form, InputNumber, notification } from 'antd'
+import { Form, InputNumber, Select, notification } from 'antd'
 import { useForm } from 'antd/es/form/Form'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import SoundIcon from '@/assets/svgs/sound.svg'
+import { soundsSource } from '@/constants/common'
 
 const Setting = () => {
   const [form] = useForm()
   const [api, contextHolder] = notification.useNotification()
+  const isPlaying = useRef(false)
 
   const fetchAppSetting = () => {
     const settings = getSettingApp()
@@ -35,6 +38,19 @@ const Setting = () => {
     }
   }
 
+  const playSound = () => {
+    if (!isPlaying.current) {
+      isPlaying.current = true
+
+      const audio = new Audio(soundsSource[form.getFieldValue('sound')])
+      audio.play()
+
+      setTimeout(() => {
+        isPlaying.current = false
+      }, 1000)
+    }
+  }
+
   return (
     <div className="h-full w-full flex items-center justify-center flex-col">
       {contextHolder}
@@ -58,7 +74,19 @@ const Setting = () => {
               </span>
             }
             name="minQuantityQuestion"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true },
+              {
+                validator: (_, value) => {
+                  if (value < form.getFieldValue('maxQuantityQuestion')) {
+                    return Promise.resolve()
+                  } else {
+                    return Promise.reject()
+                  }
+                },
+                message: 'Không thể lớn hơn hoặc bằng câu hỏi tối đa',
+              },
+            ]}
             className="mb-[50px]"
           >
             <InputNumber
@@ -76,7 +104,20 @@ const Setting = () => {
               </span>
             }
             name="maxQuantityQuestion"
-            rules={[{ required: true }]}
+            rules={[
+              { required: true },
+              {
+                validator: (_, value) => {
+                  if (value > form.getFieldValue('minQuantityQuestion')) {
+                    return Promise.resolve()
+                  } else {
+                    return Promise.reject()
+                  }
+                },
+                message: 'Không thể nhỏ hơn hoặc bằng câu hỏi tối thiểu',
+              },
+            ]}
+            className="mb-[50px]"
           >
             <InputNumber
               type="number"
@@ -108,7 +149,30 @@ const Setting = () => {
               ms
             </span>
           </div>
-
+          <div className="relative">
+            <Form.Item
+              label={
+                <span className="text-2xl font-medium text-[#475569]">
+                  Âm thanh
+                </span>
+              }
+              name="sound"
+              rules={[{ required: true }]}
+              className="w-full"
+            >
+              <Select>
+                <Select.Option value={0}>1</Select.Option>
+                <Select.Option value={1}>2</Select.Option>
+                <Select.Option value={2}>3</Select.Option>
+              </Select>
+            </Form.Item>
+            <span
+              className="absolute top-[57%] -translate-y-1/2 right-[-30px] text-xl cursor-pointer"
+              onClick={playSound}
+            >
+              <SoundIcon width={20} height={20} />
+            </span>
+          </div>
           <Form.Item className="flex justify-center">
             <Button color="info">Lưu</Button>
           </Form.Item>

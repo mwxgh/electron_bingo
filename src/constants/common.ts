@@ -1,5 +1,8 @@
 import { TestTableDataType, UserTableDataType } from '@/types/common/table'
 import type { ColumnsType } from 'antd/es/table'
+import Sound1 from '@/assets/sound/sound1.mp3'
+import Sound2 from '@/assets/sound/sound2.mp3'
+import Sound3 from '@/assets/sound/sound3.mp3'
 
 export const NUMBER_OF_TEST = 9
 export const COMPANY = 'NOSAH_SAFETY'
@@ -154,3 +157,5 @@ export const excelFileHeader = [
   'Xưởng',
   'Công việc',
 ] as const
+
+export const soundsSource = [Sound1, Sound2, Sound3]

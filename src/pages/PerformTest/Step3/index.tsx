@@ -1,14 +1,13 @@
 import Button from '@/components/Button'
-import { keyBoard } from '@/constants/common'
+import { keyBoard, soundsSource } from '@/constants/common'
 import { ROUTES } from '@/constants/routes'
 import { getSettingApp } from '@/service/localStorage'
 import { getEntityById } from '@/service/manageData'
 import { useTestProgress } from '@/stores/testProgressStore'
 import { Answer, Test, TestDetail, TestType } from '@/types/common/database'
 import moment, { Moment } from 'moment'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import sound from '@/assets/sound/sound1.mp3'
 
 const Step3 = () => {
   const { testProgress, setTestProgress } = useTestProgress()
@@ -22,10 +21,12 @@ const Step3 = () => {
   const navigate = useNavigate()
   const [isBreakTime, setIsBreakTime] = useState(false)
   const [questionBreakTime, setQuestionBreakTime] = useState(1000)
+  const [soundIndex, setSoundIndex] = useState(0)
 
   const startTimeRef = useRef<Moment | null>(null)
   const pauseTimeRef = useRef<Moment | null>(null)
   const intervalIdRef = useRef<number | null>(null)
+  const audioRepeatRef = useRef<NodeJS.Timeout | null>(null)
 
   const fetchTestList = async () => {
     const test = (await getEntityById(
@@ -39,11 +40,32 @@ const Step3 = () => {
     const settings = await getSettingApp()
 
     setQuestionBreakTime(settings.questionBreakTime ?? 1000)
+    setSoundIndex(settings.sound ?? 0)
   }
+
+  const playAudio = useCallback(() => {
+    const audio = new Audio(soundsSource[soundIndex])
+    audio.play()
+
+    if (audioRepeatRef.current) {
+      clearInterval(audioRepeatRef.current)
+    }
+
+    audioRepeatRef.current = setInterval(() => {
+      audio.play()
+    }, 1000)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [soundIndex])
 
   useEffect(() => {
     fetchTestList()
     fetchAppSetting()
+
+    return () => {
+      if (audioRepeatRef.current) {
+        clearInterval(audioRepeatRef.current)
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -55,10 +77,16 @@ const Step3 = () => {
       started === true &&
       !isBreakTime
     ) {
-      const audio = new Audio(sound)
-      audio.play()
+      playAudio()
     }
-  }, [currentQuestionIndex, questions, started, isBreakTime])
+  }, [
+    currentQuestionIndex,
+    questions,
+    started,
+    isBreakTime,
+    soundIndex,
+    playAudio,
+  ])
 
   const handleOnChoseCorrectAnswer = () => {
     if (isBreakTime) return
@@ -114,6 +142,10 @@ const Step3 = () => {
   const pauseTestTime = () => {
     setIsPause(true)
 
+    if (audioRepeatRef.current) {
+      clearInterval(audioRepeatRef.current)
+    }
+
     if (intervalIdRef.current !== null) {
       pauseTimeRef.current = moment()
       clearInterval(intervalIdRef.current)
@@ -137,6 +169,8 @@ const Step3 = () => {
   const resumeTestTime = () => {
     setIsPause(false)
 
+    playAudio()
+
     const currentPauseTime =
       pauseTime +
       moment.duration(moment().diff(pauseTimeRef.current)).asMilliseconds()
@@ -156,6 +190,10 @@ const Step3 = () => {
 
   const nextQuestion = () => {
     stopTestTime()
+
+    if (audioRepeatRef.current) {
+      clearInterval(audioRepeatRef.current)
+    }
 
     setTimeout(() => {
       setIsBreakTime(false)
