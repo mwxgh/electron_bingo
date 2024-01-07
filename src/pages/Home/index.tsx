@@ -9,7 +9,7 @@ import SettingIcon from '@/assets/svgs/setting.svg'
 const Home = () => {
   const navigate = useNavigate()
   return (
-    <div className="flex justify-center items-center h-full">
+    <div className="flex justify-center items-center h-screen">
       <ul>
         <li>
           <Button

@@ -74,7 +74,7 @@ function Step4() {
   }
 
   return (
-    <div>
+    <div className='text-white'>
       {contextHolder}
       <div className="flex">
         <div className="w-full">

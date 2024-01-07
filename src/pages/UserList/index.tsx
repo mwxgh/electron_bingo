@@ -257,18 +257,19 @@ const UserList = () => {
           className="hidden"
         />
       </div>
-      <Typography.Title level={5}>Tìm kiếm</Typography.Title>
+
+      <Typography.Title level={5} style={{ color: '#fff' }}>
+        Tìm kiếm
+      </Typography.Title>
       <div className="flex items-center mb-[20px] justify-between">
-        <div>
-          <Input.Search
-            style={{ width: 300 }}
-            className="w-[300px]"
-            size="large"
-            onSearch={(value) => {
-              setKeyword(value)
-            }}
-          />
-        </div>
+        <Input.Search
+          style={{ width: 300 }}
+          className="w-[300px]"
+          size="large"
+          onSearch={(value) => {
+            setKeyword(value)
+          }}
+        />
         <div className="flex items-center">
           {selectedRowKeys.length > 0 && (
             <Button

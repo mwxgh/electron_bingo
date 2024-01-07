@@ -32,13 +32,18 @@ const UserForm: React.FC<Props> = ({
 
   return (
     <Modal
-      title={<div className="text-xl text-center">{title}</div>}
+      title={
+        <div className="text-xl text-center bg-transparent text-white">
+          {title}
+        </div>
+      }
       open={isOpen}
       onCancel={handleClose}
       footer={null}
       width={500}
+      className="p-0"
+      centered
     >
-      <div className="h-[1px] bg-slate-400 mt-[15px] w-[40%] mx-auto"></div>
       {isOpen && (
         <Form
           name="basic"
@@ -49,7 +54,7 @@ const UserForm: React.FC<Props> = ({
           onFinish={onFinish}
         >
           <Form.Item<User>
-            label={<span className="text-lg ">Mã nhân viên</span>}
+            label={<span className="text-lg text-white">Mã nhân viên</span>}
             name="code"
             rules={[{ required: true }]}
             className="mb-[30px]"
@@ -58,7 +63,7 @@ const UserForm: React.FC<Props> = ({
           </Form.Item>
 
           <Form.Item<User>
-            label={<span className="text-lg ">Họ và tên</span>}
+            label={<span className="text-lg text-white">Họ và tên</span>}
             name="name"
             rules={[{ required: true }]}
             className="mb-[30px]"
@@ -67,7 +72,7 @@ const UserForm: React.FC<Props> = ({
           </Form.Item>
 
           <Form.Item<User>
-            label={<span className="text-lg ">Xưởng</span>}
+            label={<span className="text-lg text-white">Xưởng</span>}
             name="factory"
             className="mb-[30px]"
           >
@@ -75,7 +80,7 @@ const UserForm: React.FC<Props> = ({
           </Form.Item>
 
           <Form.Item<User>
-            label={<span className="text-lg ">Công việc</span>}
+            label={<span className="text-lg text-white">Công việc</span>}
             name="position"
             className="mb-[30px]"
           >

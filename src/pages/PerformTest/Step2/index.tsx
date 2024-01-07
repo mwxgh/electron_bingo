@@ -31,8 +31,8 @@ const Step2 = () => {
       {testData.map((item, index) => (
         <div
           key={index}
-          className={`bg-sky-600 hover:bg-sky-500 cursor-pointer ${
-            passedTests.includes(item.uuid ?? '') && 'opacity-50'
+          className={`bg-[#DD6937] hover:bg-[#dd6937d8] cursor-pointer ${
+            passedTests.includes(item.uuid ?? '') && 'opacity-60'
           } w-[250px] py-[20px] rounded-lg mx-[20px] mb-[40px] text-xl text-white font-medium flex justify-center items-center`}
           onClick={() => {
             setTestProgress(

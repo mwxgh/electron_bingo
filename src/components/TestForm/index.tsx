@@ -30,7 +30,9 @@ const QuestionDetail: React.FC<QuestionDetailProps> = ({
 }) => {
   return (
     <div className="flex items-center mb-[15px]">
-      <p className="mr-[10px] whitespace-nowrap w-[50px]">Câu {index + 1}:</p>
+      <p className="mr-[10px] whitespace-nowrap w-[50px] text-white">
+        Câu {index + 1}:
+      </p>
       <div className="mr-[15px]">
         {detail.type === 'sight' ? (
           <EyeIcon width="30" height="30" />
@@ -48,10 +50,8 @@ const QuestionDetail: React.FC<QuestionDetailProps> = ({
             })
           }}
         >
-          {[1, 2, 3, 4].map((item) => (
-            <Select.Option value={item.toString()}>
-              {item.toString()}
-            </Select.Option>
+          {['1', '2', '3', '4'].map((item) => (
+            <Select.Option value={item}>{item}</Select.Option>
           ))}
         </Select>
       </div>
@@ -119,13 +119,14 @@ const TestForm: React.FC<Props> = ({
 
   return (
     <Modal
-      title={<div className="text-xl text-center">{title}</div>}
+      title={<div className="text-xl text-center text-white">{title}</div>}
       open={isOpen}
       onCancel={handleClose}
       footer={null}
       width={500}
+      className="p-0"
+      centered
     >
-      <div className="h-[1px] bg-slate-400 mt-[15px] w-[40%] mx-auto"></div>
       {isOpen && (
         <Form
           name="basic"
@@ -136,7 +137,7 @@ const TestForm: React.FC<Props> = ({
           onFinish={onFinish}
         >
           <Form.Item
-            label={<span className="text-lg ">Tên đề kiểm tra</span>}
+            label={<span className="text-lg text-white">Tên đề kiểm tra</span>}
             name="name"
             rules={[{ required: true }]}
             className="mb-[30px]"
@@ -144,7 +145,7 @@ const TestForm: React.FC<Props> = ({
             <Input />
           </Form.Item>
           <Form.Item
-            label={<span className="text-lg ">Loại đề kiểm tra</span>}
+            label={<span className="text-lg text-white">Loại đề kiểm tra</span>}
             name="type"
             rules={[{ required: true }]}
             className="mb-[30px]"
@@ -158,7 +159,7 @@ const TestForm: React.FC<Props> = ({
             </Select>
           </Form.Item>
           <Form.Item
-            label={<span className="text-lg ">Số câu hỏi</span>}
+            label={<span className="text-lg text-white">Số câu hỏi</span>}
             name="quantity"
             rules={[{ required: true }]}
             className="mb-[30px]"
@@ -173,7 +174,9 @@ const TestForm: React.FC<Props> = ({
 
           {!isCreate && (
             <Form.Item
-              label={<span className="text-lg ">Chi tiết câu hỏi</span>}
+              label={
+                <span className="text-lg text-white">Chi tiết câu hỏi</span>
+              }
               name="details"
               rules={[{ required: true }]}
               className="mb-[30px]"
@@ -206,7 +209,7 @@ const TestForm: React.FC<Props> = ({
           )}
 
           <Form.Item className="flex justify-center">
-            <Button color="info">Xác nhận</Button>
+            <Button color="orange">Xác nhận</Button>
           </Form.Item>
         </Form>
       )}

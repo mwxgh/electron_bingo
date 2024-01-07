@@ -1,0 +1,42 @@
+.ant-pagination .ant-pagination-item a {
+  color: #fff;
+}
+
+.ant-pagination .ant-pagination-item.ant-pagination-item-active a {
+  color: #000;
+}
+
+.ant-pagination-item-link .anticon svg {
+  fill: #fff;
+}
+
+.ant-pagination-item-ellipsis {
+  color: #fff !important;
+}
+
+table:hover,
+tr:hover,
+thead:hover {
+  background: transparent !important;
+}
+
+.ant-table-tbody > tr.ant-table-row:hover > td {
+  background: none !important;
+}
+
+.ant-table {
+  background-color: transparent !important;
+}
+
+.ant-table-thead > tr.ant-table-row:hover > td {
+  background: none !important;
+}
+
+.ant-table-thead .ant-table-cell {
+  background: transparent !important;
+  color: #fff !important;
+}
+
+.ant-table-row.ant-table-row-selected .ant-table-cell {
+  background: none !important;
+}
