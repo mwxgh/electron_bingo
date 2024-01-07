@@ -54,7 +54,9 @@ const Setting = () => {
   return (
     <div className="h-full w-full flex items-center justify-center flex-col">
       {contextHolder}
-      <span className="text-4xl font-semibold mb-[50px]">Tùy chỉnh</span>
+      <span className="text-4xl font-semibold mb-[50px] text-white">
+        Tùy chỉnh
+      </span>
 
       <div className="flex justify-center">
         <Form
@@ -69,7 +71,7 @@ const Setting = () => {
         >
           <Form.Item
             label={
-              <span className="text-2xl font-medium text-[#475569]">
+              <span className="text-2xl font-medium text-white">
                 Số lượng câu hỏi tối thiểu
               </span>
             }
@@ -93,13 +95,13 @@ const Setting = () => {
               type="number"
               min={1}
               max={100}
-              className="w-full text-xl text-[#475569]"
+              className="w-full text-xl  text-white"
             />
           </Form.Item>
 
           <Form.Item
             label={
-              <span className="text-2xl font-medium text-[#475569]">
+              <span className="text-2xl font-medium text-white">
                 Số lượng câu hỏi tối đa
               </span>
             }
@@ -123,13 +125,13 @@ const Setting = () => {
               type="number"
               min={1}
               max={100}
-              className="w-full text-xl text-[#475569]"
+              className="w-full text-xl  text-white"
             />
           </Form.Item>
           <div className="relative">
             <Form.Item
               label={
-                <span className="text-2xl font-medium text-[#475569]">
+                <span className="text-2xl font-medium  text-white">
                   Thời gian chuyển câu hỏi
                 </span>
               }
@@ -142,17 +144,17 @@ const Setting = () => {
                 min={100}
                 max={10000}
                 step={100}
-                className="w-full text-xl text-[#475569]"
+                className="w-full text-xl  text-white"
               />
             </Form.Item>
-            <span className="absolute top-1/2 -translate-y-1/2 right-[-35px] text-xl">
+            <span className="absolute top-1/2 -translate-y-1/2 right-[-35px] text-xl text-white">
               ms
             </span>
           </div>
           <div className="relative">
             <Form.Item
               label={
-                <span className="text-2xl font-medium text-[#475569]">
+                <span className="text-2xl font-medium text-white">
                   Âm thanh
                 </span>
               }

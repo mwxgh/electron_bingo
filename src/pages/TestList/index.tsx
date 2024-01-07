@@ -127,7 +127,9 @@ const TestList = () => {
   return (
     <div>
       {contextHolder}
-      <Typography.Title level={5}>Tìm kiếm</Typography.Title>
+      <Typography.Title level={5} style={{ color: '#fff' }}>
+        Tìm kiếm
+      </Typography.Title>
       <div className="flex items-center mb-[20px] justify-between">
         <div>
           <Input.Search
@@ -211,7 +213,7 @@ const TestList = () => {
         width={600}
       >
         <div className="pt-[30px]">
-          <span className="text-xl">
+          <span className="text-xl text-white">
             Bạn có chắc chắn muốn xóa các đề kiểm tra đã chọn không?
           </span>
         </div>

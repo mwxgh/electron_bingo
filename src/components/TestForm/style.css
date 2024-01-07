@@ -1,3 +1,20 @@
 .ant-form-large .ant-form-item .ant-form-item-label > label {
   height: 20px;
 }
+
+.ant-select-disabled .ant-select-selector {
+  background-color: rgb(50, 83, 150) !important;
+}
+
+.ant-select-disabled .ant-select-selector .ant-select-selection-item {
+  color: #d4d4d4 !important;
+}
+
+.ant-input-number-disabled .ant-input-number-input-wrap input {
+  background-color: rgb(50, 83, 150) !important;
+  border-radius: 9px;
+}
+
+.ant-input-number-disabled .ant-input-number-input-wrap input {
+  color: #d4d4d4 !important;
+}

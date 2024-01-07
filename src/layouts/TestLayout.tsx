@@ -31,7 +31,7 @@ const TestLayout = () => {
 
           const renderHorizontalBar = () => {
             if (stepIndex !== testSteps.length)
-              return <div className="w-[150px] h-[2px] bg-slate-600"></div>
+              return <div className="w-[150px] h-[2px] bg-white"></div>
 
             return null
           }
@@ -104,7 +104,7 @@ const TestLayout = () => {
 
   return (
     <div>
-      <div className="mb-[70px] px-[25px] mt-[20px]">{renderBreadcrumb()}</div>
+      <div className="mb-[70px] px-[25px] mt-[20px] text-white">{renderBreadcrumb()}</div>
       {/* <div className="h-[1px] w-full bg-slate-800 opacity-20" /> */}
       <Outlet />
     </div>

@@ -9,6 +9,7 @@ import { useTestProgress } from '@/stores/testProgressStore'
 import { getUsers } from '@/service/users'
 import { User } from '@/types/common/database'
 import { useEffect, useState } from 'react'
+import "./style.css"
 
 const Step1 = () => {
   const navigate = useNavigate()
@@ -59,8 +60,15 @@ const Step1 = () => {
   }, [keyword])
 
   return (
-    <div>
-      <Typography.Title level={5}>Tìm kiếm</Typography.Title>
+    <>
+      <Typography.Title
+        level={5}
+        style={{
+          color: '#fff',
+        }}
+      >
+        Tìm kiếm
+      </Typography.Title>
       <Search
         style={{ width: 300 }}
         className="w-[300px]"
@@ -76,7 +84,7 @@ const Step1 = () => {
           className="mt-[30px]"
         />
       )}
-    </div>
+    </>
   )
 }
 

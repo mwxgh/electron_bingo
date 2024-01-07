@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Table as AntdTable } from 'antd'
+import "./style.css"
 
 interface Props {
   data: any
@@ -32,10 +33,18 @@ const Table: React.FC<Props> = ({
       }}
       bordered
       scroll={{
-        y: 550,
+        y: 400,
       }}
       tableLayout="fixed"
       className={className}
+      rowClassName={"text-white hover:bg-[red] text-md"}
+      pagination={
+        {
+          rootClassName: "text-white"
+        }
+      }
+      
+      
       {...rest}
     />
   )

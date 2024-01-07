@@ -66,14 +66,13 @@ app.on('window-all-closed', () => {
 })
 
 app.on('browser-window-focus', function () {
-  globalShortcut.register("CommandOrControl+R", () => {
-      console.log("CommandOrControl+R is pressed: Shortcut Disabled");
-  });
-  globalShortcut.register("F5", () => {
-      console.log("F5 is pressed: Shortcut Disabled");
-  });
-});
-
+  globalShortcut.register('CommandOrControl+R', () => {
+    console.log('CommandOrControl+R is pressed: Shortcut Disabled')
+  })
+  globalShortcut.register('F5', () => {
+    console.log('F5 is pressed: Shortcut Disabled')
+  })
+})
 
 app.on('activate', () => {
   // On OS X it's common to re-create a window in the app when the

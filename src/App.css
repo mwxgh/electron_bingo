@@ -37,3 +37,20 @@
 .read-the-docs {
   color: #888;
 }
+
+.ant-input-search-button .anticon-search svg {
+  fill: #fff;
+}
+
+.ant-modal-content {
+  background-color: #2a5ec7 !important;
+  border: 1px solid #fff !important;
+}
+
+.ant-modal-header {
+  background-color: transparent !important;
+}
+
+.ant-modal-close-x svg {
+  fill: #fff;
+}

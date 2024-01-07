@@ -221,12 +221,12 @@ const Step3 = () => {
     <div className="px-[30px]">
       <div className="flex justify-between items-center h-[95px]">
         <div className="flex flex-col items-center">
-          <span className="font-bold text-3xl">Thời gian</span>
-          <span className="text-3xl">{time} ms</span>
+          <span className="font-bold text-3xl text-white">Thời gian</span>
+          <span className="text-3xl text-white">{time} ms</span>
         </div>
         <div className="flex flex-col items-center">
-          <span className="font-bold text-3xl">Câu hỏi</span>
-          <span className="text-3xl">
+          <span className="font-bold text-3xl text-white">Câu hỏi</span>
+          <span className="text-3xl text-white">
             {currentQuestionIndex + 1}/{questions.length}
           </span>
         </div>
@@ -281,7 +281,7 @@ const Step3 = () => {
 
           return (
             <div
-              className={`p-[50px] hover:opacity-80 cursor-pointer text-white text-3xl rounded-md`}
+              className={`p-[50px] hover:opacity-90 cursor-pointer text-white font-medium text-3xl rounded-md`}
               key={index}
               style={{
                 background: color,
@@ -298,7 +298,7 @@ const Step3 = () => {
         })}
 
         {!questions[currentQuestionIndex] && (
-          <div className="w-full flex justify-center text-2xl">
+          <div className="w-full flex justify-center text-2xl text-white">
             Bạn đã hoàn thành bài kiểm tra !
           </div>
         )}

@@ -3,6 +3,7 @@ import { getProtectAppCode } from '@/service/localStorage'
 import { checkProtectAppCode } from '@/service/settings'
 import { useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import Logo from '@/assets/image/logo.png'
 
 const AppLayout = () => {
   const navigate = useNavigate()
@@ -19,7 +20,17 @@ const AppLayout = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.href])
 
-  return <Outlet />
+  return (
+    <div className="relative bg-gradient-to-br from-blue-400 to-blue-900 min-h-screen">
+      <img
+        src={Logo}
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10"
+      />
+      <div className="relative z-1 grow">
+        <Outlet />
+      </div>
+    </div>
+  )
 }
 
 export default AppLayout
