@@ -9,7 +9,11 @@ import SettingIcon from '@/assets/svgs/setting.svg'
 const Home = () => {
   const navigate = useNavigate()
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center h-screen">
+      <p className="text-white font-bold text-3xl text-center mb-[20px] w-[700px]">
+        CÔNG TY CỔ PHẦN TRUYỀN THÔNG VÀ DỊCH VỤ AN TOÀN VỆ SINH LAO ĐÔNG QUỐC
+        GIA
+      </p>
       <ul>
         <li>
           <Button
