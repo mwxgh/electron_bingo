@@ -10,7 +10,7 @@ const Home = () => {
   const navigate = useNavigate()
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-      <p className="text-white font-bold text-3xl text-center mb-[20px] w-[700px]">
+      <p className="text-white font-bold text-4xl text-center mb-[20px] w-[800px] absolute top-[60px]">
         CÔNG TY CỔ PHẦN TRUYỀN THÔNG VÀ DỊCH VỤ AN TOÀN VỆ SINH LAO ĐÔNG QUỐC
         GIA
       </p>
@@ -20,7 +20,6 @@ const Home = () => {
             onClick={() => navigate(ROUTES.PERFORM_TEST + '/1')}
             size="large"
             icon={<TestIcon width={30} height={30} />}
-            className="mt-[50px]"
           >
             Kiểm tra
           </Button>
