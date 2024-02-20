@@ -11,11 +11,15 @@ interface TestProgress {
 
 type UseTestProgressStore = {
   testProgress: TestProgress
+  resetTestProgress: () => void
   setTestProgress: (progress: TestProgress, replace?: boolean) => void
 }
 
 export const useTestProgress = create<UseTestProgressStore>((set) => ({
   testProgress: {},
+  resetTestProgress: () => {
+    set({})
+  },
   setTestProgress: (testProgress: TestProgress, replace?: boolean) =>
     set((state) => {
       return {

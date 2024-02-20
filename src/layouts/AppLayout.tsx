@@ -29,6 +29,7 @@ const AppLayout = () => {
       <div className="relative z-1 grow">
         <Outlet />
       </div>
+      <p className='absolute bottom-[15px] right-[15px] text-white'>Phần mềm thuộc sở hữu của Công ty Cổ phần Truyền thông và Dịch vụ An toàn vệ sinh lao động Quốc Gia</p>
     </div>
   )
 }
