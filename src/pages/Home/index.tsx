@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div className="flex flex-col justify-center items-center h-screen">
       <p className="text-white font-bold text-4xl text-center mb-[20px] w-[800px] absolute top-[60px]">
-        CÔNG TY CỔ PHẦN TRUYỀN THÔNG VÀ DỊCH VỤ AN TOÀN VỆ SINH LAO ĐÔNG QUỐC
+        CÔNG TY CỔ PHẦN TRUYỀN THÔNG VÀ DỊCH VỤ AN TOÀN VỆ SINH LAO ĐỘNG QUỐC
         GIA
       </p>
       <ul>

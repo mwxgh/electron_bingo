@@ -85,36 +85,36 @@ export const testSteps = [
 
 export const colorCodePalette = [
   {
-    name: 'crimson',
-    hex: '#DC143C',
+    name: 'red',
+    hex: '#FF0000',
   },
   {
-    name: 'deepPink',
-    hex: '#FF1493',
+    name: 'mediumVioletRed',
+    hex: '#C71585',
   },
   {
-    name: 'orangeRed',
-    hex: '#FF4500',
+    name: 'darkOrange',
+    hex: '#FF8C00',
   },
   {
-    name: 'gold',
-    hex: '#FFD700',
+    name: 'yellow',
+    hex: '#FFFF00',
   },
   {
-    name: 'darkOrchid',
-    hex: '#9932CC',
+    name: 'blueViolet',
+    hex: '#8A2BE2',
   },
   {
-    name: 'forestGreen',
-    hex: '#228B22',
+    name: 'darkGreen',
+    hex: '#006400',
   },
   {
-    name: 'steelBlue',
-    hex: '#4682B4',
+    name: 'maroon',
+    hex: '#800000',
   },
   {
-    name: 'sienna',
-    hex: '#A0522D',
+    name: 'navy',
+    hex: '#000080',
   },
 ]
 

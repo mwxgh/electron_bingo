@@ -37,7 +37,7 @@ const Step3 = () => {
   }
 
   const fetchAppSetting = async () => {
-    const settings = await getSettingApp()
+    const settings = getSettingApp()
 
     setQuestionBreakTime(settings.questionBreakTime ?? 1000)
     setSoundIndex(settings.sound ?? 0)
@@ -53,7 +53,7 @@ const Step3 = () => {
 
     audioRepeatRef.current = setInterval(() => {
       audio.play()
-    }, 1000)
+    }, 200)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [soundIndex])
 
@@ -210,7 +210,11 @@ const Step3 = () => {
   if (!started) {
     return (
       <div className="px-[30px] h-full flex justify-center items-center">
-        <Button color="info" className="mt-[200px]" onClick={startTestTime}>
+        <Button
+          color="orange"
+          className="font-bold text-[30px] mt-[200px]"
+          onClick={startTestTime}
+        >
           Bắt đầu
         </Button>
       </div>
@@ -267,7 +271,7 @@ const Step3 = () => {
 
           if (item.key === currentQuestion.key) {
             if (currentQuestion.value === 'sound') {
-              color = '#0ea5e9'
+              color = '#94a3b8'
             } else {
               color = currentQuestion.value
             }
