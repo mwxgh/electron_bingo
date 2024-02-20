@@ -210,12 +210,8 @@ const Step3 = () => {
   if (!started) {
     return (
       <div className="px-[30px] h-full flex justify-center items-center">
-        <Button
-          color="orange"
-          className="font-bold text-[30px] mt-[200px]"
-          onClick={startTestTime}
-        >
-          Bắt đầu
+        <Button color="orange" className="mt-[200px]" onClick={startTestTime}>
+          <span className="font-bold text-3xl text-white">Bắt đầu</span>
         </Button>
       </div>
     )

@@ -11,10 +11,10 @@ const TestListComplete: React.FC<Props> = ({ completedTest, onClick }) => {
     <div>
       {[...Array(NUMBER_OF_TEST)].map((_, index) => (
         <span
-          className={`bg-[#DD6937] px-[20px] rounded-full text-white ml-[10px] ${
+          className={`px-[20px] rounded-full text-white ml-[10px] ${
             completedTest.includes(index + 1)
               ? 'bg-[#839197] opacity-80 cursor-default'
-              : 'hover:bg-[#dd6937d8] cursor-pointer'
+              : 'bg-[#DD6937] hover:bg-[#dd6937d8] cursor-pointer'
           }`}
           onClick={() => {
             onClick?.(index + 1)
