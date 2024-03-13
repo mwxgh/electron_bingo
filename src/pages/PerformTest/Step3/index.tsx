@@ -207,6 +207,23 @@ const Step3 = () => {
     }, questionBreakTime)
   }
 
+  const backQuestion = () => {
+    stopTestTime()
+
+    if (audioRepeatRef.current) {
+      clearInterval(audioRepeatRef.current)
+    }
+
+    setTimeout(() => {
+      setIsBreakTime(false)
+
+      if (currentQuestionIndex > 0 && currentQuestionIndex !== -1) {
+        startTestTime()
+        setCurrentQuestionIndex(currentQuestionIndex - 1)
+      }
+    }, questionBreakTime)
+  }
+
   if (!started) {
     return (
       <div className="px-[30px] h-full flex justify-center items-center">
@@ -219,46 +236,57 @@ const Step3 = () => {
 
   return (
     <div className="px-[30px]">
-      <div className="flex justify-between items-center h-[95px]">
-        <div className="flex flex-col items-center">
+      <div className="flex items-center h-[95px]">
+        <div className="flex flex-col items-start w-[33.3%] whitespace-nowrap">
           <span className="font-bold text-3xl text-white">Thời gian</span>
           <span className="text-3xl text-white">{time} ms</span>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center w-[33.3%]">
           <span className="font-bold text-3xl text-white">Câu hỏi</span>
           <span className="text-3xl text-white">
             {currentQuestionIndex + 1}/{questions.length}
           </span>
         </div>
-        <div className="w-[174.14px]">
-          {questions[currentQuestionIndex] ? (
+        <div className="w-[33.3%] flex justify-end">
+          {currentQuestionIndex > 0 && currentQuestionIndex !== -1 && (
             <Button
               size="medium"
               className="text-xl w-[170px]"
-              onClick={isPause ? resumeTestTime : pauseTestTime}
+              onClick={backQuestion}
             >
-              {isPause ? 'Tiếp tục' : 'Tạm dừng'}
-            </Button>
-          ) : (
-            <Button
-              size="medium"
-              className="text-xl w-[170px]"
-              onClick={() => {
-                setTestProgress(
-                  {
-                    answers,
-                  },
-                  true,
-                )
-                navigate(`${ROUTES.PERFORM_TEST}/${4}`)
-              }}
-            >
-              Hoàn thành
+              Quay lại
             </Button>
           )}
+          <div className="ml-4">
+            {questions[currentQuestionIndex] ? (
+              <Button
+                size="medium"
+                className="text-xl w-[170px]"
+                onClick={isPause ? resumeTestTime : pauseTestTime}
+              >
+                {isPause ? 'Tiếp tục' : 'Tạm dừng'}
+              </Button>
+            ) : (
+              <Button
+                size="medium"
+                className="text-xl w-[170px]"
+                onClick={() => {
+                  setTestProgress(
+                    {
+                      answers,
+                    },
+                    true,
+                  )
+                  navigate(`${ROUTES.PERFORM_TEST}/${4}`)
+                }}
+              >
+                Hoàn thành
+              </Button>
+            )}
+          </div>
         </div>
       </div>
-      <div className="flex justify-between px-[100px] mt-[100px]">
+      <div className="flex px-[100px] mt-[100px] gap-16">
         {keyBoard.map((item, index) => {
           const currentQuestion = questions[currentQuestionIndex]
           let color
@@ -281,7 +309,7 @@ const Step3 = () => {
 
           return (
             <div
-              className={`p-[50px] hover:opacity-90 cursor-pointer text-white font-medium text-3xl rounded-md`}
+              className={`p-[50px] hover:opacity-90 cursor-pointer text-white font-medium text-3xl rounded-md w-1/5 text-center`}
               key={index}
               style={{
                 background: color,
