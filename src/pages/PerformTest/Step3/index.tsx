@@ -9,6 +9,8 @@ import moment, { Moment } from 'moment'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+const COUNT_DOWN_TIME = 3
+
 const Step3 = () => {
   const { testProgress, setTestProgress } = useTestProgress()
   const [questions, setQuestions] = useState<Partial<TestDetail[]>>([])
@@ -22,11 +24,13 @@ const Step3 = () => {
   const [isBreakTime, setIsBreakTime] = useState(false)
   const [questionBreakTime, setQuestionBreakTime] = useState(1000)
   const [soundIndex, setSoundIndex] = useState(0)
+  const [countDown, setCountDown] = useState(COUNT_DOWN_TIME + 1)
 
   const startTimeRef = useRef<Moment | null>(null)
   const pauseTimeRef = useRef<Moment | null>(null)
   const intervalIdRef = useRef<number | null>(null)
   const audioRepeatRef = useRef<NodeJS.Timeout | null>(null)
+  const countDownRef = useRef<NodeJS.Timeout | null>(null)
 
   const fetchTestList = async () => {
     const test = (await getEntityById(
@@ -95,13 +99,14 @@ const Step3 = () => {
 
     if (currentQuestion) {
       setAnswers((preAnswers) => {
-        return [
-          ...preAnswers,
-          {
-            type: currentQuestion?.type,
-            time,
-          },
-        ]
+        const newAnswers = [...preAnswers]
+
+        newAnswers[currentQuestionIndex] = {
+          type: currentQuestion?.type,
+          time,
+        }
+
+        return newAnswers
       })
       setIsBreakTime(true)
 
@@ -132,9 +137,14 @@ const Step3 = () => {
 
     startTimeRef.current = moment()
 
+    if (intervalIdRef.current) {
+      window.clearInterval(intervalIdRef.current)
+    }
+
     intervalIdRef.current = window.setInterval(() => {
       setTime(
-        moment.duration(moment().diff(startTimeRef.current)).asMilliseconds(),
+        moment.duration(moment().diff(startTimeRef.current)).asMilliseconds() ||
+          0,
       )
     }, 1)
   }
@@ -207,58 +217,111 @@ const Step3 = () => {
     }, questionBreakTime)
   }
 
-  if (!started) {
+  const backQuestion = () => {
+    stopTestTime()
+
+    if (audioRepeatRef.current) {
+      clearInterval(audioRepeatRef.current)
+    }
+
+    setTimeout(() => {
+      setIsBreakTime(false)
+
+      if (currentQuestionIndex > 0 && currentQuestionIndex !== -1) {
+        startTestTime()
+        setCurrentQuestionIndex(currentQuestionIndex - 1)
+      }
+    }, questionBreakTime)
+  }
+
+  useEffect(() => {
+    if (countDownRef.current && countDown === 0) {
+      clearInterval(countDownRef.current)
+      startTestTime()
+    }
+  }, [countDown])
+
+  const startCountDown = () => {
+    setCountDown((currentCountDown) => currentCountDown - 1)
+
+    countDownRef.current = setInterval(() => {
+      setCountDown((currentCountDown) => currentCountDown - 1)
+    }, 1000)
+  }
+
+  if (countDown === COUNT_DOWN_TIME + 1) {
     return (
       <div className="px-[30px] h-full flex justify-center items-center">
-        <Button color="orange" className="mt-[200px]" onClick={startTestTime}>
+        <Button color="orange" className="mt-[200px]" onClick={startCountDown}>
           <span className="font-bold text-3xl text-white">Bắt đầu</span>
         </Button>
       </div>
     )
   }
 
+  if (countDown > 0) {
+    return (
+      <div className="px-[30px] h-full flex justify-center items-center">
+        <div className="text-[#DD6937] mt-[200px] text-5xl font-bold">
+          {countDown}
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="px-[30px]">
-      <div className="flex justify-between items-center h-[95px]">
-        <div className="flex flex-col items-center">
+      <div className="flex items-center h-[95px]">
+        <div className="flex flex-col items-start w-[33.3%] whitespace-nowrap">
           <span className="font-bold text-3xl text-white">Thời gian</span>
           <span className="text-3xl text-white">{time} ms</span>
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center w-[33.3%]">
           <span className="font-bold text-3xl text-white">Câu hỏi</span>
           <span className="text-3xl text-white">
             {currentQuestionIndex + 1}/{questions.length}
           </span>
         </div>
-        <div className="w-[174.14px]">
-          {questions[currentQuestionIndex] ? (
+        <div className="w-[33.3%] flex justify-end">
+          {currentQuestionIndex > 0 && currentQuestionIndex !== -1 && (
             <Button
               size="medium"
               className="text-xl w-[170px]"
-              onClick={isPause ? resumeTestTime : pauseTestTime}
+              onClick={backQuestion}
             >
-              {isPause ? 'Tiếp tục' : 'Tạm dừng'}
-            </Button>
-          ) : (
-            <Button
-              size="medium"
-              className="text-xl w-[170px]"
-              onClick={() => {
-                setTestProgress(
-                  {
-                    answers,
-                  },
-                  true,
-                )
-                navigate(`${ROUTES.PERFORM_TEST}/${4}`)
-              }}
-            >
-              Hoàn thành
+              Quay lại
             </Button>
           )}
+          <div className="ml-4">
+            {questions[currentQuestionIndex] ? (
+              <Button
+                size="medium"
+                className="text-xl w-[170px]"
+                onClick={isPause ? resumeTestTime : pauseTestTime}
+              >
+                {isPause ? 'Tiếp tục' : 'Tạm dừng'}
+              </Button>
+            ) : (
+              <Button
+                size="medium"
+                className="text-xl w-[170px]"
+                onClick={() => {
+                  setTestProgress(
+                    {
+                      answers,
+                    },
+                    true,
+                  )
+                  navigate(`${ROUTES.PERFORM_TEST}/${4}`)
+                }}
+              >
+                Hoàn thành
+              </Button>
+            )}
+          </div>
         </div>
       </div>
-      <div className="flex justify-between px-[100px] mt-[100px]">
+      <div className="flex px-[100px] mt-[100px] gap-16">
         {keyBoard.map((item, index) => {
           const currentQuestion = questions[currentQuestionIndex]
           let color
@@ -281,7 +344,7 @@ const Step3 = () => {
 
           return (
             <div
-              className={`p-[50px] hover:opacity-90 cursor-pointer text-white font-medium text-3xl rounded-md`}
+              className={`p-[50px] hover:opacity-90 cursor-pointer text-white font-medium text-3xl rounded-md w-1/5 text-center`}
               key={index}
               style={{
                 background: color,
